@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import { MAX_CHALLENGES } from '../../constants/settings'
 import { CompletedRow } from './CompletedRow'
 import { CurrentRow } from './CurrentRow'
@@ -9,6 +11,7 @@ type Props = {
   currentGuess: string
   isRevealing?: boolean
   currentRowClassName: string
+  onWin: () => void
 }
 
 export const Grid = ({
@@ -17,12 +20,18 @@ export const Grid = ({
   currentGuess,
   isRevealing,
   currentRowClassName,
+  onWin,
 }: Props) => {
   const empties =
     guesses.length < MAX_CHALLENGES - 1
       ? Array.from(Array(MAX_CHALLENGES - 1 - guesses.length))
       : []
 
+  useEffect(() => {
+    if (guesses.includes(solution)) {
+      onWin()
+    }
+  }, [guesses, solution])
   return (
     <>
       {guesses.map((guess, i) => (
@@ -34,10 +43,14 @@ export const Grid = ({
         />
       ))}
       {guesses.length < MAX_CHALLENGES && (
-        <CurrentRow guess={currentGuess} className={currentRowClassName} />
+        <CurrentRow
+          guess={currentGuess}
+          className={currentRowClassName}
+          solution={solution}
+        />
       )}
       {empties.map((_, i) => (
-        <EmptyRow key={i} />
+        <EmptyRow key={i} solution={solution} />
       ))}
     </>
   )

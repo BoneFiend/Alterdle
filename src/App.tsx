@@ -46,10 +46,9 @@ import {
   findFirstUnusedReveal,
   getGameDate,
   getIsLatestGame,
-  isWinningWord,
+  getSolution,
   isWordInWordList,
   setGameDate,
-  solution,
   solutionGameDate,
   unicodeLength,
 } from './lib/words'
@@ -83,17 +82,31 @@ function App() {
     getStoredIsHighContrastMode()
   )
   const [isRevealing, setIsRevealing] = useState(false)
+
+  const [numberOfWords, setNumberOfWords] = useState(1)
+  const [wonGames, setWonGames] = useState<number[]>([])
+  const [numberOfLetters, setNumberOfLetters] = useState(5)
+
+  const [solution, setSolution] = useState<string[]>(() => {
+    const { newSolution, solutionGameDate, solutionIndex, tomorrow } =
+      getSolution(getGameDate(), numberOfWords, numberOfLetters)
+    return newSolution
+  })
+
   const [guesses, setGuesses] = useState<string[]>(() => {
     const loaded = loadGameStateFromLocalStorage(isLatestGame)
-    if (loaded?.solution !== solution) {
+    // console.log('loaded: ')
+    // console.log(loaded)
+    if (!loaded?.solution || loaded?.solution !== solution) {
+      // TODO and below, this currently just ignores all loaded guesses
       return []
     }
-    const gameWasWon = loaded.guesses.includes(solution)
+    const gameWasWon = solution.every((word) => loaded.guesses.includes(word))
     if (gameWasWon) {
-      setIsGameWon(true)
+      // setIsGameWon(true)
     }
     if (loaded.guesses.length === MAX_CHALLENGES && !gameWasWon) {
-      setIsGameLost(true)
+      // setIsGameLost(true)
       showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
         persist: true,
       })
@@ -108,6 +121,12 @@ function App() {
       ? localStorage.getItem('gameMode') === 'hard'
       : false
   )
+
+  const [winningWord, setWinningWord] = useState(false)
+
+  useEffect(() => {
+    setWinningWord(wonGames.length === numberOfWords)
+  }, [wonGames, numberOfWords])
 
   useEffect(() => {
     // if no game state on load,
@@ -167,13 +186,37 @@ function App() {
 
   useEffect(() => {
     saveGameStateToLocalStorage(getIsLatestGame(), { guesses, solution })
-  }, [guesses])
+
+    if (winningWord) {
+      if (isLatestGame) {
+        setStats(addStatsForCompletedGame(stats, guesses.length))
+      }
+      return setIsGameWon(true)
+    }
+
+    if (guesses.length === MAX_CHALLENGES - 1) {
+      if (isLatestGame) {
+        setStats(addStatsForCompletedGame(stats, guesses.length + 1))
+      }
+      setIsGameLost(true)
+      showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
+        persist: true,
+        delayMs: REVEAL_TIME_MS * numberOfLetters + 1,
+      })
+    }
+  }, [guesses, winningWord])
+
+  const handleGridWin = (gridId: number) => {
+    if (!wonGames.includes(gridId)) {
+      setWonGames([...wonGames, gridId])
+    }
+  }
 
   useEffect(() => {
     if (isGameWon) {
       const winMessage =
         WIN_MESSAGES[Math.floor(Math.random() * WIN_MESSAGES.length)]
-      const delayMs = REVEAL_TIME_MS * solution.length
+      const delayMs = REVEAL_TIME_MS * numberOfLetters
 
       showSuccessAlert(winMessage, {
         delayMs,
@@ -184,13 +227,13 @@ function App() {
     if (isGameLost) {
       setTimeout(() => {
         setIsStatsModalOpen(true)
-      }, (solution.length + 1) * REVEAL_TIME_MS)
+      }, (numberOfLetters + 1) * REVEAL_TIME_MS)
     }
   }, [isGameWon, isGameLost, showSuccessAlert])
 
   const onChar = (value: string) => {
     if (
-      unicodeLength(`${currentGuess}${value}`) <= solution.length &&
+      unicodeLength(`${currentGuess}${value}`) <= numberOfLetters &&
       guesses.length < MAX_CHALLENGES &&
       !isGameWon
     ) {
@@ -209,7 +252,7 @@ function App() {
       return
     }
 
-    if (!(unicodeLength(currentGuess) === solution.length)) {
+    if (!(unicodeLength(currentGuess) === numberOfLetters)) {
       setCurrentRowClass('jiggle')
       return showErrorAlert(NOT_ENOUGH_LETTERS_MESSAGE, {
         onClose: clearCurrentRowClass,
@@ -239,35 +282,15 @@ function App() {
     // chars have been revealed
     setTimeout(() => {
       setIsRevealing(false)
-    }, REVEAL_TIME_MS * solution.length)
-
-    const winningWord = isWinningWord(currentGuess)
+    }, REVEAL_TIME_MS * numberOfLetters)
 
     if (
-      unicodeLength(currentGuess) === solution.length &&
+      unicodeLength(currentGuess) === numberOfLetters &&
       guesses.length < MAX_CHALLENGES &&
       !isGameWon
     ) {
       setGuesses([...guesses, currentGuess])
       setCurrentGuess('')
-
-      if (winningWord) {
-        if (isLatestGame) {
-          setStats(addStatsForCompletedGame(stats, guesses.length))
-        }
-        return setIsGameWon(true)
-      }
-
-      if (guesses.length === MAX_CHALLENGES - 1) {
-        if (isLatestGame) {
-          setStats(addStatsForCompletedGame(stats, guesses.length + 1))
-        }
-        setIsGameLost(true)
-        showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
-          persist: true,
-          delayMs: REVEAL_TIME_MS * solution.length + 1,
-        })
-      }
     }
   }
 
@@ -293,18 +316,19 @@ function App() {
         <div className="mx-auto flex w-full grow flex-col px-1 pt-2 pb-8 sm:px-6 md:max-w-7xl lg:px-8 short:pb-2 short:pt-2">
           <div className="flex grow flex-col justify-center pb-6 short:pb-2">
             <Grid
-              solution={solution}
+              solution={solution[0]}
               guesses={guesses}
               currentGuess={currentGuess}
               isRevealing={isRevealing}
               currentRowClassName={currentRowClass}
+              onWin={() => handleGridWin(0)} // TODO redo this as a map()
             />
           </div>
-          <Keyboard
+          <Keyboard // TODO remake keyboard logic
             onChar={onChar}
             onDelete={onDelete}
             onEnter={onEnter}
-            solution={solution}
+            solution={solution[0]}
             guesses={guesses}
             isRevealing={isRevealing}
           />
@@ -315,7 +339,7 @@ function App() {
           <StatsModal
             isOpen={isStatsModalOpen}
             handleClose={() => setIsStatsModalOpen(false)}
-            solution={solution}
+            solution={solution[0]} // TODO overhaul stats
             guesses={guesses}
             gameStats={stats}
             isLatestGame={isLatestGame}

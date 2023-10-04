@@ -26,10 +26,6 @@ export const isWordInWordList = (word: string) => {
   )
 }
 
-export const isWinningWord = (word: string) => {
-  return solution === word
-}
-
 // build a set of previously revealed letters - present and correct
 // guess must use correct letters in that space and any other revealed letters
 // also check if all revealed instances of a letter are used (i.e. two C's)
@@ -40,7 +36,7 @@ export const findFirstUnusedReveal = (word: string, guesses: string[]) => {
 
   const lettersLeftArray = new Array<string>()
   const guess = guesses[guesses.length - 1]
-  const statuses = getGuessStatuses(solution, guess)
+  const statuses = getGuessStatuses(solution[0], guess)
   const splitWord = unicodeSplit(word)
   const splitGuess = unicodeSplit(guess)
 
@@ -118,20 +114,38 @@ export const getIndex = (gameDate: Date) => {
   return index
 }
 
-export const getWordOfDay = (index: number) => {
-  if (index < 0) {
-    throw new Error('Invalid index')
-  }
-
-  return localeAwareUpperCase(WORDS[index % WORDS.length])
+export const seededRandom = (seed: number) => {
+  let x = Math.sin(seed++) * 10000
+  return x - Math.floor(x)
 }
 
-export const getSolution = (gameDate: Date) => {
+export const getSolution = (
+  gameDate: Date,
+  numberOfWords: number,
+  numberOfLetters: number
+) => {
   const nextGameDate = getNextGameDate(gameDate)
   const index = getIndex(gameDate)
-  const wordOfTheDay = getWordOfDay(index)
+
+  const seed =
+    gameDate.getDate() * Math.E +
+    gameDate.getMonth() +
+    gameDate.getFullYear() +
+    numberOfWords * 1234 +
+    numberOfLetters
+  let solution: string[] = []
+
+  let availableWords = [...WORDS] // TODO only select words of certain length
+
+  for (let i = 0; i < numberOfWords && availableWords.length > 0; i++) {
+    const index = Math.floor(seededRandom(seed + i) * availableWords.length)
+    solution.push(localeAwareUpperCase(availableWords[index]))
+    availableWords.splice(index, 1)
+  }
+  // console.log('found solution: ' + solution)
+
   return {
-    solution: wordOfTheDay,
+    newSolution: solution,
     solutionGameDate: gameDate,
     solutionIndex: index,
     tomorrow: nextGameDate.valueOf(),
@@ -176,5 +190,8 @@ export const getIsLatestGame = () => {
   return parsed === null || !('d' in parsed)
 }
 
-export const { solution, solutionGameDate, solutionIndex, tomorrow } =
-  getSolution(getGameDate())
+// TODO this call will likely mess up when trying to change dates
+export const { newSolution, solutionGameDate, solutionIndex, tomorrow } =
+  getSolution(getGameDate(), 1, 5)
+
+export const solution = newSolution
