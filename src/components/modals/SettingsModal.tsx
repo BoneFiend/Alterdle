@@ -1,8 +1,10 @@
 import {
+  CHALLENGES_DESCRIPTION,
   HARD_MODE_DESCRIPTION,
   HIGH_CONTRAST_MODE_DESCRIPTION,
 } from '../../constants/strings'
 import { BaseModal } from './BaseModal'
+import { SettingsSlider } from './SettingsSlider'
 import { SettingsToggle } from './SettingsToggle'
 
 type Props = {
@@ -14,6 +16,8 @@ type Props = {
   handleDarkMode: Function
   isHighContrastMode: boolean
   handleHighContrastMode: Function
+  numberOfWords: number
+  handleNumberOfWords: Function
 }
 
 export const SettingsModal = ({
@@ -25,10 +29,18 @@ export const SettingsModal = ({
   handleDarkMode,
   isHighContrastMode,
   handleHighContrastMode,
+  numberOfWords,
+  handleNumberOfWords,
 }: Props) => {
   return (
     <BaseModal title="Settings" isOpen={isOpen} handleClose={handleClose}>
       <div className="mt-2 flex flex-col divide-y">
+        <SettingsSlider
+          settingName="Challenges"
+          value={numberOfWords}
+          handleValue={(value: number) => handleNumberOfWords(value)}
+          description={CHALLENGES_DESCRIPTION}
+        />
         <SettingsToggle
           settingName="Hard Mode"
           flag={isHardMode}

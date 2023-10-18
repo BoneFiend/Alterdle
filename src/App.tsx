@@ -19,7 +19,6 @@ import {
   DATE_LOCALE,
   DISCOURAGE_INAPP_BROWSERS,
   LONG_ALERT_TIME_MS,
-  MAX_CHALLENGES,
   REVEAL_TIME_MS,
   WELCOME_INFO_MODAL_MS,
 } from './constants/settings'
@@ -87,11 +86,11 @@ function App() {
   const [wonGames, setWonGames] = useState<number[]>([])
   const [numberOfLetters, setNumberOfLetters] = useState(5)
 
-  const [solution, setSolution] = useState<string[]>(() => {
-    const { newSolution, solutionGameDate, solutionIndex, tomorrow } =
-      getSolution(getGameDate(), numberOfWords, numberOfLetters)
-    return newSolution
-  })
+  const maxChallenges = numberOfWords + 5
+
+  const { newSolution, solutionGameDate, solutionIndex, tomorrow } =
+    getSolution(getGameDate(), numberOfWords, numberOfLetters)
+  const solution = newSolution
 
   const [guesses, setGuesses] = useState<string[]>(() => {
     const loaded = loadGameStateFromLocalStorage(isLatestGame)
@@ -105,7 +104,7 @@ function App() {
     if (gameWasWon) {
       // setIsGameWon(true)
     }
-    if (loaded.guesses.length === MAX_CHALLENGES && !gameWasWon) {
+    if (loaded.guesses.length === maxChallenges && !gameWasWon) {
       // setIsGameLost(true)
       showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
         persist: true,
@@ -194,7 +193,7 @@ function App() {
       return setIsGameWon(true)
     }
 
-    if (guesses.length === MAX_CHALLENGES - 1) {
+    if (guesses.length === maxChallenges) {
       if (isLatestGame) {
         setStats(addStatsForCompletedGame(stats, guesses.length + 1))
       }
@@ -234,7 +233,7 @@ function App() {
   const onChar = (value: string) => {
     if (
       unicodeLength(`${currentGuess}${value}`) <= numberOfLetters &&
-      guesses.length < MAX_CHALLENGES &&
+      guesses.length < maxChallenges &&
       !isGameWon
     ) {
       setCurrentGuess(`${currentGuess}${value}`)
@@ -286,7 +285,7 @@ function App() {
 
     if (
       unicodeLength(currentGuess) === numberOfLetters &&
-      guesses.length < MAX_CHALLENGES &&
+      guesses.length < maxChallenges &&
       !isGameWon
     ) {
       setGuesses([...guesses, currentGuess])
@@ -315,14 +314,18 @@ function App() {
 
         <div className="mx-auto flex w-full grow flex-col px-1 pt-2 pb-8 sm:px-6 md:max-w-7xl lg:px-8 short:pb-2 short:pt-2">
           <div className="flex grow flex-col justify-center pb-6 short:pb-2">
-            <Grid
-              solution={solution[0]}
-              guesses={guesses}
-              currentGuess={currentGuess}
-              isRevealing={isRevealing}
-              currentRowClassName={currentRowClass}
-              onWin={() => handleGridWin(0)} // TODO redo this as a map()
-            />
+            {solution.map((sol, i) => (
+              <Grid
+                key={i}
+                solution={solution[i]}
+                guesses={guesses}
+                currentGuess={currentGuess}
+                isRevealing={isRevealing}
+                currentRowClassName={currentRowClass}
+                onWin={() => handleGridWin(i)}
+                maxChallenges={maxChallenges}
+              />
+            ))}
           </div>
           <Keyboard // TODO remake keyboard logic
             onChar={onChar}
@@ -382,6 +385,8 @@ function App() {
             handleDarkMode={handleDarkMode}
             isHighContrastMode={isHighContrastMode}
             handleHighContrastMode={handleHighContrastMode}
+            numberOfWords={numberOfWords}
+            handleNumberOfWords={setNumberOfWords}
           />
           <AlertContainer />
         </div>
