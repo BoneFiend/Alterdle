@@ -32,7 +32,7 @@ export const Grid = ({
     if (guesses.includes(solution)) {
       onWin()
     }
-  }, [guesses, solution])
+  }, [guesses, solution, onWin])
   return (
     <>
       {guesses.map((guess, i) => (

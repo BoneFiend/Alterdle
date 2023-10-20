@@ -47,8 +47,7 @@ import {
   getIsLatestGame,
   getSolution,
   isWordInWordList,
-  setGameDate,
-  solutionGameDate,
+  setGameDate, // solutionGameDate,
   unicodeLength,
 } from './lib/words'
 
@@ -88,8 +87,11 @@ function App() {
 
   const maxChallenges = numberOfWords + 5
 
-  const { newSolution, solutionGameDate, solutionIndex, tomorrow } =
-    getSolution(getGameDate(), numberOfWords, numberOfLetters)
+  const { newSolution, solutionGameDate } = getSolution(
+    getGameDate(),
+    numberOfWords,
+    numberOfLetters
+  )
   const solution = newSolution
 
   const [guesses, setGuesses] = useState<string[]>(() => {
@@ -203,7 +205,16 @@ function App() {
         delayMs: REVEAL_TIME_MS * numberOfLetters + 1,
       })
     }
-  }, [guesses, winningWord])
+  }, [
+    guesses,
+    winningWord,
+    isLatestGame,
+    maxChallenges,
+    numberOfLetters,
+    showErrorAlert,
+    solution,
+    stats,
+  ])
 
   const handleGridWin = (gridId: number) => {
     if (!wonGames.includes(gridId)) {
@@ -228,7 +239,7 @@ function App() {
         setIsStatsModalOpen(true)
       }, (numberOfLetters + 1) * REVEAL_TIME_MS)
     }
-  }, [isGameWon, isGameLost, showSuccessAlert])
+  }, [isGameWon, isGameLost, showSuccessAlert, numberOfLetters])
 
   const onChar = (value: string) => {
     if (

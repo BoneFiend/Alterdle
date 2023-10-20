@@ -1,5 +1,3 @@
-import classnames from 'classnames'
-
 type Props = {
   settingName: string
   value: number
