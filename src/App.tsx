@@ -398,6 +398,8 @@ function App() {
             handleHighContrastMode={handleHighContrastMode}
             numberOfWords={numberOfWords}
             handleNumberOfWords={setNumberOfWords}
+            numberOfLetters={numberOfLetters}
+            handleNumberOfLetters={setNumberOfLetters}
           />
           <AlertContainer />
         </div>

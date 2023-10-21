@@ -3,6 +3,8 @@ type Props = {
   value: number
   handleValue: Function
   description?: string
+  minValue: number
+  maxValue: number
 }
 
 export const SettingsSlider = ({
@@ -10,6 +12,8 @@ export const SettingsSlider = ({
   value,
   handleValue,
   description,
+  minValue,
+  maxValue,
 }: Props) => {
   return (
     <>
@@ -26,8 +30,8 @@ export const SettingsSlider = ({
           <p>{value}</p>
           <input
             type="range"
-            min="1"
-            max="4"
+            min={minValue}
+            max={maxValue}
             value={value}
             onChange={(e) => handleValue(Number(e.target.value))}
             step="1"
