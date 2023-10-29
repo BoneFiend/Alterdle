@@ -1,8 +1,10 @@
 # Alterdle
 
-This project forks Reactle, a clone of the popular word guessing game we all know and love. Made using React, Typescript, and Tailwind.
+Alterdle is an customisable word guessing game, allowing you to choose how many challenges you want to guess at once!
 
-[**Try out the demo!**](https://reactle.vercel.app/)
+This project forks [cwackerfuss/react-wordle](https://github.com/cwackerfuss/react-wordle), a clone of the popular word guessing game we all know and love. Made using React, Typescript, and Tailwind.
+
+[**Try out the demo!**](https://bonefiend.github.io/alterdle/)
 
 ## Build and run
 
@@ -21,11 +23,17 @@ $> npm run start
 #### Development
 
 ```bash
+$> docker compose up
+```
+
+or
+
+```bash
 $> docker build -t alterdle:dev -f docker/Dockerfile .
 $> docker run -d -p 3000:3000 --name atlerdle-dev atlerdle:dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in browser.
+Open [http://localhost:3000](http://localhost:3000) in browser. Please follow [this tutorial](https://shipyard.build/blog/react-wordle-with-docker-compose/) for a complete discussion on building a Docker image for Alterdle.
 
 #### Production
 
