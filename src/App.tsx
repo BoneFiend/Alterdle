@@ -457,6 +457,10 @@ function App() {
             numberOfGuessesMade={
               guesses[numberOfWords - 1][numberOfLetters - 1].length
             }
+            numberOfWords={numberOfWords}
+            handleNumberOfWords={setNumberOfWords}
+            numberOfLetters={numberOfLetters}
+            handleNumberOfLetters={setNumberOfLetters}
           />
           <DatePickerModal
             isOpen={isDatePickerModalOpen}

@@ -6,10 +6,14 @@ import {
   DATE_LOCALE,
   ENABLE_ARCHIVED_GAMES,
   ENABLE_MIGRATE_STATS,
+  MAX_NUMBER_OF_LETTERS,
+  MAX_NUMBER_OF_WORDS,
 } from '../../constants/settings'
 import {
   ARCHIVE_GAMEDATE_TEXT,
+  CHALLENGES_DESCRIPTION,
   GUESS_DISTRIBUTION_TEXT,
+  LENGTH_DESCRIPTION,
   NEW_WORD_TEXT,
   SHARE_TEXT,
   STATISTICS_TITLE,
@@ -21,6 +25,7 @@ import { Histogram } from '../stats/Histogram'
 import { MigrationIntro } from '../stats/MigrationIntro'
 import { StatBar } from '../stats/StatBar'
 import { BaseModal } from './BaseModal'
+import { SettingsSlider } from './SettingsSlider'
 
 type Props = {
   isOpen: boolean
@@ -38,6 +43,10 @@ type Props = {
   isDarkMode: boolean
   isHighContrastMode: boolean
   numberOfGuessesMade: number
+  numberOfWords: number
+  handleNumberOfWords: Function
+  numberOfLetters: number
+  handleNumberOfLetters: Function
 }
 
 export const StatsModal = ({
@@ -56,7 +65,12 @@ export const StatsModal = ({
   isDarkMode,
   isHighContrastMode,
   numberOfGuessesMade,
+  numberOfWords,
+  handleNumberOfWords,
+  numberOfLetters,
+  handleNumberOfLetters,
 }: Props) => {
+  // TODO add challenges and length slider
   if (gameStats.totalGames <= 0) {
     return (
       <BaseModal
@@ -86,6 +100,22 @@ export const StatsModal = ({
         gameStats={gameStats}
         isGameWon={isGameWon}
         numberOfGuessesMade={numberOfGuessesMade}
+      />
+      <SettingsSlider
+        settingName="Challenges"
+        value={numberOfWords}
+        handleValue={(value: number) => handleNumberOfWords(value)}
+        description={CHALLENGES_DESCRIPTION}
+        minValue={1}
+        maxValue={MAX_NUMBER_OF_WORDS} // TODO dont allow more than 2 single letter words
+      />
+      <SettingsSlider
+        settingName="Word Length"
+        value={numberOfLetters}
+        handleValue={(value: number) => handleNumberOfLetters(value)}
+        description={LENGTH_DESCRIPTION}
+        minValue={5}
+        maxValue={MAX_NUMBER_OF_LETTERS}
       />
       {(isGameLost || isGameWon) && (
         <div className="mt-5 columns-2 items-center items-stretch justify-center text-center dark:text-white sm:mt-6">
