@@ -1,6 +1,6 @@
 # Alterdle
 
-Alterdle is an customisable word guessing game, allowing you to choose how many challenges you want to guess at once!
+Alterdle is a customisable word guessing game, allowing you to choose how many challenges you want to guess at once!
 
 This project forks [cwackerfuss/react-wordle](https://github.com/cwackerfuss/react-wordle), a clone of the popular word guessing game we all know and love. Made using React, Typescript, and Tailwind.
 
