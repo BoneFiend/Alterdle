@@ -49,7 +49,7 @@ import {
   getIsLatestGame,
   getSolution,
   isWordInWordList,
-  setGameDate, // solutionGameDate,
+  setGameDate,
   unicodeLength,
 } from './lib/words'
 
@@ -63,14 +63,12 @@ function App() {
   const { showError: showErrorAlert, showSuccess: showSuccessAlert } =
     useAlert()
   const [currentGuess, setCurrentGuess] = useState('')
-  const [isGameWon, setIsGameWon] = useState(false)
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false)
   const [isDatePickerModalOpen, setIsDatePickerModalOpen] = useState(false)
   const [isMigrateStatsModalOpen, setIsMigrateStatsModalOpen] = useState(false)
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false)
   const [currentRowClass, setCurrentRowClass] = useState('')
-  const [isGameLost, setIsGameLost] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(
     localStorage.getItem('theme')
       ? localStorage.getItem('theme') === 'dark'
@@ -85,11 +83,24 @@ function App() {
 
   const [numberOfWords, setNumberOfWords] = useState(1)
   const [numberOfLetters, setNumberOfLetters] = useState(5)
-  const [wonGames, setWonGames] = useState<any[][]>(
+  const [wonGrids, setWonGrids] = useState<any[][]>(
     Array(MAX_NUMBER_OF_WORDS)
       .fill(0)
       .map((row, index) => new Array(MAX_NUMBER_OF_LETTERS).fill([]))
   )
+  const [gamesWon, setGamesWon] = useState<any[][]>(
+    Array(MAX_NUMBER_OF_WORDS)
+      .fill(0)
+      .map((row, index) => new Array(MAX_NUMBER_OF_LETTERS).fill(false))
+  )
+  const [gamesLost, setGamesLost] = useState<any[][]>(
+    Array(MAX_NUMBER_OF_WORDS)
+      .fill(0)
+      .map((row, index) => new Array(MAX_NUMBER_OF_LETTERS).fill(false))
+  )
+
+  const isGameWon = gamesWon[numberOfWords - 1][numberOfLetters - 1]
+  const isGameLost = gamesLost[numberOfWords - 1][numberOfLetters - 1]
 
   const maxChallenges = numberOfWords + 5
 
@@ -209,7 +220,10 @@ function App() {
     saveGameStateToLocalStorage(getIsLatestGame(), { guesses, solution })
 
     if (
-      guesses[numberOfWords - 1][numberOfLetters - 1].length === maxChallenges
+      guesses[numberOfWords - 1][numberOfLetters - 1].length ===
+        maxChallenges &&
+      !isGameWon &&
+      !isGameLost
     ) {
       if (isLatestGame) {
         setStats((prevStats) =>
@@ -219,9 +233,11 @@ function App() {
           )
         )
       }
-      setIsGameLost(true)
+      const newGamesLost = [...gamesLost]
+      newGamesLost[numberOfWords - 1][numberOfLetters - 1] = true
+      setGamesLost(newGamesLost)
       showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
-        persist: true,
+        // persist: true, // TODO rework to show the solutions permanently on each setting
         delayMs: REVEAL_TIME_MS * numberOfLetters + 1,
       })
     }
@@ -233,11 +249,17 @@ function App() {
     numberOfWords,
     showErrorAlert,
     solution,
+    gamesLost,
+    isGameWon,
+    isGameLost,
   ])
 
   useEffect(() => {
     if (
-      wonGames[numberOfWords - 1][numberOfLetters - 1].length === numberOfWords
+      wonGrids[numberOfWords - 1][numberOfLetters - 1].length ===
+        numberOfWords &&
+      !isGameWon &&
+      !isGameLost
     ) {
       if (isLatestGame) {
         // TODO redo stats
@@ -248,18 +270,29 @@ function App() {
           )
         )
       }
-      return setIsGameWon(true)
+      const newGamesWon = [...gamesWon]
+      newGamesWon[numberOfWords - 1][numberOfLetters - 1] = true
+      setGamesWon(newGamesWon)
     }
-  }, [wonGames, numberOfLetters, numberOfWords, guesses, isLatestGame])
+  }, [
+    wonGrids,
+    numberOfLetters,
+    numberOfWords,
+    guesses,
+    isLatestGame,
+    gamesWon,
+    isGameWon,
+    isGameLost,
+  ])
 
   const handleGridWin = (gridId: number) => {
-    if (!wonGames[numberOfWords - 1][numberOfLetters - 1].includes(gridId)) {
-      const newWonGames = wonGames.map((row) => row.map((cell) => [...cell]))
-      newWonGames[numberOfWords - 1][numberOfLetters - 1] = [
-        ...newWonGames[numberOfWords - 1][numberOfLetters - 1],
+    if (!wonGrids[numberOfWords - 1][numberOfLetters - 1].includes(gridId)) {
+      const newWonGrids = wonGrids.map((row) => row.map((cell) => [...cell]))
+      newWonGrids[numberOfWords - 1][numberOfLetters - 1] = [
+        ...newWonGrids[numberOfWords - 1][numberOfLetters - 1],
         gridId,
       ]
-      setWonGames(newWonGames)
+      setWonGrids(newWonGrids)
     }
   }
 
