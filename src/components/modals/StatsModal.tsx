@@ -8,6 +8,8 @@ import {
   ENABLE_MIGRATE_STATS,
   MAX_NUMBER_OF_LETTERS,
   MAX_NUMBER_OF_WORDS,
+  MIN_NUMBER_OF_LETTERS,
+  MIN_NUMBER_OF_WORDS,
 } from '../../constants/settings'
 import {
   ARCHIVE_GAMEDATE_TEXT,
@@ -106,7 +108,7 @@ export const StatsModal = ({
         value={numberOfWords}
         handleValue={(value: number) => handleNumberOfWords(value)}
         description={CHALLENGES_DESCRIPTION}
-        minValue={1}
+        minValue={MIN_NUMBER_OF_WORDS}
         maxValue={MAX_NUMBER_OF_WORDS} // TODO dont allow more than 2 single letter words
       />
       <SettingsSlider
@@ -114,7 +116,7 @@ export const StatsModal = ({
         value={numberOfLetters}
         handleValue={(value: number) => handleNumberOfLetters(value)}
         description={LENGTH_DESCRIPTION}
-        minValue={5}
+        minValue={MIN_NUMBER_OF_LETTERS}
         maxValue={MAX_NUMBER_OF_LETTERS}
       />
       {(isGameLost || isGameWon) && (

@@ -1,8 +1,10 @@
 import { enUS } from 'date-fns/locale'
 
 export const MAX_CHALLENGES = 6 //TODO get rid of
+export const MIN_NUMBER_OF_WORDS = 1
 export const MAX_NUMBER_OF_WORDS = 4
-export const MAX_NUMBER_OF_LETTERS = 5
+export const MIN_NUMBER_OF_LETTERS = 1
+export const MAX_NUMBER_OF_LETTERS = 8
 export const ALERT_TIME_MS = 2000
 export const LONG_ALERT_TIME_MS = 10000
 export const REVEAL_TIME_MS = 350

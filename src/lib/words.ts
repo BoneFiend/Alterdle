@@ -10,7 +10,6 @@ import queryString from 'query-string'
 
 import { ENABLE_ARCHIVED_GAMES } from '../constants/settings'
 import { NOT_CONTAINED_MESSAGE, WRONG_SPOT_MESSAGE } from '../constants/strings'
-import { VALID_GUESSES } from '../constants/validGuesses'
 import { WORDS } from '../constants/wordlist'
 import { getToday } from './dateutils'
 import { getGuessStatuses } from './statuses'
@@ -20,10 +19,7 @@ export const firstGameDate = new Date(2022, 0)
 export const periodInDays = 1
 
 export const isWordInWordList = (word: string) => {
-  return (
-    WORDS.includes(localeAwareLowerCase(word)) ||
-    VALID_GUESSES.includes(localeAwareLowerCase(word))
-  )
+  return WORDS.includes(localeAwareLowerCase(word))
 }
 
 // build a set of previously revealed letters - present and correct
@@ -135,7 +131,9 @@ export const getSolution = (
     numberOfLetters
   let solution: string[] = []
 
-  let availableWords = [...WORDS] // TODO only select words of certain length
+  let availableWords = [
+    ...WORDS.filter((word) => word.length === numberOfLetters),
+  ]
 
   for (let i = 0; i < numberOfWords && availableWords.length > 0; i++) {
     const index = Math.floor(seededRandom(seed + i) * availableWords.length)
