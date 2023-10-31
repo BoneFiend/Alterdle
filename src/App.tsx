@@ -19,8 +19,6 @@ import {
   DATE_LOCALE,
   DISCOURAGE_INAPP_BROWSERS,
   LONG_ALERT_TIME_MS,
-  MAX_NUMBER_OF_LETTERS,
-  MAX_NUMBER_OF_WORDS,
   REVEAL_TIME_MS,
   WELCOME_INFO_MODAL_MS,
 } from './constants/settings'
@@ -44,10 +42,11 @@ import {
 } from './lib/localStorage'
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import {
+  create2dArray,
   findFirstUnusedReveal,
   getGameDate,
   getIsLatestGame,
-  getSolution,
+  getSolutions,
   isWordInWordList,
   setGameDate,
   unicodeLength,
@@ -83,39 +82,19 @@ function App() {
 
   const [numberOfWords, setNumberOfWords] = useState(1)
   const [numberOfLetters, setNumberOfLetters] = useState(5)
-  const [wonGrids, setWonGrids] = useState<any[][]>(
-    Array(MAX_NUMBER_OF_WORDS)
-      .fill(0)
-      .map((row, index) => new Array(MAX_NUMBER_OF_LETTERS).fill([]))
-  )
-  const [gamesWon, setGamesWon] = useState<any[][]>(
-    Array(MAX_NUMBER_OF_WORDS)
-      .fill(0)
-      .map((row, index) => new Array(MAX_NUMBER_OF_LETTERS).fill(false))
-  )
-  const [gamesLost, setGamesLost] = useState<any[][]>(
-    Array(MAX_NUMBER_OF_WORDS)
-      .fill(0)
-      .map((row, index) => new Array(MAX_NUMBER_OF_LETTERS).fill(false))
-  )
+  const [wonGrids, setWonGrids] = useState<any[][]>(create2dArray([]))
+  const [gamesWon, setGamesWon] = useState<any[][]>(create2dArray(false))
+  const [gamesLost, setGamesLost] = useState<any[][]>(create2dArray(false))
+  const [isGameWon, setIsGameWon] = useState(false)
+  const [isGameLost, setIsGameLost] = useState(false)
 
-  const isGameWon = gamesWon[numberOfWords - 1][numberOfLetters - 1]
-  const isGameLost = gamesLost[numberOfWords - 1][numberOfLetters - 1]
+  const [maxChallenges, setMaxChallenges] = useState<number>(6)
 
-  const maxChallenges = numberOfWords + 5
-
-  const { newSolution, solutionGameDate } = getSolution(
-    getGameDate(),
-    numberOfWords,
-    numberOfLetters
+  const [solutions] = useState<any[][]>(() => getSolutions(getGameDate()))
+  const [solution, setSolution] = useState(
+    solutions[numberOfWords - 1][numberOfLetters - 1]
   )
-  const solution = newSolution
-
-  const [guesses, setGuesses] = useState<any[][]>(
-    Array(MAX_NUMBER_OF_WORDS)
-      .fill(0)
-      .map((row, index) => new Array(MAX_NUMBER_OF_LETTERS).fill([]))
-  )
+  const [guesses, setGuesses] = useState<any[][]>(create2dArray([]))
 
   //   const loaded = loadGameStateFromLocalStorage(isLatestGame)
   //   // console.log('loaded: ')
@@ -215,6 +194,13 @@ function App() {
   const clearCurrentRowClass = () => {
     setCurrentRowClass('')
   }
+
+  useEffect(() => {
+    setIsGameWon(gamesWon[numberOfWords - 1][numberOfLetters - 1])
+    setIsGameLost(gamesLost[numberOfWords - 1][numberOfLetters - 1])
+    setMaxChallenges(numberOfWords + 5)
+    setSolution(solutions[numberOfWords - 1][numberOfLetters - 1])
+  }, [numberOfWords, numberOfLetters, gamesWon, gamesLost, solutions])
 
   useEffect(() => {
     saveGameStateToLocalStorage(getIsLatestGame(), { guesses, solution })
@@ -469,7 +455,7 @@ function App() {
           />
           <DatePickerModal
             isOpen={isDatePickerModalOpen}
-            initialDate={solutionGameDate}
+            initialDate={getGameDate()}
             handleSelectDate={(d) => {
               setIsDatePickerModalOpen(false)
               setGameDate(d)

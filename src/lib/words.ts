@@ -8,7 +8,11 @@ import {
 import { default as GraphemeSplitter } from 'grapheme-splitter'
 import queryString from 'query-string'
 
-import { ENABLE_ARCHIVED_GAMES } from '../constants/settings'
+import {
+  ENABLE_ARCHIVED_GAMES,
+  MAX_NUMBER_OF_LETTERS,
+  MAX_NUMBER_OF_WORDS,
+} from '../constants/settings'
 import { NOT_CONTAINED_MESSAGE, WRONG_SPOT_MESSAGE } from '../constants/strings'
 import { WORDS } from '../constants/wordlist'
 import { getToday } from './dateutils'
@@ -17,6 +21,12 @@ import { getGuessStatuses } from './statuses'
 // 1 January 2022 Game Epoch
 export const firstGameDate = new Date(2022, 0)
 export const periodInDays = 1
+
+export const create2dArray = (filler: any) => {
+  return Array(MAX_NUMBER_OF_WORDS)
+    .fill(0)
+    .map((row, index) => new Array(MAX_NUMBER_OF_LETTERS).fill(filler))
+}
 
 export const isWordInWordList = (word: string) => {
   return WORDS.includes(localeAwareLowerCase(word))
@@ -145,7 +155,6 @@ export const getSolution = (
     availableWords.splice(index, 1)
   }
   // console.log('found solution: ' + solution)
-
   return {
     newSolution: solution,
     solutionGameDate: gameDate,
@@ -154,6 +163,16 @@ export const getSolution = (
   }
 }
 
+export const getSolutions = (gameDate: Date) => {
+  const newSolutions = [...create2dArray([])]
+  for (let i = 0; i < MAX_NUMBER_OF_WORDS; i++) {
+    for (let j = 0; j < MAX_NUMBER_OF_LETTERS; j++) {
+      newSolutions[i][j] = getSolution(gameDate, i + 1, j + 1).newSolution
+    }
+  }
+  // console.log('found new solutions')
+  return newSolutions
+}
 export const getGameDate = () => {
   if (getIsLatestGame()) {
     return getToday()
@@ -192,6 +211,5 @@ export const getIsLatestGame = () => {
   return parsed === null || !('d' in parsed)
 }
 
-// TODO this call will likely mess up when trying to change dates
-export const { newSolution, solutionGameDate, solutionIndex, tomorrow } =
-  getSolution(getGameDate(), 1, 5)
+export const solutionGameDate = getGameDate()
+export const solutionIndex = getIndex(solutionGameDate)
