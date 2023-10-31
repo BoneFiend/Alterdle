@@ -25,14 +25,18 @@ export const isWordInWordList = (word: string) => {
 // build a set of previously revealed letters - present and correct
 // guess must use correct letters in that space and any other revealed letters
 // also check if all revealed instances of a letter are used (i.e. two C's)
-export const findFirstUnusedReveal = (word: string, guesses: string[]) => {
+export const findFirstUnusedReveal = (
+  word: string,
+  guesses: string[],
+  solution: string
+) => {
   if (guesses.length === 0) {
     return false
   }
 
   const lettersLeftArray = new Array<string>()
   const guess = guesses[guesses.length - 1]
-  const statuses = getGuessStatuses(solution[0], guess)
+  const statuses = getGuessStatuses(solution, guess)
   const splitWord = unicodeSplit(word)
   const splitGuess = unicodeSplit(guess)
 
@@ -191,5 +195,3 @@ export const getIsLatestGame = () => {
 // TODO this call will likely mess up when trying to change dates
 export const { newSolution, solutionGameDate, solutionIndex, tomorrow } =
   getSolution(getGameDate(), 1, 5)
-
-export const solution = newSolution

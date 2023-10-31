@@ -20,9 +20,10 @@ import {
   SHARE_TEXT,
   STATISTICS_TITLE,
 } from '../../constants/strings'
+import { getToday } from '../../lib/dateutils'
 import { GameStats } from '../../lib/localStorage'
 import { shareStatus } from '../../lib/share'
-import { solutionGameDate, tomorrow } from '../../lib/words'
+import { getNextGameDate, solutionGameDate } from '../../lib/words'
 import { Histogram } from '../stats/Histogram'
 import { MigrationIntro } from '../stats/MigrationIntro'
 import { StatBar } from '../stats/StatBar'
@@ -127,7 +128,7 @@ export const StatsModal = ({
                 <h5>{NEW_WORD_TEXT}</h5>
                 <Countdown
                   className="text-lg font-medium text-gray-900 dark:text-gray-100"
-                  date={tomorrow}
+                  date={getNextGameDate(getToday())}
                   daysInHours={true}
                 />
               </div>

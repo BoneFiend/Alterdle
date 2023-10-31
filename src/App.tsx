@@ -354,10 +354,11 @@ function App() {
     }
 
     // enforce hard mode - all guesses must contain all previously revealed letters
-    if (isHardMode) {
+    if (isHardMode && numberOfWords === 1) {
       const firstMissingReveal = findFirstUnusedReveal(
         currentGuess,
-        guesses[numberOfWords - 1][numberOfLetters - 1]
+        guesses[numberOfWords - 1][numberOfLetters - 1],
+        solution[0]
       )
       if (firstMissingReveal) {
         setCurrentRowClass('jiggle')
@@ -410,7 +411,7 @@ function App() {
 
         <div className="mx-auto flex w-full grow flex-col px-1 pt-2 pb-8 sm:px-6 md:max-w-7xl lg:px-8 short:pb-2 short:pt-2">
           <div className="flex grow flex-col justify-center pb-6 short:pb-2">
-            {solution.map((sol, i) => (
+            {solution.map((sol: any, i: any) => (
               <Grid
                 key={i}
                 solution={solution[i]}
@@ -430,6 +431,7 @@ function App() {
             solution={solution[0]}
             guesses={guesses[numberOfWords - 1][numberOfLetters - 1]}
             isRevealing={isRevealing}
+            numberOfLetters={numberOfLetters}
           />
           <InfoModal
             isOpen={isInfoModalOpen}

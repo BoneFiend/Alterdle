@@ -1,18 +1,27 @@
 export const GAME_TITLE = process.env.REACT_APP_GAME_NAME!
 
-export const WIN_MESSAGES = ['Great Job!', 'Awesome', 'Well done!', 'Poggers']
+export const WIN_MESSAGES = [
+  'Great Job!',
+  'Awesome',
+  'Well done!',
+  'Poggers',
+  'Proud of you',
+  'Excellent',
+  'Sweet!',
+  'Brilliant',
+]
 export const GAME_COPIED_MESSAGE = 'Game copied to clipboard'
 export const NOT_ENOUGH_LETTERS_MESSAGE = 'Not enough letters'
 export const WORD_NOT_FOUND_MESSAGE = 'Word not found'
 export const HARD_MODE_ALERT_MESSAGE =
-  'Hard Mode can be enabled only at the start!'
+  'Hard Mode can be enabled only at the start'
 export const HARD_MODE_DESCRIPTION =
-  'Any revealed hints must be used in subsequent guesses'
+  'Any revealed hints must be used in subsequent guesses. Only available for single challenge games'
 export const HIGH_CONTRAST_MODE_DESCRIPTION = 'For improved color vision'
 export const CHALLENGES_DESCRIPTION = 'Number of words to play at once'
 export const LENGTH_DESCRIPTION = 'Length of each word'
 export const CORRECT_WORD_MESSAGE = (solution: string[]) =>
-  `The word was ${solution}`
+  `The word was ${solution}` //TODO fix this grammar
 export const WRONG_SPOT_MESSAGE = (guess: string, position: number) =>
   `Must use ${guess} in position ${position}`
 export const NOT_CONTAINED_MESSAGE = (letter: string) =>
