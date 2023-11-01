@@ -211,11 +211,15 @@ function App() {
       !isGameWon &&
       !isGameLost
     ) {
+      // Fail situation
       if (isLatestGame) {
         setStats((prevStats) =>
           addStatsForCompletedGame(
             prevStats,
-            guesses[numberOfWords - 1][numberOfLetters - 1].length + 1
+            guesses[numberOfWords - 1][numberOfLetters - 1].length + 1,
+            numberOfWords,
+            numberOfLetters,
+            maxChallenges
           )
         )
       }
@@ -247,12 +251,15 @@ function App() {
       !isGameWon &&
       !isGameLost
     ) {
+      // Win situation
       if (isLatestGame) {
-        // TODO redo stats
         setStats((prevStats) =>
           addStatsForCompletedGame(
             prevStats,
-            guesses[numberOfWords - 1][numberOfLetters - 1].length
+            guesses[numberOfWords - 1][numberOfLetters - 1].length,
+            numberOfWords,
+            numberOfLetters,
+            maxChallenges
           )
         )
       }
@@ -269,6 +276,7 @@ function App() {
     gamesWon,
     isGameWon,
     isGameLost,
+    maxChallenges,
   ])
 
   const handleGridWin = (gridId: number) => {
@@ -426,7 +434,7 @@ function App() {
           <StatsModal
             isOpen={isStatsModalOpen}
             handleClose={() => setIsStatsModalOpen(false)}
-            solution={solution[0]} // TODO overhaul stats
+            solution={solution[0]} // TODO remake sharing
             guesses={guesses[numberOfWords - 1][numberOfLetters - 1]}
             gameStats={stats}
             isLatestGame={isLatestGame}
@@ -452,6 +460,7 @@ function App() {
             handleNumberOfWords={setNumberOfWords}
             numberOfLetters={numberOfLetters}
             handleNumberOfLetters={setNumberOfLetters}
+            maxChallenges={maxChallenges}
           />
           <DatePickerModal
             isOpen={isDatePickerModalOpen}

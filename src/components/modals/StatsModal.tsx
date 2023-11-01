@@ -50,6 +50,7 @@ type Props = {
   handleNumberOfWords: Function
   numberOfLetters: number
   handleNumberOfLetters: Function
+  maxChallenges: number
 }
 
 export const StatsModal = ({
@@ -72,29 +73,19 @@ export const StatsModal = ({
   handleNumberOfWords,
   numberOfLetters,
   handleNumberOfLetters,
+  maxChallenges,
 }: Props) => {
-  // TODO add challenges and length slider
-  if (gameStats.totalGames <= 0) {
-    return (
-      <BaseModal
-        title={STATISTICS_TITLE}
-        isOpen={isOpen}
-        handleClose={handleClose}
-      >
-        <StatBar gameStats={gameStats} />
-        {ENABLE_MIGRATE_STATS && (
-          <MigrationIntro handleMigrateStatsButton={handleMigrateStatsButton} />
-        )}
-      </BaseModal>
-    )
-  }
   return (
     <BaseModal
       title={STATISTICS_TITLE}
       isOpen={isOpen}
       handleClose={handleClose}
     >
-      <StatBar gameStats={gameStats} />
+      <StatBar
+        gameStats={gameStats}
+        numberOfWords={numberOfWords}
+        numberOfLetters={numberOfLetters}
+      />
       <h4 className="text-lg font-medium leading-6 text-gray-900 dark:text-gray-100">
         {GUESS_DISTRIBUTION_TEXT}
       </h4>
@@ -103,6 +94,9 @@ export const StatsModal = ({
         gameStats={gameStats}
         isGameWon={isGameWon}
         numberOfGuessesMade={numberOfGuessesMade}
+        numberOfWords={numberOfWords}
+        numberOfLetters={numberOfLetters}
+        maxChallenges={maxChallenges}
       />
       <SettingsSlider
         settingName="Challenges"

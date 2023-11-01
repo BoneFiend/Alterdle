@@ -8,6 +8,8 @@ import { GameStats } from '../../lib/localStorage'
 
 type Props = {
   gameStats: GameStats
+  numberOfWords: number
+  numberOfLetters: number
 }
 
 const StatItem = ({
@@ -25,13 +27,31 @@ const StatItem = ({
   )
 }
 
-export const StatBar = ({ gameStats }: Props) => {
+export const StatBar = ({
+  gameStats,
+  numberOfWords,
+  numberOfLetters,
+}: Props) => {
   return (
     <div className="my-2 flex justify-center">
-      <StatItem label={TOTAL_TRIES_TEXT} value={gameStats.totalGames} />
-      <StatItem label={SUCCESS_RATE_TEXT} value={`${gameStats.successRate}%`} />
-      <StatItem label={CURRENT_STREAK_TEXT} value={gameStats.currentStreak} />
-      <StatItem label={BEST_STREAK_TEXT} value={gameStats.bestStreak} />
+      <StatItem
+        label={TOTAL_TRIES_TEXT}
+        value={gameStats.totalGames[numberOfWords - 1][numberOfLetters - 1]}
+      />
+      <StatItem
+        label={SUCCESS_RATE_TEXT}
+        value={`${
+          gameStats.successRate[numberOfWords - 1][numberOfLetters - 1]
+        }%`}
+      />
+      <StatItem
+        label={CURRENT_STREAK_TEXT}
+        value={gameStats.currentStreak[numberOfWords - 1][numberOfLetters - 1]}
+      />
+      <StatItem
+        label={BEST_STREAK_TEXT}
+        value={gameStats.bestStreak[numberOfWords - 1][numberOfLetters - 1]}
+      />
     </div>
   )
 }

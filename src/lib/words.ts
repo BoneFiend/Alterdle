@@ -10,6 +10,7 @@ import queryString from 'query-string'
 
 import {
   ENABLE_ARCHIVED_GAMES,
+  GAME_EPOCH,
   MAX_NUMBER_OF_LETTERS,
   MAX_NUMBER_OF_WORDS,
 } from '../constants/settings'
@@ -18,8 +19,7 @@ import { WORDS } from '../constants/wordlist'
 import { getToday } from './dateutils'
 import { getGuessStatuses } from './statuses'
 
-// 1 January 2022 Game Epoch
-export const firstGameDate = new Date(2022, 0)
+export const firstGameDate = GAME_EPOCH
 export const periodInDays = 1
 
 export const create2dArray = (filler: any) => {

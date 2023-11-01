@@ -2,9 +2,9 @@ import { enUS } from 'date-fns/locale'
 
 export const MAX_CHALLENGES = 6 //TODO get rid of
 export const MIN_NUMBER_OF_WORDS = 1
-export const MAX_NUMBER_OF_WORDS = 4
+export const MAX_NUMBER_OF_WORDS = 16
 export const MIN_NUMBER_OF_LETTERS = 1
-export const MAX_NUMBER_OF_LETTERS = 8
+export const MAX_NUMBER_OF_LETTERS = 11
 export const ALERT_TIME_MS = 2000
 export const LONG_ALERT_TIME_MS = 10000
 export const REVEAL_TIME_MS = 350
@@ -15,3 +15,4 @@ export const BLOWFISH_KEY = 'xcQUAHsik#Thq&LG*8es2DsZ$3bw^e'
 export const BLOWFISH_IV = '#45XmF^w'
 export const ENABLE_ARCHIVED_GAMES = true
 export const DATE_LOCALE = enUS
+export const GAME_EPOCH = new Date(2022, 0) // 1 January 2022

@@ -1,57 +1,85 @@
-import { MAX_CHALLENGES } from '../constants/settings'
+import { GAME_EPOCH, MAX_NUMBER_OF_WORDS } from '../constants/settings'
+import { getToday } from './dateutils'
 import {
   GameStats,
   loadStatsFromLocalStorage,
   saveStatsToLocalStorage,
 } from './localStorage'
-
-// In stats array elements 0-5 are successes in 1-6 trys
+import { create2dArray } from './words'
 
 export const addStatsForCompletedGame = (
   gameStats: GameStats,
-  count: number
+  count: number,
+  numberOfWords: number,
+  numberOfLetters: number,
+  maxChallenges: number
 ) => {
   // Count is number of incorrect guesses before end.
   const stats = { ...gameStats }
+  if (stats.latestDate[numberOfWords - 1][numberOfLetters - 1] < getToday()) {
+    stats.latestDate[numberOfWords - 1][numberOfLetters - 1] = getToday()
+    stats.totalGames[numberOfWords - 1][numberOfLetters - 1] += 1
 
-  stats.totalGames += 1
+    if (count >= maxChallenges) {
+      // Fail situation
+      stats.currentStreak[numberOfWords - 1][numberOfLetters - 1] = 0
+      stats.gamesFailed[numberOfWords - 1][numberOfLetters - 1] += 1
+    } else {
+      // Win situation
+      const winDistribution = [
+        ...stats.winDistribution[numberOfWords - 1][numberOfLetters - 1],
+      ]
+      winDistribution[count - 1] += 1
+      stats.winDistribution[numberOfWords - 1][numberOfLetters - 1] =
+        winDistribution
+      stats.currentStreak[numberOfWords - 1][numberOfLetters - 1] += 1
 
-  if (count >= MAX_CHALLENGES) {
-    // A fail situation
-    stats.currentStreak = 0
-    stats.gamesFailed += 1
-  } else {
-    stats.winDistribution[count] += 1
-    stats.currentStreak += 1
-
-    if (stats.bestStreak < stats.currentStreak) {
-      stats.bestStreak = stats.currentStreak
+      if (
+        stats.bestStreak[numberOfWords - 1][numberOfLetters - 1] <
+        stats.currentStreak[numberOfWords - 1][numberOfLetters - 1]
+      ) {
+        stats.bestStreak[numberOfWords - 1][numberOfLetters - 1] =
+          stats.currentStreak[numberOfWords - 1][numberOfLetters - 1]
+      }
     }
+
+    stats.successRate[numberOfWords - 1][numberOfLetters - 1] = getSuccessRate(
+      stats,
+      numberOfWords,
+      numberOfLetters
+    )
   }
-
-  stats.successRate = getSuccessRate(stats)
-
   saveStatsToLocalStorage(stats)
   return stats
 }
 
 const defaultStats: GameStats = {
-  winDistribution: Array.from(new Array(MAX_CHALLENGES), () => 0),
-  gamesFailed: 0,
-  currentStreak: 0,
-  bestStreak: 0,
-  totalGames: 0,
-  successRate: 0,
+  winDistribution: create2dArray(
+    Array.from(new Array(MAX_NUMBER_OF_WORDS + 5), () => 0)
+  ),
+  gamesFailed: create2dArray(0),
+  currentStreak: create2dArray(0),
+  bestStreak: create2dArray(0),
+  totalGames: create2dArray(0),
+  successRate: create2dArray(0),
+  latestDate: create2dArray(GAME_EPOCH),
 }
 
 export const loadStats = () => {
   return loadStatsFromLocalStorage() || defaultStats
 }
 
-const getSuccessRate = (gameStats: GameStats) => {
+const getSuccessRate = (
+  gameStats: GameStats,
+  numberOfWords: number,
+  numberOfLetters: number
+) => {
   const { totalGames, gamesFailed } = gameStats
 
   return Math.round(
-    (100 * (totalGames - gamesFailed)) / Math.max(totalGames, 1)
+    (100 *
+      (totalGames[numberOfWords - 1][numberOfLetters - 1] -
+        gamesFailed[numberOfWords - 1][numberOfLetters - 1])) /
+      Math.max(totalGames[numberOfWords - 1][numberOfLetters - 1], 1)
   )
 }
