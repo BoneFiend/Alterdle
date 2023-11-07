@@ -13,6 +13,12 @@
   --absent-cell-bg-color: theme('colors.slate.400');
   --correct-cell-bg-color: theme('colors.green.500');
   --present-cell-bg-color: theme('colors.yellow.500');
+
+  --correct-cell-hover-bg-color: theme('colors.green.600');
+  --present-cell-hover-bg-color: theme('colors.yellow.600');
+
+  --correct-cell-active-bg-color: theme('colors.green.700');
+  --present-cell-active-bg-color: theme('colors.yellow.700');
 }
 
 .dark {
@@ -25,6 +31,46 @@
 .high-contrast {
   --correct-cell-bg-color: theme('colors.orange.500');
   --present-cell-bg-color: theme('colors.cyan.500');
+
+  --correct-cell-hover-bg-color: theme('colors.orange.600');
+  --present-cell-hover-bg-color: theme('colors.cyan.600');
+
+  --correct-cell-active-bg-color: theme('colors.orange.700');
+  --present-cell-active-bg-color: theme('colors.cyan.700');
+}
+
+.absent {
+  background-color: var(--absent-cell-bg-color);
+  border-color: var(--absent-cell-bg-color);
+  color: white;
+}
+
+.correct {
+  background-color: var(--correct-cell-bg-color);
+  border-color: var(--correct-cell-bg-color);
+  color: white;
+}
+
+.present {
+  background-color: var(--present-cell-bg-color);
+  border-color: var(--present-cell-bg-color);
+  color: white;
+}
+
+.correct:hover {
+  background-color: var(--correct-cell-hover-bg-color);
+}
+
+.present:hover {
+  background-color: var(--present-cell-hover-bg-color);
+}
+
+.correct:active {
+  background-color: var(--correct-cell-active-bg-color);
+}
+
+.present:active {
+  background-color: var(--present-cell-active-bg-color);
 }
 
 .cell-fill-animation {
