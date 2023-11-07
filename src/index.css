@@ -2,7 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  background-color: var(--theme-bg);
+}
+
+.theme-bg {
+  background-color: var(--theme-bg);
+}
+
+.modal-bg {
+  background-color: var(--theme-modal-bg);
+}
+
 :root {
+  --theme-bg: theme('colors.white');
+  --theme-modal-bg: theme('colors.white');
+
   --animation-speed: 1000ms;
   --animation-speed-fast: 250ms;
 
@@ -22,6 +37,9 @@
 }
 
 .dark {
+  --theme-bg: theme('colors.slate.900');
+  --theme-modal-bg: theme('colors.gray.800');
+
   --default-cell-bg-color: theme('colors.slate.900');
   --default-cell-border-color: theme('colors.white');
   --default-cell-text-color: theme('colors.white');
@@ -37,6 +55,10 @@
 
   --correct-cell-active-bg-color: theme('colors.orange.700');
   --present-cell-active-bg-color: theme('colors.cyan.700');
+}
+
+.cell-bg {
+  background-color: var(--default-cell-bg-color);
 }
 
 .absent {
