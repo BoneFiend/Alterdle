@@ -82,18 +82,15 @@ function App() {
 
   const [numberOfWords, setNumberOfWords] = useState(1)
   const [numberOfLetters, setNumberOfLetters] = useState(5)
-  const [wonGrids, setWonGrids] = useState<any[][]>(create2dArray([]))
   const [gamesWon, setGamesWon] = useState<any[][]>(create2dArray(false))
   const [gamesLost, setGamesLost] = useState<any[][]>(create2dArray(false))
-  const [isGameWon, setIsGameWon] = useState(false)
-  const [isGameLost, setIsGameLost] = useState(false)
+  const isGameWon = gamesWon[numberOfWords - 1][numberOfLetters - 1]
+  const isGameLost = gamesLost[numberOfWords - 1][numberOfLetters - 1]
 
-  const [maxChallenges, setMaxChallenges] = useState<number>(6)
+  const maxChallenges = numberOfWords + 5
 
   const [solutions] = useState<any[][]>(() => getSolutions(getGameDate()))
-  const [solution, setSolution] = useState(
-    solutions[numberOfWords - 1][numberOfLetters - 1]
-  )
+  const solution = solutions[numberOfWords - 1][numberOfLetters - 1]
   const [guesses, setGuesses] = useState<any[][]>(create2dArray([]))
 
   //   const loaded = loadGameStateFromLocalStorage(isLatestGame)
@@ -196,98 +193,11 @@ function App() {
   }
 
   useEffect(() => {
-    setIsGameWon(gamesWon[numberOfWords - 1][numberOfLetters - 1])
-    setIsGameLost(gamesLost[numberOfWords - 1][numberOfLetters - 1])
-    setMaxChallenges(numberOfWords + 5)
-    setSolution(solutions[numberOfWords - 1][numberOfLetters - 1])
-  }, [numberOfWords, numberOfLetters, gamesWon, gamesLost, solutions])
-
-  useEffect(() => {
     saveGameStateToLocalStorage(getIsLatestGame(), { guesses, solution })
+  }, [guesses, solution])
 
-    if (
-      guesses[numberOfWords - 1][numberOfLetters - 1].length ===
-        maxChallenges &&
-      !isGameWon &&
-      !isGameLost
-    ) {
-      // Fail situation
-      if (isLatestGame) {
-        setStats((prevStats) =>
-          addStatsForCompletedGame(
-            prevStats,
-            guesses[numberOfWords - 1][numberOfLetters - 1].length + 1,
-            numberOfWords,
-            numberOfLetters,
-            maxChallenges
-          )
-        )
-      }
-      const newGamesLost = [...gamesLost]
-      newGamesLost[numberOfWords - 1][numberOfLetters - 1] = true
-      setGamesLost(newGamesLost)
-      showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
-        // persist: true, // TODO rework to show the solutions permanently on each setting
-        delayMs: REVEAL_TIME_MS * numberOfLetters + 1,
-      })
-    }
-  }, [
-    guesses,
-    isLatestGame,
-    maxChallenges,
-    numberOfLetters,
-    numberOfWords,
-    showErrorAlert,
-    solution,
-    gamesLost,
-    isGameWon,
-    isGameLost,
-  ])
-
-  useEffect(() => {
-    if (
-      wonGrids[numberOfWords - 1][numberOfLetters - 1].length ===
-        numberOfWords &&
-      !isGameWon &&
-      !isGameLost
-    ) {
-      // Win situation
-      if (isLatestGame) {
-        setStats((prevStats) =>
-          addStatsForCompletedGame(
-            prevStats,
-            guesses[numberOfWords - 1][numberOfLetters - 1].length,
-            numberOfWords,
-            numberOfLetters,
-            maxChallenges
-          )
-        )
-      }
-      const newGamesWon = [...gamesWon]
-      newGamesWon[numberOfWords - 1][numberOfLetters - 1] = true
-      setGamesWon(newGamesWon)
-    }
-  }, [
-    wonGrids,
-    numberOfLetters,
-    numberOfWords,
-    guesses,
-    isLatestGame,
-    gamesWon,
-    isGameWon,
-    isGameLost,
-    maxChallenges,
-  ])
-
-  const handleGridWin = (gridId: number) => {
-    if (!wonGrids[numberOfWords - 1][numberOfLetters - 1].includes(gridId)) {
-      const newWonGrids = wonGrids.map((row) => row.map((cell) => [...cell]))
-      newWonGrids[numberOfWords - 1][numberOfLetters - 1] = [
-        ...newWonGrids[numberOfWords - 1][numberOfLetters - 1],
-        gridId,
-      ]
-      setWonGrids(newWonGrids)
-    }
+  const checkIsGameWon = (guesses: any[], solution: any[]) => {
+    return solution.every((word) => guesses.includes(word))
   }
 
   useEffect(() => {
@@ -371,8 +281,7 @@ function App() {
 
     if (
       unicodeLength(currentGuess) === numberOfLetters &&
-      guesses[numberOfWords - 1][numberOfLetters - 1].length < maxChallenges &&
-      !isGameWon
+      guesses[numberOfWords - 1][numberOfLetters - 1].length < maxChallenges
     ) {
       const newGuesses = guesses.map((row) => row.map((cell) => [...cell]))
       newGuesses[numberOfWords - 1][numberOfLetters - 1] = [
@@ -381,6 +290,54 @@ function App() {
       ]
       setGuesses(newGuesses)
       setCurrentGuess('')
+
+      if (
+        checkIsGameWon(
+          newGuesses[numberOfWords - 1][numberOfLetters - 1],
+          solution
+        )
+      ) {
+        // Win situation
+        if (isLatestGame) {
+          console.log('won in app')
+          setStats((prevStats) =>
+            addStatsForCompletedGame(
+              prevStats,
+              newGuesses[numberOfWords - 1][numberOfLetters - 1].length,
+              numberOfWords,
+              numberOfLetters,
+              true
+            )
+          )
+        }
+        const newGamesWon = [...gamesWon]
+        newGamesWon[numberOfWords - 1][numberOfLetters - 1] = true
+        setGamesWon(newGamesWon)
+      } else if (
+        newGuesses[numberOfWords - 1][numberOfLetters - 1].length ===
+        maxChallenges
+      ) {
+        // Lose situation
+        if (isLatestGame) {
+          console.log('failed in app')
+          setStats((prevStats) =>
+            addStatsForCompletedGame(
+              prevStats,
+              newGuesses[numberOfWords - 1][numberOfLetters - 1].length + 1,
+              numberOfWords,
+              numberOfLetters,
+              false
+            )
+          )
+        }
+        const newGamesLost = [...gamesLost]
+        newGamesLost[numberOfWords - 1][numberOfLetters - 1] = true
+        setGamesLost(newGamesLost)
+        showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
+          // persist: true, // TODO rework to show the solutions permanently on each setting
+          delayMs: REVEAL_TIME_MS * numberOfLetters + 1,
+        })
+      }
     }
   }
 
@@ -413,7 +370,6 @@ function App() {
                 currentGuess={currentGuess}
                 isRevealing={isRevealing}
                 currentRowClassName={currentRowClass}
-                onWin={() => handleGridWin(i)}
                 maxChallenges={maxChallenges}
               />
             ))}

@@ -12,7 +12,7 @@ export const addStatsForCompletedGame = (
   count: number,
   numberOfWords: number,
   numberOfLetters: number,
-  maxChallenges: number
+  won: boolean
 ) => {
   // Count is number of incorrect guesses before end.
   const stats = { ...gameStats }
@@ -20,8 +20,8 @@ export const addStatsForCompletedGame = (
     stats.latestDate[numberOfWords - 1][numberOfLetters - 1] = getToday()
     stats.totalGames[numberOfWords - 1][numberOfLetters - 1] += 1
 
-    if (count >= maxChallenges) {
-      // Fail situation
+    if (!won) {
+      // Lose situation
       stats.currentStreak[numberOfWords - 1][numberOfLetters - 1] = 0
       stats.gamesFailed[numberOfWords - 1][numberOfLetters - 1] += 1
     } else {

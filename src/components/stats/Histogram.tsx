@@ -17,7 +17,7 @@ const isCurrentDayStatRow = (
   numberOfGuessesMade: number,
   i: number
 ) => {
-  return isLatestGame && isGameWon && numberOfGuessesMade === i + 1
+  return isLatestGame && isGameWon && numberOfGuessesMade === i
 }
 
 export const Histogram = ({
@@ -49,7 +49,7 @@ export const Histogram = ({
             isLatestGame,
             isGameWon,
             numberOfGuessesMade,
-            i
+            value
           )}
           size={90 * (winDistribution[value - 1] / maxValue)}
           label={String(winDistribution[value - 1])}
