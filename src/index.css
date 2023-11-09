@@ -18,6 +18,11 @@ html {
   --theme-bg: theme('colors.white');
   --theme-modal-bg: theme('colors.white');
 
+  /* Also in .accent-button:focus */
+  --theme-accent-bg: theme('colors.indigo.600');
+  --theme-accent-hover: theme('colors.indigo.700');
+  --theme-accent-focus: theme('colors.indigo.500');
+
   --animation-speed: 1000ms;
   --animation-speed-fast: 250ms;
 
@@ -55,6 +60,27 @@ html {
 
   --correct-cell-active-bg-color: theme('colors.orange.700');
   --present-cell-active-bg-color: theme('colors.cyan.700');
+}
+
+.accent-button {
+  background-color: var(--theme-accent-bg);
+  @apply mt-2 inline-flex w-full items-center justify-center rounded-md border border-transparent px-4 py-2 text-center text-base font-medium text-white shadow-sm;
+}
+
+.accent-button:hover {
+  background-color: var(--theme-accent-hover);
+}
+
+.accent-button:focus {
+  @apply focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2;
+}
+
+.migrate-button {
+  @apply w-min text-left;
+}
+
+.migrate-button:disabled {
+  @apply disabled:border-gray-200 disabled:bg-white disabled:text-gray-900 disabled:focus:outline-none disabled:dark:border-gray-600 disabled:dark:bg-gray-800 disabled:dark:text-gray-400;
 }
 
 .cell-bg {
@@ -343,21 +369,26 @@ svg.cursor-pointer:hover {
 }
 
 .react-datepicker__day--selecting-range-start {
-  @apply border-2 border-indigo-600 bg-white;
+  border-color: var(--theme-accent-bg);
+  @apply border-2 bg-white;
 }
 
 .react-datepicker__day--selecting-range-end {
-  @apply border-2 border-indigo-600 bg-white;
+  border-color: var(--theme-accent-bg);
+  @apply border-2 bg-white;
 }
 
 .react-datepicker__day--selected {
-  @apply bg-indigo-600 text-white dark:text-white;
+  background-color: var(--theme-accent-bg);
+  @apply text-white dark:text-white;
 }
 
 .react-datepicker__day--range-start {
-  @apply bg-indigo-600 text-white hover:bg-white hover:text-gray-700;
+  background-color: var(--theme-accent-bg);
+  @apply text-white hover:bg-white hover:text-gray-700;
 }
 
 .react-datepicker__day--range-end {
-  @apply bg-indigo-600 text-white hover:bg-white hover:text-gray-700;
+  background-color: var(--theme-accent-bg);
+  @apply text-white hover:bg-white hover:text-gray-700;
 }
