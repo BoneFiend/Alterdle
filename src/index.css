@@ -16,12 +16,11 @@ html {
 
 :root {
   --theme-bg: theme('colors.white');
-  --theme-modal-bg: theme('colors.white');
+  --theme-modal-bg: theme('colors.white'); /* Also in .accent-button:focus */
 
   /* Also in .accent-button:focus */
   --theme-accent-bg: theme('colors.indigo.600');
   --theme-accent-hover: theme('colors.indigo.700');
-  --theme-accent-focus: theme('colors.indigo.500');
 
   --animation-speed: 1000ms;
   --animation-speed-fast: 250ms;
@@ -80,7 +79,7 @@ html {
 }
 
 .accent-button:focus {
-  @apply focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2;
+  @apply ring-offset-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:ring-offset-slate-800;
 }
 
 .migrate-button {
