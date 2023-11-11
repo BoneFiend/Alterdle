@@ -120,11 +120,11 @@ export const DatePickerModal = ({
           )}
         />
       </div>
-      <div className="mt-5 flex columns-2 items-center items-stretch justify-center gap-2 text-center dark:text-white sm:mt-6">
+      <div className="mt-5 flex columns-2 items-stretch justify-center gap-2 text-center dark:text-white sm:mt-6">
         <button
           type="button"
           disabled={!isValidGameDate(getToday())}
-          className="accent-button disabled:border-gray-200 disabled:bg-gray-500 disabled:bg-white disabled:text-gray-900
+          className="accent-button disabled:border-gray-200 disabled:bg-white disabled:text-gray-900
           disabled:focus:outline-none disabled:dark:border-gray-600 disabled:dark:bg-gray-800 disabled:dark:text-gray-400"
           onClick={() => handleSelectDate(getToday())}
         >
