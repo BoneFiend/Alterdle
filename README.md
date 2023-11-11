@@ -1,45 +1,11 @@
 # Alterdle
 
-Alterdle is a customisable word guessing game, allowing you to choose how many challenges you want to guess at once!
+Alterdle is a fully customisable word guessing game.
 
-This project forks [cwackerfuss/react-wordle](https://github.com/cwackerfuss/react-wordle), a clone of the popular word guessing game we all know and love. Made using React, Typescript, and Tailwind.
+For the first time ever it allows users to choose how many words to guess at once (between 1 and 16) as well as how long each word is (between 1 and 11 letters), resulting in 176 unique daily puzzles!!
 
-[**Try out the demo!**](https://bonefiend.github.io/alterdle/)
+This game chooses words at random, so will occasionally choose rude or inappropriate ones. If you find a particularly offensive word please consider contributing to the project.
 
-## Build and run
+This game was built on top of the open source project [cwackerfuss/react-wordle](https://github.com/cwackerfuss/react-wordle). Made using React, Typescript, and Tailwind.
 
-### To Run Locally:
-
-Clone the repository and perform the following command line actions:
-
-```bash
-$> cd alterdle
-$> npm install
-$> npm run start
-```
-
-### To build/run docker container:
-
-#### Development
-
-```bash
-$> docker compose up
-```
-
-or
-
-```bash
-$> docker build -t alterdle:dev -f docker/Dockerfile .
-$> docker run -d -p 3000:3000 --name atlerdle-dev atlerdle:dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in browser. Please follow [this tutorial](https://shipyard.build/blog/react-wordle-with-docker-compose/) for a complete discussion on building a Docker image for Alterdle.
-
-#### Production
-
-```bash
-$> docker build --target=prod -t atlerdle:prod -f docker/Dockerfile .
-$> docker run -d -p 80:8080  --name atlerdle-prod atlerdle:prod
-```
-
-Open [http://localhost](http://localhost) in browser. See the [entry in the FAQ](#why-does-sharing-of-results-not-work) below about requirements for sharing of results.
+[**Try out Alterdle!**](https://bonefiend.github.io/alterdle/)

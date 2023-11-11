@@ -3,6 +3,7 @@ import {
   ChartBarIcon,
   CogIcon,
   InformationCircleIcon,
+  QuestionMarkCircleIcon,
 } from '@heroicons/react/outline'
 
 import { ENABLE_ARCHIVED_GAMES } from '../../constants/settings'
@@ -10,6 +11,7 @@ import { GAME_TITLE } from '../../constants/strings'
 
 type Props = {
   setIsInfoModalOpen: (value: boolean) => void
+  setIsHelpModalOpen: (value: boolean) => void
   setIsStatsModalOpen: (value: boolean) => void
   setIsDatePickerModalOpen: (value: boolean) => void
   setIsSettingsModalOpen: (value: boolean) => void
@@ -17,6 +19,7 @@ type Props = {
 
 export const Navbar = ({
   setIsInfoModalOpen,
+  setIsHelpModalOpen,
   setIsStatsModalOpen,
   setIsDatePickerModalOpen,
   setIsSettingsModalOpen,
@@ -29,15 +32,19 @@ export const Navbar = ({
             className="h-6 w-6 cursor-pointer dark:stroke-white"
             onClick={() => setIsInfoModalOpen(true)}
           />
-          {ENABLE_ARCHIVED_GAMES && (
-            <CalendarIcon
-              className="ml-3 h-6 w-6 cursor-pointer dark:stroke-white"
-              onClick={() => setIsDatePickerModalOpen(true)}
-            />
-          )}
+          <QuestionMarkCircleIcon
+            className="ml-3 h-6 w-6 cursor-pointer dark:stroke-white"
+            onClick={() => setIsHelpModalOpen(true)}
+          />
         </div>
         <p className="text-xl font-bold dark:text-white">{GAME_TITLE}</p>
         <div className="right-icons">
+          {ENABLE_ARCHIVED_GAMES && (
+            <CalendarIcon
+              className="mr-3 h-6 w-6 cursor-pointer dark:stroke-white"
+              onClick={() => setIsDatePickerModalOpen(true)}
+            />
+          )}
           <ChartBarIcon
             className="mr-3 h-6 w-6 cursor-pointer dark:stroke-white"
             onClick={() => setIsStatsModalOpen(true)}

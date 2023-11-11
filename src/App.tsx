@@ -10,6 +10,7 @@ import { AlertContainer } from './components/alerts/AlertContainer'
 import { Grid } from './components/grid/Grid'
 import { Keyboard } from './components/keyboard/Keyboard'
 import { DatePickerModal } from './components/modals/DatePickerModal'
+import { HelpModal } from './components/modals/HelpModal'
 import { InfoModal } from './components/modals/InfoModal'
 import { MigrateStatsModal } from './components/modals/MigrateStatsModal'
 import { SettingsModal } from './components/modals/SettingsModal'
@@ -20,7 +21,7 @@ import {
   DISCOURAGE_INAPP_BROWSERS,
   LONG_ALERT_TIME_MS,
   REVEAL_TIME_MS,
-  WELCOME_INFO_MODAL_MS,
+  WELCOME_HELP_MODAL_MS,
 } from './constants/settings'
 import {
   CORRECT_WORD_MESSAGE,
@@ -61,8 +62,9 @@ function App() {
 
   const { showError: showErrorAlert, showSuccess: showSuccessAlert } =
     useAlert()
-  const [currentGuess, setCurrentGuess] = useState('')
+  const [currentGuess, setCurrentGuess] = useState('') // TODO make per setting too
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
+  const [isHelpModalOpen, setIsHelpModalOpen] = useState(false)
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false)
   const [isDatePickerModalOpen, setIsDatePickerModalOpen] = useState(false)
   const [isMigrateStatsModalOpen, setIsMigrateStatsModalOpen] = useState(false)
@@ -138,8 +140,8 @@ function App() {
     // show the user the how-to info modal
     if (!loadGameStateFromLocalStorage(true)) {
       setTimeout(() => {
-        setIsInfoModalOpen(true)
-      }, WELCOME_INFO_MODAL_MS)
+        setIsHelpModalOpen(true)
+      }, WELCOME_HELP_MODAL_MS)
     }
   })
 
@@ -299,7 +301,6 @@ function App() {
       ) {
         // Win situation
         if (isLatestGame) {
-          console.log('won in app')
           setStats((prevStats) =>
             addStatsForCompletedGame(
               prevStats,
@@ -319,7 +320,6 @@ function App() {
       ) {
         // Lose situation
         if (isLatestGame) {
-          console.log('failed in app')
           setStats((prevStats) =>
             addStatsForCompletedGame(
               prevStats,
@@ -346,6 +346,7 @@ function App() {
       <div className="flex h-full flex-col">
         <Navbar
           setIsInfoModalOpen={setIsInfoModalOpen}
+          setIsHelpModalOpen={setIsHelpModalOpen}
           setIsStatsModalOpen={setIsStatsModalOpen}
           setIsDatePickerModalOpen={setIsDatePickerModalOpen}
           setIsSettingsModalOpen={setIsSettingsModalOpen}
@@ -382,6 +383,14 @@ function App() {
             guesses={guesses[numberOfWords - 1][numberOfLetters - 1]}
             isRevealing={isRevealing}
             numberOfLetters={numberOfLetters}
+          />
+          <HelpModal
+            isOpen={isHelpModalOpen}
+            handleClose={() => setIsHelpModalOpen(false)}
+            numberOfWords={numberOfWords}
+            handleNumberOfWords={setNumberOfWords}
+            numberOfLetters={numberOfLetters}
+            handleNumberOfLetters={setNumberOfLetters}
           />
           <InfoModal
             isOpen={isInfoModalOpen}
