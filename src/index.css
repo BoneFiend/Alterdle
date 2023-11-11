@@ -34,11 +34,15 @@ html {
   --correct-cell-bg-color: theme('colors.green.500');
   --present-cell-bg-color: theme('colors.yellow.500');
 
-  --correct-cell-hover-bg-color: theme('colors.green.600');
-  --present-cell-hover-bg-color: theme('colors.yellow.600');
+  --correct-key-hover-bg-color: theme('colors.green.600');
+  --present-key-hover-bg-color: theme('colors.yellow.600');
 
-  --correct-cell-active-bg-color: theme('colors.green.700');
-  --present-cell-active-bg-color: theme('colors.yellow.700');
+  --correct-key-active-bg-color: theme('colors.green.700');
+  --present-key-active-bg-color: theme('colors.yellow.700');
+
+  --default-key-bg-color: theme('colors.slate.200');
+  --default-key-hover-color: theme('colors.slate.300');
+  --default-key-active-color: theme('colors.slate.400');
 }
 
 .dark {
@@ -49,17 +53,21 @@ html {
   --default-cell-border-color: theme('colors.white');
   --default-cell-text-color: theme('colors.white');
   --absent-cell-bg-color: theme('colors.slate.800');
+
+  --default-key-bg-color: theme('colors.slate.600');
+  --default-key-hover-color: theme('colors.slate.600');
+  --default-key-active-color: theme('colors.slate.600');
 }
 
 .high-contrast {
   --correct-cell-bg-color: theme('colors.orange.500');
   --present-cell-bg-color: theme('colors.cyan.500');
 
-  --correct-cell-hover-bg-color: theme('colors.orange.600');
-  --present-cell-hover-bg-color: theme('colors.cyan.600');
+  --correct-key-hover-bg-color: theme('colors.orange.600');
+  --present-key-hover-bg-color: theme('colors.cyan.600');
 
-  --correct-cell-active-bg-color: theme('colors.orange.700');
-  --present-cell-active-bg-color: theme('colors.cyan.700');
+  --correct-key-active-bg-color: theme('colors.orange.700');
+  --present-key-active-bg-color: theme('colors.cyan.700');
 }
 
 .accent-button {
@@ -105,20 +113,32 @@ html {
   color: white;
 }
 
-.correct:hover {
-  background-color: var(--correct-cell-hover-bg-color);
+.correct-key:hover {
+  background-color: var(--correct-key-hover-bg-color);
 }
 
-.present:hover {
-  background-color: var(--present-cell-hover-bg-color);
+.present-key:hover {
+  background-color: var(--present-key-hover-bg-color);
 }
 
-.correct:active {
-  background-color: var(--correct-cell-active-bg-color);
+.correct-key:active {
+  background-color: var(--correct-key-active-bg-color);
 }
 
-.present:active {
-  background-color: var(--present-cell-active-bg-color);
+.present-key:active {
+  background-color: var(--present-key-active-bg-color);
+}
+
+.default-key {
+  background-color: var(--default-key-bg-color);
+}
+
+.default-key:hover {
+  background-color: var(--default-key-hover-color);
+}
+
+.default-key:active {
+  background-color: var(--default-key-active-color);
 }
 
 .cell-fill-animation {

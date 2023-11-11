@@ -28,11 +28,10 @@ export const Key = ({
     'xxshort:h-8 xxshort:w-8 xxshort:text-xxs xshort:w-10 xshort:h-10 flex short:h-12 h-14 items-center justify-center rounded mx-0.5 text-xs font-bold cursor-pointer select-none dark:text-white',
     {
       'transition ease-in-out': isRevealing,
-      'bg-slate-200 dark:bg-slate-600 hover:bg-slate-300 active:bg-slate-400':
-        !status,
+      'default-key': !status,
       absent: status === 'absent',
-      correct: status === 'correct',
-      present: status === 'present',
+      'correct correct-key': status === 'correct',
+      'present present-key': status === 'present',
     }
   )
 
