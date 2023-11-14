@@ -3,7 +3,7 @@ import './App.css'
 import { ClockIcon } from '@heroicons/react/outline'
 import { format } from 'date-fns'
 import { default as GraphemeSplitter } from 'grapheme-splitter'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Div100vh from 'react-div-100vh'
 
 import { AlertContainer } from './components/alerts/AlertContainer'
@@ -43,14 +43,15 @@ import {
 } from './lib/localStorage'
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import {
-  create2dArray,
+  Obj2d,
   findFirstUnusedReveal,
   getGameDate,
   getIsLatestGame,
-  getSolutions,
+  getSolution,
   isWordInWordList,
   setGameDate,
   unicodeLength,
+  updateObj2d,
 } from './lib/words'
 
 function App() {
@@ -62,7 +63,6 @@ function App() {
 
   const { showError: showErrorAlert, showSuccess: showSuccessAlert } =
     useAlert()
-  const [currentGuess, setCurrentGuess] = useState('') // TODO make per setting too
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false)
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false)
@@ -84,16 +84,20 @@ function App() {
 
   const [numberOfWords, setNumberOfWords] = useState(1)
   const [numberOfLetters, setNumberOfLetters] = useState(5)
-  const [gamesWon, setGamesWon] = useState<any[][]>(create2dArray(false))
-  const [gamesLost, setGamesLost] = useState<any[][]>(create2dArray(false))
-  const isGameWon = gamesWon[numberOfWords - 1][numberOfLetters - 1]
-  const isGameLost = gamesLost[numberOfWords - 1][numberOfLetters - 1]
+  const [gamesWon, setGamesWon] = useState<Obj2d>({})
+  const isGameWon = gamesWon[numberOfWords]?.[numberOfLetters] ?? false
+  const isGameLost = gamesWon[numberOfWords]?.[numberOfLetters] ?? false
 
   const maxChallenges = numberOfWords + 5
 
-  const [solutions] = useState<any[][]>(() => getSolutions(getGameDate()))
-  const solution = solutions[numberOfWords - 1][numberOfLetters - 1]
-  const [guesses, setGuesses] = useState<any[][]>(create2dArray([]))
+  const solution = useMemo(
+    () =>
+      getSolution(getGameDate(), numberOfWords, numberOfLetters).newSolution,
+    [numberOfWords, numberOfLetters]
+  )
+  const [guesses, setGuesses] = useState<Obj2d>({})
+  const [currentGuesses, setCurrentGuesses] = useState<Obj2d>({})
+  const currentGuess = currentGuesses[numberOfWords]?.[numberOfLetters] ?? ''
 
   //   const loaded = loadGameStateFromLocalStorage(isLatestGame)
   //   // console.log('loaded: ')
@@ -109,13 +113,13 @@ function App() {
   //       )
   //   }
   //   const gameWasWon = solution.every((word) =>
-  //     loaded.guesses[numberOfWords - 1][numberOfLetters - 1].includes(word)
+  //     loaded.guesses[numberOfWords]?.[numberOfLetters].includes(word)
   //   )
   //   if (gameWasWon) {
   //     // setIsGameWon(true)
   //   }
   //   if (
-  //     loaded.guesses[numberOfWords - 1][numberOfLetters - 1].length ===
+  //     loaded.guesses[numberOfWords]?.[numberOfLetters].length ===
   //       maxChallenges &&
   //     !gameWasWon
   //   ) {
@@ -175,7 +179,7 @@ function App() {
 
   const handleHardMode = (isHard: boolean) => {
     if (
-      guesses[numberOfWords - 1][numberOfLetters - 1].length === 0 ||
+      (guesses[numberOfWords]?.[numberOfLetters] ?? []).length === 0 ||
       localStorage.getItem('gameMode') === 'hard'
     ) {
       setIsHardMode(isHard)
@@ -227,16 +231,32 @@ function App() {
   const onChar = (value: string) => {
     if (
       unicodeLength(`${currentGuess}${value}`) <= numberOfLetters &&
-      guesses[numberOfWords - 1][numberOfLetters - 1].length < maxChallenges &&
+      (guesses[numberOfWords]?.[numberOfLetters] ?? []).length <
+        maxChallenges &&
       !isGameWon
     ) {
-      setCurrentGuess(`${currentGuess}${value}`)
+      setCurrentGuesses(
+        updateObj2d(
+          currentGuesses,
+          numberOfWords,
+          numberOfLetters,
+          `${currentGuess}${value}`
+        )
+      )
     }
   }
 
   const onDelete = () => {
-    setCurrentGuess(
-      new GraphemeSplitter().splitGraphemes(currentGuess).slice(0, -1).join('')
+    setCurrentGuesses(
+      updateObj2d(
+        currentGuesses,
+        numberOfWords,
+        numberOfLetters,
+        new GraphemeSplitter()
+          .splitGraphemes(currentGuess)
+          .slice(0, -1)
+          .join('')
+      )
     )
   }
 
@@ -263,7 +283,7 @@ function App() {
     if (isHardMode && numberOfWords === 1) {
       const firstMissingReveal = findFirstUnusedReveal(
         currentGuess,
-        guesses[numberOfWords - 1][numberOfLetters - 1],
+        guesses[numberOfWords]?.[numberOfLetters] ?? [],
         solution[0]
       )
       if (firstMissingReveal) {
@@ -283,56 +303,49 @@ function App() {
 
     if (
       unicodeLength(currentGuess) === numberOfLetters &&
-      guesses[numberOfWords - 1][numberOfLetters - 1].length < maxChallenges
+      (guesses[numberOfWords]?.[numberOfLetters] ?? []).length < maxChallenges
     ) {
-      const newGuesses = guesses.map((row) => row.map((cell) => [...cell]))
-      newGuesses[numberOfWords - 1][numberOfLetters - 1] = [
-        ...newGuesses[numberOfWords - 1][numberOfLetters - 1],
+      const newGuesses = updateObj2d(guesses, numberOfWords, numberOfLetters, [
+        ...(guesses[numberOfWords]?.[numberOfLetters] ?? []),
         currentGuess,
-      ]
+      ])
       setGuesses(newGuesses)
-      setCurrentGuess('')
+      setCurrentGuesses(
+        updateObj2d(currentGuesses, numberOfWords, numberOfLetters, '')
+      )
 
       if (
-        checkIsGameWon(
-          newGuesses[numberOfWords - 1][numberOfLetters - 1],
-          solution
-        )
+        checkIsGameWon(newGuesses[numberOfWords]?.[numberOfLetters], solution)
       ) {
         // Win situation
         if (isLatestGame) {
           setStats((prevStats) =>
             addStatsForCompletedGame(
               prevStats,
-              newGuesses[numberOfWords - 1][numberOfLetters - 1].length,
+              newGuesses[numberOfWords]?.[numberOfLetters].length,
               numberOfWords,
               numberOfLetters,
               true
             )
           )
         }
-        const newGamesWon = [...gamesWon]
-        newGamesWon[numberOfWords - 1][numberOfLetters - 1] = true
-        setGamesWon(newGamesWon)
+        setGamesWon(updateObj2d(gamesWon, numberOfWords, numberOfLetters, true))
       } else if (
-        newGuesses[numberOfWords - 1][numberOfLetters - 1].length ===
-        maxChallenges
+        newGuesses[numberOfWords]?.[numberOfLetters].length === maxChallenges
       ) {
         // Lose situation
         if (isLatestGame) {
           setStats((prevStats) =>
             addStatsForCompletedGame(
               prevStats,
-              newGuesses[numberOfWords - 1][numberOfLetters - 1].length + 1,
+              newGuesses[numberOfWords]?.[numberOfLetters].length + 1,
               numberOfWords,
               numberOfLetters,
               false
             )
           )
         }
-        const newGamesLost = [...gamesLost]
-        newGamesLost[numberOfWords - 1][numberOfLetters - 1] = true
-        setGamesLost(newGamesLost)
+        setGamesWon(updateObj2d(gamesWon, numberOfWords, numberOfLetters, true))
         showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
           // persist: true, // TODO rework to show the solutions permanently on each setting
           delayMs: REVEAL_TIME_MS * numberOfLetters + 1,
@@ -367,7 +380,7 @@ function App() {
               <Grid
                 key={i}
                 solution={solution[i]}
-                guesses={guesses[numberOfWords - 1][numberOfLetters - 1]}
+                guesses={guesses[numberOfWords]?.[numberOfLetters] ?? []}
                 currentGuess={currentGuess}
                 isRevealing={isRevealing}
                 currentRowClassName={currentRowClass}
@@ -382,7 +395,7 @@ function App() {
               onDelete={onDelete}
               onEnter={onEnter}
               solution={solution[0]}
-              guesses={guesses[numberOfWords - 1][numberOfLetters - 1]}
+              guesses={guesses[numberOfWords]?.[numberOfLetters] ?? []}
               isRevealing={isRevealing}
               numberOfLetters={numberOfLetters}
             />
@@ -403,7 +416,7 @@ function App() {
             isOpen={isStatsModalOpen}
             handleClose={() => setIsStatsModalOpen(false)}
             solution={solution[0]} // TODO remake sharing
-            guesses={guesses[numberOfWords - 1][numberOfLetters - 1]}
+            guesses={guesses[numberOfWords]?.[numberOfLetters] ?? []}
             gameStats={stats}
             isLatestGame={isLatestGame}
             isGameLost={isGameLost}
@@ -422,7 +435,7 @@ function App() {
             isDarkMode={isDarkMode}
             isHighContrastMode={isHighContrastMode}
             numberOfGuessesMade={
-              guesses[numberOfWords - 1][numberOfLetters - 1].length
+              (guesses[numberOfWords]?.[numberOfLetters] ?? []).length
             }
             numberOfWords={numberOfWords}
             handleNumberOfWords={setNumberOfWords}

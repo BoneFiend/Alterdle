@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
-import { GameStats, StoredGameState } from '../../lib/localStorage'
+import { StoredGameState } from '../../lib/localStorage'
+import { Obj2d } from '../../lib/words'
 import { EmigratePanel } from '../stats/EmigratePanel'
 import { ImmigratePanel } from '../stats/ImmigratePanel'
 import { BaseModal } from './BaseModal'
@@ -11,7 +12,7 @@ type Props = {
 }
 
 export type MigrationStats = {
-  statistics: GameStats
+  statistics: Obj2d
   gameState: StoredGameState | null
 }
 

@@ -4,10 +4,11 @@ import {
   SUCCESS_RATE_TEXT,
   TOTAL_TRIES_TEXT,
 } from '../../constants/strings'
-import { GameStats } from '../../lib/localStorage'
+import { defaultStats } from '../../lib/stats'
+import { Obj2d } from '../../lib/words'
 
 type Props = {
-  gameStats: GameStats
+  gameStats: Obj2d
   numberOfWords: number
   numberOfLetters: number
 }
@@ -36,21 +37,31 @@ export const StatBar = ({
     <div className="my-2 flex justify-center">
       <StatItem
         label={TOTAL_TRIES_TEXT}
-        value={gameStats.totalGames[numberOfWords - 1][numberOfLetters - 1]}
+        value={
+          gameStats[numberOfWords]?.[numberOfLetters]?.totalGames ??
+          defaultStats.totalGames
+        }
       />
       <StatItem
         label={SUCCESS_RATE_TEXT}
         value={`${
-          gameStats.successRate[numberOfWords - 1][numberOfLetters - 1]
+          gameStats[numberOfWords]?.[numberOfLetters]?.successRate ??
+          defaultStats.successRate
         }%`}
       />
       <StatItem
         label={CURRENT_STREAK_TEXT}
-        value={gameStats.currentStreak[numberOfWords - 1][numberOfLetters - 1]}
+        value={
+          gameStats[numberOfWords]?.[numberOfLetters]?.currentStreak ??
+          defaultStats.currentStreak
+        }
       />
       <StatItem
         label={BEST_STREAK_TEXT}
-        value={gameStats.bestStreak[numberOfWords - 1][numberOfLetters - 1]}
+        value={
+          gameStats[numberOfWords]?.[numberOfLetters]?.bestStreak ??
+          defaultStats.bestStreak
+        }
       />
     </div>
   )

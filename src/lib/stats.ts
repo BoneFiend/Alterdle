@@ -1,14 +1,33 @@
 import { GAME_EPOCH, MAX_NUMBER_OF_WORDS } from '../constants/settings'
 import { getToday } from './dateutils'
 import {
-  GameStats,
   loadStatsFromLocalStorage,
   saveStatsToLocalStorage,
 } from './localStorage'
-import { create2dArray } from './words'
+import { Obj2d } from './words'
+
+type GameStats = {
+  winDistribution: number[]
+  gamesFailed: number
+  currentStreak: number
+  bestStreak: number
+  totalGames: number
+  successRate: number
+  latestDate: Date
+}
+
+export const defaultStats: GameStats = {
+  winDistribution: Array.from(new Array(MAX_NUMBER_OF_WORDS + 5), () => 0),
+  gamesFailed: 0,
+  currentStreak: 0,
+  bestStreak: 0,
+  totalGames: 0,
+  successRate: 0,
+  latestDate: GAME_EPOCH,
+}
 
 export const addStatsForCompletedGame = (
-  gameStats: GameStats,
+  gameStats: Obj2d,
   count: number,
   numberOfWords: number,
   numberOfLetters: number,
@@ -16,34 +35,39 @@ export const addStatsForCompletedGame = (
 ) => {
   // Count is number of incorrect guesses before end.
   const stats = { ...gameStats }
-  if (stats.latestDate[numberOfWords - 1][numberOfLetters - 1] < getToday()) {
-    stats.latestDate[numberOfWords - 1][numberOfLetters - 1] = getToday()
-    stats.totalGames[numberOfWords - 1][numberOfLetters - 1] += 1
+  if (!stats[numberOfWords]) {
+    stats[numberOfWords] = {}
+  }
+  if (!stats[numberOfWords][numberOfLetters]) {
+    stats[numberOfWords][numberOfLetters] = { ...defaultStats }
+  }
+  if (stats[numberOfWords][numberOfLetters].latestDate < getToday()) {
+    stats[numberOfWords][numberOfLetters].latestDate = getToday()
+    stats[numberOfWords][numberOfLetters].totalGames += 1
 
     if (!won) {
       // Lose situation
-      stats.currentStreak[numberOfWords - 1][numberOfLetters - 1] = 0
-      stats.gamesFailed[numberOfWords - 1][numberOfLetters - 1] += 1
+      stats[numberOfWords][numberOfLetters].currentStreak = 0
+      stats[numberOfWords][numberOfLetters].gamesFailed += 1
     } else {
       // Win situation
       const winDistribution = [
-        ...stats.winDistribution[numberOfWords - 1][numberOfLetters - 1],
+        ...stats[numberOfWords][numberOfLetters].winDistribution,
       ]
       winDistribution[count - 1] += 1
-      stats.winDistribution[numberOfWords - 1][numberOfLetters - 1] =
-        winDistribution
-      stats.currentStreak[numberOfWords - 1][numberOfLetters - 1] += 1
+      stats[numberOfWords][numberOfLetters].winDistribution = winDistribution
+      stats[numberOfWords][numberOfLetters].currentStreak += 1
 
       if (
-        stats.bestStreak[numberOfWords - 1][numberOfLetters - 1] <
-        stats.currentStreak[numberOfWords - 1][numberOfLetters - 1]
+        stats[numberOfWords][numberOfLetters].bestStreak <
+        stats[numberOfWords][numberOfLetters].currentStreak
       ) {
-        stats.bestStreak[numberOfWords - 1][numberOfLetters - 1] =
-          stats.currentStreak[numberOfWords - 1][numberOfLetters - 1]
+        stats[numberOfWords][numberOfLetters].bestStreak =
+          stats[numberOfWords][numberOfLetters].currentStreak
       }
     }
 
-    stats.successRate[numberOfWords - 1][numberOfLetters - 1] = getSuccessRate(
+    stats[numberOfWords][numberOfLetters].successRate = getSuccessRate(
       stats,
       numberOfWords,
       numberOfLetters
@@ -53,33 +77,18 @@ export const addStatsForCompletedGame = (
   return stats
 }
 
-const defaultStats: GameStats = {
-  winDistribution: create2dArray(
-    Array.from(new Array(MAX_NUMBER_OF_WORDS + 5), () => 0)
-  ),
-  gamesFailed: create2dArray(0),
-  currentStreak: create2dArray(0),
-  bestStreak: create2dArray(0),
-  totalGames: create2dArray(0),
-  successRate: create2dArray(0),
-  latestDate: create2dArray(GAME_EPOCH),
-}
-
 export const loadStats = () => {
-  return loadStatsFromLocalStorage() || defaultStats
+  return loadStatsFromLocalStorage() || ({} as Obj2d)
 }
 
 const getSuccessRate = (
-  gameStats: GameStats,
+  gameStats: Obj2d,
   numberOfWords: number,
   numberOfLetters: number
 ) => {
-  const { totalGames, gamesFailed } = gameStats
+  const { totalGames, gamesFailed } = gameStats[numberOfWords][numberOfLetters]
 
   return Math.round(
-    (100 *
-      (totalGames[numberOfWords - 1][numberOfLetters - 1] -
-        gamesFailed[numberOfWords - 1][numberOfLetters - 1])) /
-      Math.max(totalGames[numberOfWords - 1][numberOfLetters - 1], 1)
+    (100 * (totalGames - gamesFailed)) / Math.max(totalGames, 1)
   )
 }

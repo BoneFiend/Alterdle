@@ -21,9 +21,8 @@ import {
   STATISTICS_TITLE,
 } from '../../constants/strings'
 import { getToday } from '../../lib/dateutils'
-import { GameStats } from '../../lib/localStorage'
 import { shareStatus } from '../../lib/share'
-import { getNextGameDate, solutionGameDate } from '../../lib/words'
+import { Obj2d, getNextGameDate, solutionGameDate } from '../../lib/words'
 import { Histogram } from '../stats/Histogram'
 import { MigrationIntro } from '../stats/MigrationIntro'
 import { StatBar } from '../stats/StatBar'
@@ -35,7 +34,7 @@ type Props = {
   handleClose: () => void
   solution: string
   guesses: string[]
-  gameStats: GameStats
+  gameStats: Obj2d
   isLatestGame: boolean
   isGameLost: boolean
   isGameWon: boolean

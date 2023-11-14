@@ -1,8 +1,9 @@
-import { GameStats } from '../../lib/localStorage'
+import { defaultStats } from '../../lib/stats'
+import { Obj2d } from '../../lib/words'
 import { Progress } from './Progress'
 
 type Props = {
-  gameStats: GameStats
+  gameStats: Obj2d
   isLatestGame: boolean
   isGameWon: boolean
   numberOfGuessesMade: number
@@ -30,7 +31,8 @@ export const Histogram = ({
   maxChallenges,
 }: Props) => {
   const winDistribution =
-    gameStats.winDistribution[numberOfWords - 1][numberOfLetters - 1]
+    gameStats[numberOfWords]?.[numberOfLetters]?.winDistribution ??
+    defaultStats.winDistribution
   const maxValue = Math.max(...winDistribution, 1)
   const histogramBuckets = Array.from(
     {

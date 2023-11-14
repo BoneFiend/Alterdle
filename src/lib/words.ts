@@ -28,6 +28,27 @@ export const create2dArray = (filler: any) => {
     .map((row, index) => new Array(MAX_NUMBER_OF_LETTERS).fill(filler))
 }
 
+export type Obj2d = {
+  // 2d Object type to avoid type errors
+  [key: number]: {
+    [key: number]: any
+  }
+}
+
+export const updateObj2d = (
+  obj: Obj2d,
+  numberOfWords: number,
+  numberOfLetters: number,
+  newValue: any
+) => {
+  const newObj = { ...obj }
+  if (!newObj[numberOfWords]) {
+    newObj[numberOfWords] = {}
+  }
+  newObj[numberOfWords][numberOfLetters] = newValue
+  return newObj
+}
+
 export const isWordInWordList = (word: string) => {
   return WORDS.includes(localeAwareLowerCase(word))
 }
@@ -163,16 +184,6 @@ export const getSolution = (
   }
 }
 
-export const getSolutions = (gameDate: Date) => {
-  const newSolutions = [...create2dArray([])]
-  for (let i = 0; i < MAX_NUMBER_OF_WORDS; i++) {
-    for (let j = 0; j < MAX_NUMBER_OF_LETTERS; j++) {
-      newSolutions[i][j] = getSolution(gameDate, i + 1, j + 1).newSolution
-    }
-  }
-  // console.log('found new solutions')
-  return newSolutions
-}
 export const getGameDate = () => {
   if (getIsLatestGame()) {
     return getToday()
