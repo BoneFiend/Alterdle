@@ -81,6 +81,15 @@ svg.cursor-pointer:hover {
   display: flex;
 }
 
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 @keyframes revealAbsentCharCell {
   0% {
     transform: rotateX(0deg);

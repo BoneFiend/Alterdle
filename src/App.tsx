@@ -361,8 +361,8 @@ function App() {
           </div>
         )}
 
-        <div className="mx-auto flex w-full grow flex-col px-1 pt-2 pb-8 sm:px-6 md:max-w-7xl lg:px-8 short:pb-2 short:pt-2">
-          <div className="flex grow flex-col justify-center pb-6 short:pb-2">
+        <div className="mx-auto flex w-full grow flex-col pb-8 short:pb-2 short:pt-2">
+          <div className="no-scrollbar flex h-[1vh] grow flex-wrap items-center justify-center overflow-y-auto">
             {solution.map((sol: any, i: any) => (
               <Grid
                 key={i}
@@ -375,15 +375,18 @@ function App() {
               />
             ))}
           </div>
-          <Keyboard // TODO remake keyboard logic
-            onChar={onChar}
-            onDelete={onDelete}
-            onEnter={onEnter}
-            solution={solution[0]}
-            guesses={guesses[numberOfWords - 1][numberOfLetters - 1]}
-            isRevealing={isRevealing}
-            numberOfLetters={numberOfLetters}
-          />
+          <div className="px-1 pt-5">
+            <Keyboard
+              // TODO remake keyboard logic
+              onChar={onChar}
+              onDelete={onDelete}
+              onEnter={onEnter}
+              solution={solution[0]}
+              guesses={guesses[numberOfWords - 1][numberOfLetters - 1]}
+              isRevealing={isRevealing}
+              numberOfLetters={numberOfLetters}
+            />
+          </div>
           <HelpModal
             isOpen={isHelpModalOpen}
             handleClose={() => setIsHelpModalOpen(false)}
