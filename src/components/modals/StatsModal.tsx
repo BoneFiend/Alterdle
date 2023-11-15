@@ -32,7 +32,7 @@ import { SettingsSlider } from './SettingsSlider'
 type Props = {
   isOpen: boolean
   handleClose: () => void
-  solution: string
+  solution: string[]
   guesses: string[]
   gameStats: Obj2d
   isLatestGame: boolean
@@ -152,7 +152,10 @@ export const StatsModal = ({
                   isDarkMode,
                   isHighContrastMode,
                   handleShareToClipboard,
-                  handleShareFailure
+                  handleShareFailure,
+                  maxChallenges,
+                  numberOfWords,
+                  numberOfLetters
                 )
               }}
             >

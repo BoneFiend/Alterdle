@@ -1,4 +1,8 @@
-import { GAME_EPOCH, MAX_NUMBER_OF_WORDS } from '../constants/settings'
+import {
+  GAME_EPOCH,
+  MAX_CHALLENGES_BONUS,
+  MAX_NUMBER_OF_WORDS,
+} from '../constants/settings'
 import { getToday } from './dateutils'
 import {
   loadStatsFromLocalStorage,
@@ -17,7 +21,10 @@ type GameStats = {
 }
 
 export const defaultStats: GameStats = {
-  winDistribution: Array.from(new Array(MAX_NUMBER_OF_WORDS + 5), () => 0),
+  winDistribution: Array.from(
+    new Array(MAX_NUMBER_OF_WORDS + MAX_CHALLENGES_BONUS),
+    () => 0
+  ),
   gamesFailed: 0,
   currentStreak: 0,
   bestStreak: 0,

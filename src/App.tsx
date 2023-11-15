@@ -20,6 +20,7 @@ import {
   DATE_LOCALE,
   DISCOURAGE_INAPP_BROWSERS,
   LONG_ALERT_TIME_MS,
+  MAX_CHALLENGES_BONUS,
   REVEAL_TIME_MS,
   WELCOME_HELP_MODAL_MS,
 } from './constants/settings'
@@ -86,9 +87,10 @@ function App() {
   const [numberOfLetters, setNumberOfLetters] = useState(5)
   const [gamesWon, setGamesWon] = useState<Obj2d>({})
   const isGameWon = gamesWon[numberOfWords]?.[numberOfLetters] ?? false
-  const isGameLost = gamesWon[numberOfWords]?.[numberOfLetters] ?? false
+  const isGameLost =
+    gamesWon[numberOfWords]?.[numberOfLetters] === false ?? false
 
-  const maxChallenges = numberOfWords + 5
+  const maxChallenges = numberOfWords + MAX_CHALLENGES_BONUS
 
   const solution = useMemo(
     () =>
@@ -345,7 +347,9 @@ function App() {
             )
           )
         }
-        setGamesWon(updateObj2d(gamesWon, numberOfWords, numberOfLetters, true))
+        setGamesWon(
+          updateObj2d(gamesWon, numberOfWords, numberOfLetters, false)
+        )
         showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
           // persist: true, // TODO rework to show the solutions permanently on each setting
           delayMs: REVEAL_TIME_MS * numberOfLetters + 1,
@@ -415,7 +419,7 @@ function App() {
           <StatsModal
             isOpen={isStatsModalOpen}
             handleClose={() => setIsStatsModalOpen(false)}
-            solution={solution[0]} // TODO remake sharing
+            solution={solution}
             guesses={guesses[numberOfWords]?.[numberOfLetters] ?? []}
             gameStats={stats}
             isLatestGame={isLatestGame}

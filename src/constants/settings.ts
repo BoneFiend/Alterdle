@@ -1,6 +1,6 @@
 import { enUS } from 'date-fns/locale'
 
-export const MAX_CHALLENGES = 6 //TODO get rid of
+export const MAX_CHALLENGES_BONUS = 5 // How many more guesses allowed per number of challenges
 export const MIN_NUMBER_OF_WORDS = 1
 export const MAX_NUMBER_OF_WORDS = 16
 export const MIN_NUMBER_OF_LETTERS = 1
@@ -16,3 +16,5 @@ export const BLOWFISH_IV = '#45XmF^w'
 export const ENABLE_ARCHIVED_GAMES = true
 export const DATE_LOCALE = enUS
 export const GAME_EPOCH = new Date(2022, 0) // 1 January 2022
+export const BASE_URL = 'bonefiend.github.io/alterdle'
+export const MAX_SHARE_WIDTH = 15 // Number of characters wide
