@@ -7,7 +7,7 @@ const gameStatKey = 'alterdleGameStats'
 
 export type StoredGameState = {
   guesses: Obj2d
-  solution: string[]
+  gameDate: Date
 }
 
 export const saveGameStateToLocalStorage = (
@@ -20,8 +20,14 @@ export const saveGameStateToLocalStorage = (
 
 export const loadGameStateFromLocalStorage = (isLatestGame: boolean) => {
   const key = isLatestGame ? gameStateKey : archiveGameStateKey
-  const state = localStorage.getItem(key)
-  return state ? (JSON.parse(state) as StoredGameState) : null
+  const stateString = localStorage.getItem(key)
+  if (stateString) {
+    const state = JSON.parse(stateString)
+    state.gameDate = new Date(state.gameDate)
+    return state as StoredGameState
+  } else {
+    return null
+  }
 }
 
 export const saveStatsToLocalStorage = (gameStats: Obj2d) => {

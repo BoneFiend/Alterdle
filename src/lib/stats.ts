@@ -1,8 +1,4 @@
-import {
-  GAME_EPOCH,
-  MAX_CHALLENGES_BONUS,
-  MAX_NUMBER_OF_WORDS,
-} from '../constants/settings'
+import { GAME_EPOCH } from '../constants/settings'
 import { getToday } from './dateutils'
 import {
   loadStatsFromLocalStorage,
@@ -11,7 +7,7 @@ import {
 import { Obj2d } from './words'
 
 type GameStats = {
-  winDistribution: number[]
+  winDistribution: { [key: number]: number }
   gamesFailed: number
   currentStreak: number
   bestStreak: number
@@ -21,10 +17,7 @@ type GameStats = {
 }
 
 export const defaultStats: GameStats = {
-  winDistribution: Array.from(
-    new Array(MAX_NUMBER_OF_WORDS + MAX_CHALLENGES_BONUS),
-    () => 0
-  ),
+  winDistribution: {},
   gamesFailed: 0,
   currentStreak: 0,
   bestStreak: 0,
@@ -59,9 +52,11 @@ export const addStatsForCompletedGame = (
     } else {
       // Win situation
       const winDistribution = [
-        ...stats[numberOfWords][numberOfLetters].winDistribution,
+        ...Object.values(
+          stats[numberOfWords][numberOfLetters].winDistribution
+        ).map(Number),
       ]
-      winDistribution[count - 1] += 1
+      winDistribution[count] = (winDistribution[count] || 0) + 1
       stats[numberOfWords][numberOfLetters].winDistribution = winDistribution
       stats[numberOfWords][numberOfLetters].currentStreak += 1
 

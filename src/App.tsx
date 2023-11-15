@@ -97,41 +97,16 @@ function App() {
       getSolution(getGameDate(), numberOfWords, numberOfLetters).newSolution,
     [numberOfWords, numberOfLetters]
   )
-  const [guesses, setGuesses] = useState<Obj2d>({})
+  const [guesses, setGuesses] = useState<Obj2d>(() => {
+    const loaded = loadGameStateFromLocalStorage(isLatestGame)
+    if (loaded?.gameDate.getTime() !== getGameDate().getTime()) {
+      return {}
+    }
+    return loaded.guesses
+  })
+
   const [currentGuesses, setCurrentGuesses] = useState<Obj2d>({})
   const currentGuess = currentGuesses[numberOfWords]?.[numberOfLetters] ?? ''
-
-  //   const loaded = loadGameStateFromLocalStorage(isLatestGame)
-  //   // console.log('loaded: ')
-  //   // console.log(loaded)
-  //   if (!loaded?.solution || loaded?.solution !== solution) {
-  //     // TODO and below, this currently just ignores all loaded guesses
-  //     return Array(MAX_NUMBER_OF_WORDS)
-  //       .fill(0)
-  //       .map(() =>
-  //         Array(MAX_NUMBER_OF_LETTERS)
-  //           .fill(0)
-  //           .map(() => [])
-  //       )
-  //   }
-  //   const gameWasWon = solution.every((word) =>
-  //     loaded.guesses[numberOfWords]?.[numberOfLetters].includes(word)
-  //   )
-  //   if (gameWasWon) {
-  //     // setIsGameWon(true)
-  //   }
-  //   if (
-  //     loaded.guesses[numberOfWords]?.[numberOfLetters].length ===
-  //       maxChallenges &&
-  //     !gameWasWon
-  //   ) {
-  //     // setIsGameLost(true)
-  //     showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
-  //       persist: true,
-  //     })
-  //   }
-  //   setGuesses(loaded.guesses)
-  // })
 
   const [stats, setStats] = useState(() => loadStats())
 
@@ -209,7 +184,10 @@ function App() {
   }
 
   useEffect(() => {
-    saveGameStateToLocalStorage(getIsLatestGame(), { guesses, solution })
+    saveGameStateToLocalStorage(getIsLatestGame(), {
+      guesses: guesses,
+      gameDate: getGameDate(),
+    })
   }, [guesses, solution])
 
   const checkIsGameWon = (guesses: any[], solution: any[]) => {
@@ -223,6 +201,7 @@ function App() {
       const delayMs = REVEAL_TIME_MS * numberOfLetters
 
       showSuccessAlert(winMessage, {
+        // TODO only open this once. also only display correct words once
         delayMs,
         onClose: () => setIsStatsModalOpen(true),
       })

@@ -1,3 +1,4 @@
+import { getToday } from '../../lib/dateutils'
 import { defaultStats } from '../../lib/stats'
 import { Obj2d } from '../../lib/words'
 import { Progress } from './Progress'
@@ -12,15 +13,6 @@ type Props = {
   maxChallenges: number
 }
 
-const isCurrentDayStatRow = (
-  isLatestGame: boolean,
-  isGameWon: boolean,
-  numberOfGuessesMade: number,
-  i: number
-) => {
-  return isLatestGame && isGameWon && numberOfGuessesMade === i
-}
-
 export const Histogram = ({
   gameStats,
   isLatestGame,
@@ -30,10 +22,10 @@ export const Histogram = ({
   numberOfLetters,
   maxChallenges,
 }: Props) => {
-  const winDistribution =
+  const winDistribution: { [key: number]: number } =
     gameStats[numberOfWords]?.[numberOfLetters]?.winDistribution ??
     defaultStats.winDistribution
-  const maxValue = Math.max(...winDistribution, 1)
+  const maxValue = Math.max(...Object.values(winDistribution), 1)
   const histogramBuckets = Array.from(
     {
       length: maxChallenges - numberOfWords + 1,
@@ -47,14 +39,16 @@ export const Histogram = ({
         <Progress
           key={i}
           index={value}
-          isCurrentDayStatRow={isCurrentDayStatRow(
-            isLatestGame,
-            isGameWon,
-            numberOfGuessesMade,
-            value
-          )}
-          size={90 * (winDistribution[value - 1] / maxValue)}
-          label={String(winDistribution[value - 1])}
+          isCurrentDayStatRow={
+            isLatestGame &&
+            numberOfGuessesMade === value &&
+            (gameStats[numberOfWords]?.[
+              numberOfLetters
+            ]?.latestDate.getTime() === getToday().getTime() ||
+              isGameWon)
+          }
+          size={90 * ((winDistribution[value] || 0) / maxValue)}
+          label={String(winDistribution[value] || 0)}
         />
       ))}
     </div>

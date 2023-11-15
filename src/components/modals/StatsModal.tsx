@@ -113,7 +113,8 @@ export const StatsModal = ({
         minValue={MIN_NUMBER_OF_LETTERS}
         maxValue={MAX_NUMBER_OF_LETTERS}
       />
-      {(isGameLost || isGameWon) && (
+      {gameStats[numberOfWords]?.[numberOfLetters]?.latestDate.getTime() ===
+        getToday().getTime() && (
         <div className="mt-5 columns-2 items-center items-stretch justify-center text-center dark:text-white sm:mt-6">
           <div className="inline-block w-full text-left">
             {(!ENABLE_ARCHIVED_GAMES || isLatestGame) && (
