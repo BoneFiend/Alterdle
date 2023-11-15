@@ -22,7 +22,7 @@ import {
 } from '../../constants/strings'
 import { getToday } from '../../lib/dateutils'
 import { shareStatus } from '../../lib/share'
-import { Obj2d, getNextGameDate, solutionGameDate } from '../../lib/words'
+import { Obj2d, getGameDate, getNextGameDate } from '../../lib/words'
 import { Histogram } from '../stats/Histogram'
 import { MigrationIntro } from '../stats/MigrationIntro'
 import { StatBar } from '../stats/StatBar'
@@ -103,7 +103,7 @@ export const StatsModal = ({
         handleValue={(value: number) => handleNumberOfWords(value)}
         description={CHALLENGES_DESCRIPTION}
         minValue={MIN_NUMBER_OF_WORDS}
-        maxValue={MAX_NUMBER_OF_WORDS} // TODO dont allow more than 2 single letter words
+        maxValue={numberOfLetters === 1 ? 2 : MAX_NUMBER_OF_WORDS}
       />
       <SettingsSlider
         settingName="Word Length"
@@ -118,7 +118,7 @@ export const StatsModal = ({
           <div className="inline-block w-full text-left">
             {(!ENABLE_ARCHIVED_GAMES || isLatestGame) && (
               <div>
-                <h5>{NEW_WORD_TEXT}</h5>
+                <h5>{NEW_WORD_TEXT(solution)}</h5>
                 <Countdown
                   className="text-lg font-medium text-gray-900 dark:text-gray-100"
                   date={getNextGameDate(getToday())}
@@ -132,7 +132,7 @@ export const StatsModal = ({
                 <div className="mt-1 ml-1 text-center text-sm sm:text-base">
                   <strong>{ARCHIVE_GAMEDATE_TEXT}:</strong>
                   <br />
-                  {format(solutionGameDate, 'd MMMM yyyy', {
+                  {format(getGameDate(), 'd MMMM yyyy', {
                     locale: DATE_LOCALE,
                   })}
                 </div>

@@ -221,6 +221,3 @@ export const getIsLatestGame = () => {
   const parsed = queryString.parse(window.location.search)
   return parsed === null || !('d' in parsed)
 }
-
-export const solutionGameDate = getGameDate()
-export const solutionIndex = getIndex(solutionGameDate)

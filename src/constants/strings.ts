@@ -20,8 +20,13 @@ export const HARD_MODE_DESCRIPTION =
 export const HIGH_CONTRAST_MODE_DESCRIPTION = 'For improved color vision'
 export const CHALLENGES_DESCRIPTION = 'Number of words to play at once'
 export const LENGTH_DESCRIPTION = 'Length of each word'
-export const CORRECT_WORD_MESSAGE = (solution: string[]) =>
-  `The word was ${solution}` //TODO fix this grammar
+export const CORRECT_WORD_MESSAGE = (solution: string[]) => {
+  const sol = [...solution]
+  const last = sol.pop()
+  return `The word${solution.length > 1 ? 's were' : ' was'} ${sol.join(
+    ', '
+  )} ${solution.length > 1 ? 'and' : ''}  ${last}`
+}
 export const WRONG_SPOT_MESSAGE = (guess: string, position: number) =>
   `Must use ${guess} in position ${position}`
 export const NOT_CONTAINED_MESSAGE = (letter: string) =>
@@ -30,7 +35,8 @@ export const ENTER_TEXT = 'Enter'
 export const DELETE_TEXT = 'Delete'
 export const STATISTICS_TITLE = 'Statistics'
 export const GUESS_DISTRIBUTION_TEXT = 'Guess Distribution'
-export const NEW_WORD_TEXT = 'New word in'
+export const NEW_WORD_TEXT = (solution: string[]) =>
+  `New word${solution.length > 1 ? 's' : ''} in`
 export const SHARE_TEXT = 'Share'
 export const SHARE_FAILURE_TEXT =
   'Unable to share the results. This feature is available only in secure contexts (HTTPS), in some or all supporting browsers.'

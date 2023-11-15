@@ -135,11 +135,12 @@ function App() {
 
   const [stats, setStats] = useState(() => loadStats())
 
-  const [isHardMode, setIsHardMode] = useState(
+  const [isHardModeRequested, setIsHardModeRequested] = useState(
     localStorage.getItem('gameMode')
       ? localStorage.getItem('gameMode') === 'hard'
       : false
   )
+  const isHardMode = isHardModeRequested && numberOfWords === 1
 
   useEffect(() => {
     // if no game state on load,
@@ -150,6 +151,13 @@ function App() {
       }, WELCOME_HELP_MODAL_MS)
     }
   })
+
+  useEffect(() => {
+    // Ensure only 2 challenges can played at once with 2 letters
+    if (numberOfLetters === 1 && numberOfWords > 2) {
+      setNumberOfWords(2)
+    }
+  }, [numberOfLetters, numberOfWords])
 
   useEffect(() => {
     DISCOURAGE_INAPP_BROWSERS &&
@@ -184,7 +192,7 @@ function App() {
       (guesses[numberOfWords]?.[numberOfLetters] ?? []).length === 0 ||
       localStorage.getItem('gameMode') === 'hard'
     ) {
-      setIsHardMode(isHard)
+      setIsHardModeRequested(isHard)
       localStorage.setItem('gameMode', isHard ? 'hard' : 'normal')
     } else {
       showErrorAlert(HARD_MODE_ALERT_MESSAGE)

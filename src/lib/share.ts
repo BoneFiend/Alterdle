@@ -3,7 +3,7 @@ import { UAParser } from 'ua-parser-js'
 import { BASE_URL, MAX_SHARE_WIDTH } from '../constants/settings'
 import { GAME_TITLE } from '../constants/strings'
 import { getGuessStatuses } from './statuses'
-import { solutionIndex, unicodeSplit } from './words'
+import { getGameDate, getIndex, unicodeSplit } from './words'
 
 const webShareApiDeviceTypes: string[] = ['mobile', 'smarttv', 'wearable']
 const parser = new UAParser()
@@ -28,7 +28,9 @@ export const shareStatus = (
     1
   )
 
-  const header = `${GAME_TITLE} #${solutionIndex} ${numberOfWords}x${numberOfLetters} ${
+  const header = `${GAME_TITLE} #${getIndex(
+    getGameDate()
+  )} ${numberOfWords}x${numberOfLetters} ${
     lost ? 'X' : guesses.length
   }/${maxChallenges}${isHardMode ? '*' : ''}\n`
 

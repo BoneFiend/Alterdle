@@ -52,7 +52,7 @@ export const SettingsModal = ({
           handleValue={(value: number) => handleNumberOfWords(value)}
           description={CHALLENGES_DESCRIPTION}
           minValue={MIN_NUMBER_OF_WORDS}
-          maxValue={MAX_NUMBER_OF_WORDS} // TODO dont allow more than 2 single letter words
+          maxValue={numberOfLetters === 1 ? 2 : MAX_NUMBER_OF_WORDS}
         />
         <SettingsSlider
           settingName="Word Length"

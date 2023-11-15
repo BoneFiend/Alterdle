@@ -23,14 +23,16 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         <i>as well</i> as how long each word is (between {MIN_NUMBER_OF_LETTERS}{' '}
         and {MAX_NUMBER_OF_LETTERS} letters), resulting in{' '}
         {(MAX_NUMBER_OF_LETTERS - MIN_NUMBER_OF_LETTERS + 1) *
-          (MAX_NUMBER_OF_WORDS - MIN_NUMBER_OF_WORDS + 1)}{' '}
+          (MAX_NUMBER_OF_WORDS - MIN_NUMBER_OF_WORDS + 1) -
+          MAX_NUMBER_OF_WORDS + // Accounts for only 2 single letter words
+          2}{' '}
         unique daily puzzles!!
       </p>
       <br />
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        This game chooses words at random, so will occasionally choose rude or
-        inappropriate ones. If you find a particularly offensive word please
-        consider contributing to the project.{' '}
+        This game chooses words at random, so it will occasionally choose
+        obscure or inappropriate ones. If you find a particularly offensive word
+        please consider contributing to the project.{' '}
       </p>
       <p className="mt-6 text-sm italic text-gray-500 dark:text-gray-300">
         This game was built on top of the open source project{' '}
