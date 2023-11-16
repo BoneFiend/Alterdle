@@ -8,6 +8,7 @@ import { Obj2d } from './words'
 
 type GameStats = {
   winDistribution: { [key: number]: number }
+  gridsWonDistribution: { [key: number]: number }
   gamesFailed: number
   currentStreak: number
   bestStreak: number
@@ -18,6 +19,7 @@ type GameStats = {
 
 export const defaultStats: GameStats = {
   winDistribution: {},
+  gridsWonDistribution: {},
   gamesFailed: 0,
   currentStreak: 0,
   bestStreak: 0,
@@ -31,19 +33,31 @@ export const addStatsForCompletedGame = (
   count: number,
   numberOfWords: number,
   numberOfLetters: number,
-  won: boolean
+  won: boolean,
+  gridsWon: number
 ) => {
   // Count is number of incorrect guesses before end.
   const stats = { ...gameStats }
+  // Adding object labels if they don't already exist
   if (!stats[numberOfWords]) {
     stats[numberOfWords] = {}
   }
   if (!stats[numberOfWords][numberOfLetters]) {
     stats[numberOfWords][numberOfLetters] = { ...defaultStats }
   }
+
   if (stats[numberOfWords][numberOfLetters].latestDate < getToday()) {
     stats[numberOfWords][numberOfLetters].latestDate = getToday()
     stats[numberOfWords][numberOfLetters].totalGames += 1
+
+    const gridsWonDistribution = [
+      ...Object.values(
+        stats[numberOfWords][numberOfLetters].gridsWonDistribution
+      ).map(Number),
+    ]
+    gridsWonDistribution[gridsWon] = (gridsWonDistribution[gridsWon] || 0) + 1
+    stats[numberOfWords][numberOfLetters].gridsWonDistribution =
+      gridsWonDistribution
 
     if (!won) {
       // Lose situation

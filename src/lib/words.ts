@@ -17,8 +17,14 @@ import { getGuessStatuses } from './statuses'
 export const firstGameDate = GAME_EPOCH
 export const periodInDays = 1
 
-export const checkIsGameWon = (guesses: any[], solution: any[]) => {
+export const checkIsGameWon = (guesses: string[], solution: string[]) => {
   return solution.every((word) => guesses.includes(word))
+}
+
+export const countGridsWon = (guesses: string[], solution: string[]) => {
+  return solution.reduce((count, word) => {
+    return guesses.includes(word) ? count + 1 : count
+  }, 0)
 }
 
 export type Obj2d = {

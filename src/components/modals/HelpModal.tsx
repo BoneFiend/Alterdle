@@ -226,6 +226,11 @@ export const HelpModal = ({
         'not in the word in any',
         'absent'
       )}
+      <br />
+      <p className="text-sm text-gray-500 dark:text-gray-300">
+        The keyboard will display the status of letters that are in words which
+        have not been guessed yet, prioritising correct letters.
+      </p>
 
       <SettingsSlider
         settingName="Challenges"

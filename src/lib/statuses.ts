@@ -3,27 +3,41 @@ import { unicodeSplit } from './words'
 export type CharStatus = 'absent' | 'present' | 'correct' | 'incorrect' | 'null'
 
 export const getStatuses = (
-  solution: string,
+  solution: string[],
   guesses: string[]
 ): { [key: string]: CharStatus } => {
   const charObj: { [key: string]: CharStatus } = {}
-  const splitSolution = unicodeSplit(solution)
 
   guesses.forEach((word) => {
-    unicodeSplit(word).forEach((letter, i) => {
-      if (!splitSolution.includes(letter)) {
-        // make status absent
-        return (charObj[letter] = 'absent')
-      }
+    solution.forEach((sol) => {
+      if (guesses.includes(sol)) {
+        // Make letters from already guessed words absent by default
+        unicodeSplit(sol).forEach((letter) => {
+          return charObj[letter]
+            ? charObj[letter]
+            : (charObj[letter] = 'absent')
+        })
+      } else {
+        const splitSolution = unicodeSplit(sol)
 
-      if (letter === splitSolution[i]) {
-        //make status correct
-        return (charObj[letter] = 'correct')
-      }
+        unicodeSplit(word).forEach((letter, i) => {
+          if (!splitSolution.includes(letter)) {
+            // Make status absent if it hasn't already been set
+            return charObj[letter]
+              ? charObj[letter]
+              : (charObj[letter] = 'absent')
+          }
 
-      if (charObj[letter] !== 'correct') {
-        //make status present
-        return (charObj[letter] = 'present')
+          if (letter === splitSolution[i]) {
+            // Make status correct
+            return (charObj[letter] = 'correct')
+          }
+
+          if (charObj[letter] !== 'correct') {
+            // Make status present if it hasn't already been set as correct
+            return (charObj[letter] = 'present')
+          }
+        })
       }
     })
   })

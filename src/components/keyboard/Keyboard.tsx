@@ -9,7 +9,7 @@ type Props = {
   onChar: (value: string) => void
   onDelete: () => void
   onEnter: () => void
-  solution: string
+  solution: string[]
   guesses: string[]
   isRevealing?: boolean
   numberOfLetters: number

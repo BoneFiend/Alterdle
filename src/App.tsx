@@ -47,6 +47,7 @@ import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import {
   Obj2d,
   checkIsGameWon,
+  countGridsWon,
   findFirstUnusedReveal,
   getGameDate,
   getIsLatestGame,
@@ -296,7 +297,11 @@ function App() {
               newGuesses[numberOfWords]?.[numberOfLetters].length,
               numberOfWords,
               numberOfLetters,
-              true
+              true,
+              countGridsWon(
+                newGuesses[numberOfWords]?.[numberOfLetters],
+                solution
+              )
             )
           )
         }
@@ -320,7 +325,11 @@ function App() {
               newGuesses[numberOfWords]?.[numberOfLetters].length + 1,
               numberOfWords,
               numberOfLetters,
-              false
+              false,
+              countGridsWon(
+                newGuesses[numberOfWords]?.[numberOfLetters],
+                solution
+              )
             )
           )
         }
@@ -378,11 +387,10 @@ function App() {
           </div>
           <div className="px-1 pt-5">
             <Keyboard
-              // TODO remake keyboard logic
               onChar={onChar}
               onDelete={onDelete}
               onEnter={onEnter}
-              solution={solution[0]}
+              solution={solution}
               guesses={guesses[numberOfWords]?.[numberOfLetters] ?? []}
               isRevealing={isRevealing}
               numberOfLetters={numberOfLetters}
