@@ -1,4 +1,4 @@
-import { unicodeSplit } from '../../lib/words'
+import { isWordInWordList, unicodeSplit } from '../../lib/words'
 import { Cell } from './Cell'
 
 type Props = {
@@ -15,7 +15,15 @@ export const CurrentRow = ({ guess, className, solution }: Props) => {
   return (
     <div className={classes}>
       {splitGuess.map((letter, i) => (
-        <Cell key={i} value={letter} />
+        <Cell
+          key={i}
+          value={letter}
+          status={
+            guess.length === solution.length && !isWordInWordList(guess)
+              ? 'incorrect'
+              : 'null'
+          }
+        />
       ))}
       {emptyCells.map((_, i) => (
         <Cell key={i} />

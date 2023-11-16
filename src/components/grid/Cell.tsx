@@ -40,6 +40,8 @@ export const Cell = ({
         status === 'correct' && !isHighContrast,
       'present shadowed bg-yellow-500 text-white border-yellow-500':
         status === 'present' && !isHighContrast,
+      'incorrect shadowed bg-red-600 text-white border-red-600':
+        status === 'incorrect',
       'cell-fill-animation': isFilled,
       'cell-reveal': shouldReveal,
     }

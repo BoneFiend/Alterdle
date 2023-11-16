@@ -1,6 +1,7 @@
 import { CompletedRow } from './CompletedRow'
 import { CurrentRow } from './CurrentRow'
 import { EmptyRow } from './EmptyRow'
+import { SolutionRow } from './SolutionRow'
 
 type Props = {
   solution: string
@@ -52,6 +53,9 @@ export const Grid = ({
       {empties.map((_, i) => (
         <EmptyRow key={i} solution={solution} />
       ))}
+      {!guesses.includes(solution) && guesses.length === maxChallenges && (
+        <SolutionRow solution={solution} isRevealing={isRevealing} />
+      )}
     </div>
   )
 }

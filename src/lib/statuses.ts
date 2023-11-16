@@ -1,6 +1,6 @@
 import { unicodeSplit } from './words'
 
-export type CharStatus = 'absent' | 'present' | 'correct' | 'null'
+export type CharStatus = 'absent' | 'present' | 'correct' | 'incorrect' | 'null'
 
 export const getStatuses = (
   solution: string,

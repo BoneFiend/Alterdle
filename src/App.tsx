@@ -21,6 +21,7 @@ import {
   DISCOURAGE_INAPP_BROWSERS,
   LONG_ALERT_TIME_MS,
   MAX_CHALLENGES_BONUS,
+  MEDIUM_ALERT_TIME_MS,
   REVEAL_TIME_MS,
   WELCOME_HELP_MODAL_MS,
 } from './constants/settings'
@@ -258,11 +259,18 @@ function App() {
     }
 
     setIsRevealing(true)
-    // turn this back off after all
-    // chars have been revealed
-    setTimeout(() => {
-      setIsRevealing(false)
-    }, REVEAL_TIME_MS * numberOfLetters)
+    // Turn this back off after all cells have been revealed
+    setTimeout(
+      () => {
+        setIsRevealing(false)
+      },
+      REVEAL_TIME_MS *
+        numberOfLetters *
+        ((guesses[numberOfWords]?.[numberOfLetters] ?? []).length + 1 ===
+        maxChallenges
+          ? 2 // * 2 to allow for solution row to reveal
+          : 1)
+    )
 
     if (
       unicodeLength(currentGuess) === numberOfLetters &&
@@ -320,14 +328,15 @@ function App() {
           updateObj2d(gamesWon, numberOfWords, numberOfLetters, false)
         )
         showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
-          // persist: true, // TODO rework to show the solutions permanently on each setting
-          delayMs: REVEAL_TIME_MS * numberOfLetters + 1,
+          delayMs: REVEAL_TIME_MS * numberOfLetters * 2 + 1,
+          durationMs:
+            numberOfWords < 5 ? MEDIUM_ALERT_TIME_MS : LONG_ALERT_TIME_MS,
         })
         setTimeout(
           () => {
             setIsStatsModalOpen(true)
           },
-          (numberOfLetters + 1) * REVEAL_TIME_MS
+          (numberOfLetters + 1) * REVEAL_TIME_MS * 2
         )
       }
     }
