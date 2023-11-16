@@ -8,12 +8,7 @@ import {
 import { default as GraphemeSplitter } from 'grapheme-splitter'
 import queryString from 'query-string'
 
-import {
-  ENABLE_ARCHIVED_GAMES,
-  GAME_EPOCH,
-  MAX_NUMBER_OF_LETTERS,
-  MAX_NUMBER_OF_WORDS,
-} from '../constants/settings'
+import { ENABLE_ARCHIVED_GAMES, GAME_EPOCH } from '../constants/settings'
 import { NOT_CONTAINED_MESSAGE, WRONG_SPOT_MESSAGE } from '../constants/strings'
 import { WORDS } from '../constants/wordlist'
 import { getToday } from './dateutils'
@@ -22,10 +17,8 @@ import { getGuessStatuses } from './statuses'
 export const firstGameDate = GAME_EPOCH
 export const periodInDays = 1
 
-export const create2dArray = (filler: any) => {
-  return Array(MAX_NUMBER_OF_WORDS)
-    .fill(0)
-    .map((row, index) => new Array(MAX_NUMBER_OF_LETTERS).fill(filler))
+export const checkIsGameWon = (guesses: any[], solution: any[]) => {
+  return solution.every((word) => guesses.includes(word))
 }
 
 export type Obj2d = {

@@ -42,10 +42,10 @@ export const Histogram = ({
           isCurrentDayStatRow={
             isLatestGame &&
             numberOfGuessesMade === value &&
-            (gameStats[numberOfWords]?.[
+            gameStats[numberOfWords]?.[
               numberOfLetters
-            ]?.latestDate.getTime() === getToday().getTime() ||
-              isGameWon)
+            ]?.latestDate.getTime() === getToday().getTime() &&
+            isGameWon
           }
           size={90 * ((winDistribution[value] || 0) / maxValue)}
           label={String(winDistribution[value] || 0)}

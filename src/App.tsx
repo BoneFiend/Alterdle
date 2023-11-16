@@ -45,6 +45,7 @@ import {
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import {
   Obj2d,
+  checkIsGameWon,
   findFirstUnusedReveal,
   getGameDate,
   getIsLatestGame,
@@ -188,34 +189,7 @@ function App() {
       guesses: guesses,
       gameDate: getGameDate(),
     })
-  }, [guesses, solution])
-
-  const checkIsGameWon = (guesses: any[], solution: any[]) => {
-    return solution.every((word) => guesses.includes(word))
-  }
-
-  useEffect(() => {
-    if (isGameWon) {
-      const winMessage =
-        WIN_MESSAGES[Math.floor(Math.random() * WIN_MESSAGES.length)]
-      const delayMs = REVEAL_TIME_MS * numberOfLetters
-
-      showSuccessAlert(winMessage, {
-        // TODO only open this once. also only display correct words once
-        delayMs,
-        onClose: () => setIsStatsModalOpen(true),
-      })
-    }
-
-    if (isGameLost) {
-      setTimeout(
-        () => {
-          setIsStatsModalOpen(true)
-        },
-        (numberOfLetters + 1) * REVEAL_TIME_MS
-      )
-    }
-  }, [isGameWon, isGameLost, showSuccessAlert, numberOfLetters])
+  }, [guesses])
 
   const onChar = (value: string) => {
     if (
@@ -319,6 +293,14 @@ function App() {
           )
         }
         setGamesWon(updateObj2d(gamesWon, numberOfWords, numberOfLetters, true))
+        const winMessage =
+          WIN_MESSAGES[Math.floor(Math.random() * WIN_MESSAGES.length)]
+        const delayMs = REVEAL_TIME_MS * numberOfLetters
+
+        showSuccessAlert(winMessage, {
+          delayMs,
+          onClose: () => setIsStatsModalOpen(true),
+        })
       } else if (
         newGuesses[numberOfWords]?.[numberOfLetters].length === maxChallenges
       ) {
@@ -341,6 +323,12 @@ function App() {
           // persist: true, // TODO rework to show the solutions permanently on each setting
           delayMs: REVEAL_TIME_MS * numberOfLetters + 1,
         })
+        setTimeout(
+          () => {
+            setIsStatsModalOpen(true)
+          },
+          (numberOfLetters + 1) * REVEAL_TIME_MS
+        )
       }
     }
   }
