@@ -3,8 +3,10 @@ import { enUS } from 'date-fns/locale'
 export const MAX_CHALLENGES_BONUS = 5 // How many more guesses allowed per number of challenges
 export const MIN_NUMBER_OF_WORDS = 1
 export const MAX_NUMBER_OF_WORDS = 16
+export const DEFAULT_NUMBER_OF_WORDS = 1
 export const MIN_NUMBER_OF_LETTERS = 1
 export const MAX_NUMBER_OF_LETTERS = 11
+export const DEFAULT_NUMBER_OF_LETTERS = 5
 export const ALERT_TIME_MS = 2000
 export const MEDIUM_ALERT_TIME_MS = 5000
 export const LONG_ALERT_TIME_MS = 10000

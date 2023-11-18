@@ -29,7 +29,8 @@ import {
   CORRECT_WORD_MESSAGE,
   DISCOURAGE_INAPP_BROWSER_TEXT,
   GAME_COPIED_MESSAGE,
-  HARD_MODE_ALERT_MESSAGE,
+  HARD_MODE_CHEATING_MESSAGE,
+  HARD_MODE_RESTRICTION_MESSAGE,
   NOT_ENOUGH_LETTERS_MESSAGE,
   SHARE_FAILURE_TEXT,
   WIN_MESSAGES,
@@ -44,6 +45,7 @@ import {
   setStoredIsHighContrastMode,
 } from './lib/localStorage'
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
+import { loadNumberOfLetters, loadNumberOfWords, setUrl } from './lib/urlutils'
 import {
   Obj2d,
   checkIsGameWon,
@@ -86,8 +88,12 @@ function App() {
   )
   const [isRevealing, setIsRevealing] = useState(false)
 
-  const [numberOfWords, setNumberOfWords] = useState(1)
-  const [numberOfLetters, setNumberOfLetters] = useState(5)
+  const [numberOfWords, setNumberOfWords] = useState(() => {
+    return loadNumberOfWords()
+  })
+  const [numberOfLetters, setNumberOfLetters] = useState(() => {
+    return loadNumberOfLetters()
+  })
   const [gamesWon, setGamesWon] = useState<Obj2d>({})
   const isGameWon = gamesWon[numberOfWords]?.[numberOfLetters] ?? false
   const isGameLost =
@@ -135,6 +141,7 @@ function App() {
     if (numberOfLetters === 1 && numberOfWords > 2) {
       setNumberOfWords(2)
     }
+    setUrl(numberOfWords, numberOfLetters)
   }, [numberOfLetters, numberOfWords])
 
   useEffect(() => {
@@ -166,14 +173,18 @@ function App() {
   }
 
   const handleHardMode = (isHard: boolean) => {
-    if (
-      (guesses[numberOfWords]?.[numberOfLetters] ?? []).length === 0 ||
-      localStorage.getItem('gameMode') === 'hard'
-    ) {
-      setIsHardModeRequested(isHard)
-      localStorage.setItem('gameMode', isHard ? 'hard' : 'normal')
+    if (numberOfWords === 1) {
+      if (
+        (guesses[numberOfWords]?.[numberOfLetters] ?? []).length === 0 ||
+        localStorage.getItem('gameMode') === 'hard'
+      ) {
+        setIsHardModeRequested(isHard)
+        localStorage.setItem('gameMode', isHard ? 'hard' : 'normal')
+      } else {
+        showErrorAlert(HARD_MODE_CHEATING_MESSAGE)
+      }
     } else {
-      showErrorAlert(HARD_MODE_ALERT_MESSAGE)
+      showErrorAlert(HARD_MODE_RESTRICTION_MESSAGE)
     }
   }
 

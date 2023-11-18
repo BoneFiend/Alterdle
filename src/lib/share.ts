@@ -1,8 +1,9 @@
 import { UAParser } from 'ua-parser-js'
 
-import { BASE_URL, MAX_SHARE_WIDTH } from '../constants/settings'
+import { MAX_SHARE_WIDTH } from '../constants/settings'
 import { GAME_TITLE } from '../constants/strings'
 import { getGuessStatuses } from './statuses'
+import { getShareUrl } from './urlutils'
 import { getGameDate, getIndex, unicodeSplit } from './words'
 
 const webShareApiDeviceTypes: string[] = ['mobile', 'smarttv', 'wearable']
@@ -34,7 +35,7 @@ export const shareStatus = (
     lost ? 'X' : guesses.length
   }/${maxChallenges}${isHardMode ? '*' : ''}\n`
 
-  const url = BASE_URL // TODO allow for link to include game settings
+  const url = getShareUrl(numberOfWords, numberOfLetters)
   var grids = ''
   var numbers = ''
 
