@@ -127,7 +127,10 @@ function App() {
   useEffect(() => {
     // if no game state on load,
     // show the user the how-to info modal
-    if (!loadGameStateFromLocalStorage(true)) {
+    if (
+      !loadGameStateFromLocalStorage(true) &&
+      !loadGameStateFromLocalStorage(false)
+    ) {
       setTimeout(() => {
         setIsHelpModalOpen(true)
       }, WELCOME_HELP_MODAL_MS)
