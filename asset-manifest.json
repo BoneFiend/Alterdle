@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Alterdle/static/css/main.c07cf4dd.css",
+    "main.js": "/Alterdle/static/js/main.7a95d35b.js",
+    "static/js/496.3a2b595e.chunk.js": "/Alterdle/static/js/496.3a2b595e.chunk.js",
+    "index.html": "/Alterdle/index.html",
+    "main.c07cf4dd.css.map": "/Alterdle/static/css/main.c07cf4dd.css.map",
+    "main.7a95d35b.js.map": "/Alterdle/static/js/main.7a95d35b.js.map",
+    "496.3a2b595e.chunk.js.map": "/Alterdle/static/js/496.3a2b595e.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c07cf4dd.css",
+    "static/js/main.7a95d35b.js"
+  ]
+}
