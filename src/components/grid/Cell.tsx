@@ -30,6 +30,8 @@ export const Cell = ({
       'absent shadowed': status === 'absent',
       'correct shadowed': status === 'correct',
       'present shadowed': status === 'present',
+      'incorrect shadowed bg-red-600 text-white border-red-600':
+        status === 'incorrect',
       'cell-fill-animation': isFilled,
       'cell-reveal': shouldReveal,
     }

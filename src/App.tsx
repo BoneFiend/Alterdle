@@ -1,13 +1,14 @@
 import { ClockIcon } from '@heroicons/react/outline'
 import { format } from 'date-fns'
 import { default as GraphemeSplitter } from 'grapheme-splitter'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Div100vh from 'react-div-100vh'
 
 import { AlertContainer } from './components/alerts/AlertContainer'
 import { Grid } from './components/grid/Grid'
 import { Keyboard } from './components/keyboard/Keyboard'
 import { DatePickerModal } from './components/modals/DatePickerModal'
+import { HelpModal } from './components/modals/HelpModal'
 import { InfoModal } from './components/modals/InfoModal'
 import { MigrateStatsModal } from './components/modals/MigrateStatsModal'
 import { SettingsModal } from './components/modals/SettingsModal'
@@ -17,15 +18,17 @@ import {
   DATE_LOCALE,
   DISCOURAGE_INAPP_BROWSERS,
   LONG_ALERT_TIME_MS,
-  MAX_CHALLENGES,
+  MAX_CHALLENGES_BONUS,
+  MEDIUM_ALERT_TIME_MS,
   REVEAL_TIME_MS,
-  WELCOME_INFO_MODAL_MS,
+  WELCOME_HELP_MODAL_MS,
 } from './constants/settings'
 import {
   CORRECT_WORD_MESSAGE,
   DISCOURAGE_INAPP_BROWSER_TEXT,
   GAME_COPIED_MESSAGE,
-  HARD_MODE_ALERT_MESSAGE,
+  HARD_MODE_CHEATING_MESSAGE,
+  HARD_MODE_RESTRICTION_MESSAGE,
   NOT_ENOUGH_LETTERS_MESSAGE,
   SHARE_FAILURE_TEXT,
   WIN_MESSAGES,
@@ -40,16 +43,19 @@ import {
   setStoredIsHighContrastMode,
 } from './lib/localStorage'
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
+import { loadNumberOfLetters, loadNumberOfWords, setUrl } from './lib/urlutils'
 import {
+  Obj2d,
+  checkIsGameWon,
+  countGridsWon,
   findFirstUnusedReveal,
   getGameDate,
   getIsLatestGame,
-  isWinningWord,
+  getSolution,
   isWordInWordList,
   setGameDate,
-  solution,
-  solutionGameDate,
   unicodeLength,
+  updateObj2d,
 } from './lib/words'
 
 function App() {
@@ -61,15 +67,13 @@ function App() {
 
   const { showError: showErrorAlert, showSuccess: showSuccessAlert } =
     useAlert()
-  const [currentGuess, setCurrentGuess] = useState('')
-  const [isGameWon, setIsGameWon] = useState(false)
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
+  const [isHelpModalOpen, setIsHelpModalOpen] = useState(false)
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false)
   const [isDatePickerModalOpen, setIsDatePickerModalOpen] = useState(false)
   const [isMigrateStatsModalOpen, setIsMigrateStatsModalOpen] = useState(false)
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false)
   const [currentRowClass, setCurrentRowClass] = useState('')
-  const [isGameLost, setIsGameLost] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(
     localStorage.getItem('theme')
       ? localStorage.getItem('theme') === 'dark'
@@ -81,41 +85,62 @@ function App() {
     getStoredIsHighContrastMode()
   )
   const [isRevealing, setIsRevealing] = useState(false)
-  const [guesses, setGuesses] = useState<string[]>(() => {
+
+  const [numberOfWords, setNumberOfWords] = useState(() => {
+    return loadNumberOfWords()
+  })
+  const [numberOfLetters, setNumberOfLetters] = useState(() => {
+    return loadNumberOfLetters()
+  })
+  const [gamesWon, setGamesWon] = useState<Obj2d>({})
+  const isGameWon = gamesWon[numberOfWords]?.[numberOfLetters] ?? false
+  const isGameLost =
+    gamesWon[numberOfWords]?.[numberOfLetters] === false ?? false
+
+  const maxChallenges = numberOfWords + MAX_CHALLENGES_BONUS
+
+  const solution = useMemo(
+    () =>
+      getSolution(getGameDate(), numberOfWords, numberOfLetters).newSolution,
+    [numberOfWords, numberOfLetters]
+  )
+  const [guesses, setGuesses] = useState<Obj2d>(() => {
     const loaded = loadGameStateFromLocalStorage(isLatestGame)
-    if (loaded?.solution !== solution) {
-      return []
-    }
-    const gameWasWon = loaded.guesses.includes(solution)
-    if (gameWasWon) {
-      setIsGameWon(true)
-    }
-    if (loaded.guesses.length === MAX_CHALLENGES && !gameWasWon) {
-      setIsGameLost(true)
-      showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
-        persist: true,
-      })
+    if (loaded?.gameDate.getTime() !== getGameDate().getTime()) {
+      return {}
     }
     return loaded.guesses
   })
 
+  const [currentGuesses, setCurrentGuesses] = useState<Obj2d>({})
+  const currentGuess = currentGuesses[numberOfWords]?.[numberOfLetters] ?? ''
+
   const [stats, setStats] = useState(() => loadStats())
 
-  const [isHardMode, setIsHardMode] = useState(
+  const [isHardModeRequested, setIsHardModeRequested] = useState(
     localStorage.getItem('gameMode')
       ? localStorage.getItem('gameMode') === 'hard'
       : false
   )
+  const isHardMode = isHardModeRequested && numberOfWords === 1
 
   useEffect(() => {
     // if no game state on load,
     // show the user the how-to info modal
     if (!loadGameStateFromLocalStorage(true)) {
       setTimeout(() => {
-        setIsInfoModalOpen(true)
-      }, WELCOME_INFO_MODAL_MS)
+        setIsHelpModalOpen(true)
+      }, WELCOME_HELP_MODAL_MS)
     }
   })
+
+  useEffect(() => {
+    // Ensure only 2 challenges can played at once with 2 letters
+    if (numberOfLetters === 1 && numberOfWords > 2) {
+      setNumberOfWords(2)
+    }
+    setUrl(numberOfWords, numberOfLetters)
+  }, [numberOfLetters, numberOfWords])
 
   useEffect(() => {
     DISCOURAGE_INAPP_BROWSERS &&
@@ -146,11 +171,18 @@ function App() {
   }
 
   const handleHardMode = (isHard: boolean) => {
-    if (guesses.length === 0 || localStorage.getItem('gameMode') === 'hard') {
-      setIsHardMode(isHard)
-      localStorage.setItem('gameMode', isHard ? 'hard' : 'normal')
+    if (numberOfWords === 1) {
+      if (
+        (guesses[numberOfWords]?.[numberOfLetters] ?? []).length === 0 ||
+        localStorage.getItem('gameMode') === 'hard'
+      ) {
+        setIsHardModeRequested(isHard)
+        localStorage.setItem('gameMode', isHard ? 'hard' : 'normal')
+      } else {
+        showErrorAlert(HARD_MODE_CHEATING_MESSAGE)
+      }
     } else {
-      showErrorAlert(HARD_MODE_ALERT_MESSAGE)
+      showErrorAlert(HARD_MODE_RESTRICTION_MESSAGE)
     }
   }
 
@@ -164,44 +196,41 @@ function App() {
   }
 
   useEffect(() => {
-    saveGameStateToLocalStorage(getIsLatestGame(), { guesses, solution })
+    saveGameStateToLocalStorage(getIsLatestGame(), {
+      guesses: guesses,
+      gameDate: getGameDate(),
+    })
   }, [guesses])
-
-  useEffect(() => {
-    if (isGameWon) {
-      const winMessage =
-        WIN_MESSAGES[Math.floor(Math.random() * WIN_MESSAGES.length)]
-      const delayMs = REVEAL_TIME_MS * solution.length
-
-      showSuccessAlert(winMessage, {
-        delayMs,
-        onClose: () => setIsStatsModalOpen(true),
-      })
-    }
-
-    if (isGameLost) {
-      setTimeout(
-        () => {
-          setIsStatsModalOpen(true)
-        },
-        (solution.length + 1) * REVEAL_TIME_MS
-      )
-    }
-  }, [isGameWon, isGameLost, showSuccessAlert])
 
   const onChar = (value: string) => {
     if (
-      unicodeLength(`${currentGuess}${value}`) <= solution.length &&
-      guesses.length < MAX_CHALLENGES &&
+      unicodeLength(`${currentGuess}${value}`) <= numberOfLetters &&
+      (guesses[numberOfWords]?.[numberOfLetters] ?? []).length <
+        maxChallenges &&
       !isGameWon
     ) {
-      setCurrentGuess(`${currentGuess}${value}`)
+      setCurrentGuesses(
+        updateObj2d(
+          currentGuesses,
+          numberOfWords,
+          numberOfLetters,
+          `${currentGuess}${value}`
+        )
+      )
     }
   }
 
   const onDelete = () => {
-    setCurrentGuess(
-      new GraphemeSplitter().splitGraphemes(currentGuess).slice(0, -1).join('')
+    setCurrentGuesses(
+      updateObj2d(
+        currentGuesses,
+        numberOfWords,
+        numberOfLetters,
+        new GraphemeSplitter()
+          .splitGraphemes(currentGuess)
+          .slice(0, -1)
+          .join('')
+      )
     )
   }
 
@@ -210,7 +239,7 @@ function App() {
       return
     }
 
-    if (!(unicodeLength(currentGuess) === solution.length)) {
+    if (!(unicodeLength(currentGuess) === numberOfLetters)) {
       setCurrentRowClass('jiggle')
       return showErrorAlert(NOT_ENOUGH_LETTERS_MESSAGE, {
         onClose: clearCurrentRowClass,
@@ -225,8 +254,12 @@ function App() {
     }
 
     // enforce hard mode - all guesses must contain all previously revealed letters
-    if (isHardMode) {
-      const firstMissingReveal = findFirstUnusedReveal(currentGuess, guesses)
+    if (isHardMode && numberOfWords === 1) {
+      const firstMissingReveal = findFirstUnusedReveal(
+        currentGuess,
+        guesses[numberOfWords]?.[numberOfLetters] ?? [],
+        solution[0]
+      )
       if (firstMissingReveal) {
         setCurrentRowClass('jiggle')
         return showErrorAlert(firstMissingReveal, {
@@ -236,38 +269,93 @@ function App() {
     }
 
     setIsRevealing(true)
-    // turn this back off after all
-    // chars have been revealed
-    setTimeout(() => {
-      setIsRevealing(false)
-    }, REVEAL_TIME_MS * solution.length)
-
-    const winningWord = isWinningWord(currentGuess)
+    // Turn this back off after all cells have been revealed
+    setTimeout(
+      () => {
+        setIsRevealing(false)
+      },
+      REVEAL_TIME_MS *
+        numberOfLetters *
+        ((guesses[numberOfWords]?.[numberOfLetters] ?? []).length + 1 ===
+        maxChallenges
+          ? 2 // * 2 to allow for solution row to reveal
+          : 1)
+    )
 
     if (
-      unicodeLength(currentGuess) === solution.length &&
-      guesses.length < MAX_CHALLENGES &&
-      !isGameWon
+      unicodeLength(currentGuess) === numberOfLetters &&
+      (guesses[numberOfWords]?.[numberOfLetters] ?? []).length < maxChallenges
     ) {
-      setGuesses([...guesses, currentGuess])
-      setCurrentGuess('')
+      const newGuesses = updateObj2d(guesses, numberOfWords, numberOfLetters, [
+        ...(guesses[numberOfWords]?.[numberOfLetters] ?? []),
+        currentGuess,
+      ])
+      setGuesses(newGuesses)
+      setCurrentGuesses(
+        updateObj2d(currentGuesses, numberOfWords, numberOfLetters, '')
+      )
 
-      if (winningWord) {
+      if (
+        checkIsGameWon(newGuesses[numberOfWords]?.[numberOfLetters], solution)
+      ) {
+        // Win situation
         if (isLatestGame) {
-          setStats(addStatsForCompletedGame(stats, guesses.length))
+          setStats((prevStats) =>
+            addStatsForCompletedGame(
+              prevStats,
+              newGuesses[numberOfWords]?.[numberOfLetters].length,
+              numberOfWords,
+              numberOfLetters,
+              true,
+              countGridsWon(
+                newGuesses[numberOfWords]?.[numberOfLetters],
+                solution
+              )
+            )
+          )
         }
-        return setIsGameWon(true)
-      }
+        setGamesWon(updateObj2d(gamesWon, numberOfWords, numberOfLetters, true))
+        const winMessage =
+          WIN_MESSAGES[Math.floor(Math.random() * WIN_MESSAGES.length)]
+        const delayMs = REVEAL_TIME_MS * numberOfLetters
 
-      if (guesses.length === MAX_CHALLENGES - 1) {
-        if (isLatestGame) {
-          setStats(addStatsForCompletedGame(stats, guesses.length + 1))
-        }
-        setIsGameLost(true)
-        showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
-          persist: true,
-          delayMs: REVEAL_TIME_MS * solution.length + 1,
+        showSuccessAlert(winMessage, {
+          delayMs,
+          onClose: () => setIsStatsModalOpen(true),
         })
+      } else if (
+        newGuesses[numberOfWords]?.[numberOfLetters].length === maxChallenges
+      ) {
+        // Lose situation
+        if (isLatestGame) {
+          setStats((prevStats) =>
+            addStatsForCompletedGame(
+              prevStats,
+              newGuesses[numberOfWords]?.[numberOfLetters].length + 1,
+              numberOfWords,
+              numberOfLetters,
+              false,
+              countGridsWon(
+                newGuesses[numberOfWords]?.[numberOfLetters],
+                solution
+              )
+            )
+          )
+        }
+        setGamesWon(
+          updateObj2d(gamesWon, numberOfWords, numberOfLetters, false)
+        )
+        showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
+          delayMs: REVEAL_TIME_MS * numberOfLetters * 2 + 1,
+          durationMs:
+            numberOfWords < 5 ? MEDIUM_ALERT_TIME_MS : LONG_ALERT_TIME_MS,
+        })
+        setTimeout(
+          () => {
+            setIsStatsModalOpen(true)
+          },
+          (numberOfLetters + 1) * REVEAL_TIME_MS * 2
+        )
       }
     }
   }
@@ -277,6 +365,7 @@ function App() {
       <div className="flex h-full flex-col">
         <Navbar
           setIsInfoModalOpen={setIsInfoModalOpen}
+          setIsHelpModalOpen={setIsHelpModalOpen}
           setIsStatsModalOpen={setIsStatsModalOpen}
           setIsDatePickerModalOpen={setIsDatePickerModalOpen}
           setIsSettingsModalOpen={setIsSettingsModalOpen}
@@ -291,23 +380,38 @@ function App() {
           </div>
         )}
 
-        <div className="mx-auto flex w-full grow flex-col px-1 pt-2 pb-8 sm:px-6 md:max-w-7xl lg:px-8 short:pb-2 short:pt-2">
-          <div className="flex grow flex-col justify-center pb-6 short:pb-2">
-            <Grid
+        <div className="mx-auto flex w-full grow flex-col pb-8 short:pb-2 short:pt-2">
+          <div className="no-scrollbar flex h-[1vh] grow flex-wrap items-center justify-center overflow-y-auto">
+            {solution.map((sol: any, i: any) => (
+              <Grid
+                key={i}
+                solution={solution[i]}
+                guesses={guesses[numberOfWords]?.[numberOfLetters] ?? []}
+                currentGuess={currentGuess}
+                isRevealing={isRevealing}
+                currentRowClassName={currentRowClass}
+                maxChallenges={maxChallenges}
+              />
+            ))}
+          </div>
+          <div className="px-1 pt-5">
+            <Keyboard
+              onChar={onChar}
+              onDelete={onDelete}
+              onEnter={onEnter}
               solution={solution}
-              guesses={guesses}
-              currentGuess={currentGuess}
+              guesses={guesses[numberOfWords]?.[numberOfLetters] ?? []}
               isRevealing={isRevealing}
-              currentRowClassName={currentRowClass}
+              numberOfLetters={numberOfLetters}
             />
           </div>
-          <Keyboard
-            onChar={onChar}
-            onDelete={onDelete}
-            onEnter={onEnter}
-            solution={solution}
-            guesses={guesses}
-            isRevealing={isRevealing}
+          <HelpModal
+            isOpen={isHelpModalOpen}
+            handleClose={() => setIsHelpModalOpen(false)}
+            numberOfWords={numberOfWords}
+            handleNumberOfWords={setNumberOfWords}
+            numberOfLetters={numberOfLetters}
+            handleNumberOfLetters={setNumberOfLetters}
           />
           <InfoModal
             isOpen={isInfoModalOpen}
@@ -317,7 +421,7 @@ function App() {
             isOpen={isStatsModalOpen}
             handleClose={() => setIsStatsModalOpen(false)}
             solution={solution}
-            guesses={guesses}
+            guesses={guesses[numberOfWords]?.[numberOfLetters] ?? []}
             gameStats={stats}
             isLatestGame={isLatestGame}
             isGameLost={isGameLost}
@@ -335,11 +439,18 @@ function App() {
             isHardMode={isHardMode}
             isDarkMode={isDarkMode}
             isHighContrastMode={isHighContrastMode}
-            numberOfGuessesMade={guesses.length}
+            numberOfGuessesMade={
+              (guesses[numberOfWords]?.[numberOfLetters] ?? []).length
+            }
+            numberOfWords={numberOfWords}
+            handleNumberOfWords={setNumberOfWords}
+            numberOfLetters={numberOfLetters}
+            handleNumberOfLetters={setNumberOfLetters}
+            maxChallenges={maxChallenges}
           />
           <DatePickerModal
             isOpen={isDatePickerModalOpen}
-            initialDate={solutionGameDate}
+            initialDate={getGameDate()}
             handleSelectDate={(d) => {
               setIsDatePickerModalOpen(false)
               setGameDate(d)
@@ -359,6 +470,10 @@ function App() {
             handleDarkMode={handleDarkMode}
             isHighContrastMode={isHighContrastMode}
             handleHighContrastMode={handleHighContrastMode}
+            numberOfWords={numberOfWords}
+            handleNumberOfWords={setNumberOfWords}
+            numberOfLetters={numberOfLetters}
+            handleNumberOfLetters={setNumberOfLetters}
           />
           <AlertContainer />
         </div>

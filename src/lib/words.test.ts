@@ -1,9 +1,4 @@
-import {
-  getIndex,
-  getLastGameDate,
-  getNextGameDate,
-  getWordOfDay,
-} from './words'
+import { getIndex, getLastGameDate, getNextGameDate } from './words'
 
 describe('solutionIndex', () => {
   test('last game date', () => {
@@ -68,12 +63,5 @@ describe('solutionIndex', () => {
     expect(getIndex(new Date(2022, 5, 23, 15, 42, 0))).toEqual(173)
 
     expect(getIndex(new Date(2022, 5, 24))).toEqual(174)
-  })
-
-  test('word of the day', () => {
-    expect(() => getWordOfDay(-1)).toThrowError('Invalid index')
-    expect(getWordOfDay(0)).toEqual('WHICH')
-    expect(getWordOfDay(1)).toEqual('THERE')
-    expect(getWordOfDay(255)).toEqual('SHEEP')
   })
 })

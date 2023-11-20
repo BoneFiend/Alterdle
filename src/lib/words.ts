@@ -8,32 +8,58 @@ import {
 import { default as GraphemeSplitter } from 'grapheme-splitter'
 import queryString from 'query-string'
 
-import { ENABLE_ARCHIVED_GAMES } from '../constants/settings'
+import { ENABLE_ARCHIVED_GAMES, GAME_EPOCH } from '../constants/settings'
 import { NOT_CONTAINED_MESSAGE, WRONG_SPOT_MESSAGE } from '../constants/strings'
-import { VALID_GUESSES } from '../constants/validGuesses'
 import { WORDS } from '../constants/wordlist'
 import { getToday } from './dateutils'
 import { getGuessStatuses } from './statuses'
 
-// 1 January 2022 Game Epoch
-export const firstGameDate = new Date(2022, 0)
+export const firstGameDate = GAME_EPOCH
 export const periodInDays = 1
 
-export const isWordInWordList = (word: string) => {
-  return (
-    WORDS.includes(localeAwareLowerCase(word)) ||
-    VALID_GUESSES.includes(localeAwareLowerCase(word))
-  )
+export const checkIsGameWon = (guesses: string[], solution: string[]) => {
+  return solution.every((word) => guesses.includes(word))
 }
 
-export const isWinningWord = (word: string) => {
-  return solution === word
+export const countGridsWon = (guesses: string[], solution: string[]) => {
+  return solution.reduce((count, word) => {
+    return guesses.includes(word) ? count + 1 : count
+  }, 0)
+}
+
+export type Obj2d = {
+  // 2d Object type to avoid type errors
+  [key: number]: {
+    [key: number]: any
+  }
+}
+
+export const updateObj2d = (
+  obj: Obj2d,
+  numberOfWords: number,
+  numberOfLetters: number,
+  newValue: any
+) => {
+  const newObj = { ...obj }
+  if (!newObj[numberOfWords]) {
+    newObj[numberOfWords] = {}
+  }
+  newObj[numberOfWords][numberOfLetters] = newValue
+  return newObj
+}
+
+export const isWordInWordList = (word: string) => {
+  return WORDS.includes(localeAwareLowerCase(word))
 }
 
 // build a set of previously revealed letters - present and correct
 // guess must use correct letters in that space and any other revealed letters
 // also check if all revealed instances of a letter are used (i.e. two C's)
-export const findFirstUnusedReveal = (word: string, guesses: string[]) => {
+export const findFirstUnusedReveal = (
+  word: string,
+  guesses: string[],
+  solution: string
+) => {
   if (guesses.length === 0) {
     return false
   }
@@ -118,20 +144,39 @@ export const getIndex = (gameDate: Date) => {
   return index
 }
 
-export const getWordOfDay = (index: number) => {
-  if (index < 0) {
-    throw new Error('Invalid index')
-  }
-
-  return localeAwareUpperCase(WORDS[index % WORDS.length])
+export const seededRandom = (seed: number) => {
+  let x = Math.sin(seed++) * 10000
+  return x - Math.floor(x)
 }
 
-export const getSolution = (gameDate: Date) => {
+export const getSolution = (
+  gameDate: Date,
+  numberOfWords: number,
+  numberOfLetters: number
+) => {
   const nextGameDate = getNextGameDate(gameDate)
   const index = getIndex(gameDate)
-  const wordOfTheDay = getWordOfDay(index)
+
+  const seed =
+    gameDate.getDate() * Math.E +
+    gameDate.getMonth() +
+    gameDate.getFullYear() +
+    numberOfWords * 1234 +
+    numberOfLetters
+  let solution: string[] = []
+
+  let availableWords = [
+    ...WORDS.filter((word) => word.length === numberOfLetters),
+  ]
+
+  for (let i = 0; i < numberOfWords && availableWords.length > 0; i++) {
+    const index = Math.floor(seededRandom(seed + i) * availableWords.length)
+    solution.push(localeAwareUpperCase(availableWords[index]))
+    availableWords.splice(index, 1)
+  }
+  // console.log('found solution: ' + solution)
   return {
-    solution: wordOfTheDay,
+    newSolution: solution,
     solutionGameDate: gameDate,
     solutionIndex: index,
     tomorrow: nextGameDate.valueOf(),
@@ -175,6 +220,3 @@ export const getIsLatestGame = () => {
   const parsed = queryString.parse(window.location.search)
   return parsed === null || !('d' in parsed)
 }
-
-export const { solution, solutionGameDate, solutionIndex, tomorrow } =
-  getSolution(getGameDate())

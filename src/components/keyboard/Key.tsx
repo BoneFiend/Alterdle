@@ -3,7 +3,6 @@ import { ReactNode } from 'react'
 
 import { REVEAL_TIME_MS } from '../../constants/settings'
 import { CharStatus } from '../../lib/statuses'
-import { solution } from '../../lib/words'
 
 type Props = {
   children?: ReactNode
@@ -12,6 +11,7 @@ type Props = {
   status?: CharStatus
   onClick: (value: string) => void
   isRevealing?: boolean
+  numberOfLetters: number
 }
 
 export const Key = ({
@@ -21,8 +21,11 @@ export const Key = ({
   value,
   onClick,
   isRevealing,
+  numberOfLetters,
 }: Props) => {
+
   const keyDelayMs = REVEAL_TIME_MS * solution.length
+  const keyDelayMs = REVEAL_TIME_MS * numberOfLetters
 
   const classes = classnames(
     'xxshort:h-8 xxshort:w-8 xxshort:text-xxs xshort:w-10 xshort:h-10 flex short:h-12 h-14 items-center justify-center rounded mx-0.5 text-xs font-bold cursor-pointer select-none dark:text-white',

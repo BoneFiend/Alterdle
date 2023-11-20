@@ -42,6 +42,8 @@ html {
   --default-key-bg-color: theme('colors.slate.200');
   --default-key-hover-color: theme('colors.slate.300');
   --default-key-active-color: theme('colors.slate.400');
+
+  --incorrect-cell-bg-color: theme('colors.red.500');
 }
 
 .dark {
@@ -163,6 +165,10 @@ html {
   animation-name: revealPresentCharCell;
 }
 
+.cell-reveal.incorrect {
+  animation-name: revealIncorrectCharCell;
+}
+
 .cell-reveal > .letter-container {
   animation: offsetLetterFlip 0.35s linear;
   animation-fill-mode: backwards;
@@ -194,6 +200,15 @@ svg.cursor-pointer:hover {
 
 .right-icons {
   display: flex;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 @keyframes revealAbsentCharCell {
@@ -253,6 +268,32 @@ svg.cursor-pointer:hover {
   50.1% {
     background-color: var(--present-cell-bg-color);
     border-color: var(--present-cell-bg-color);
+  }
+  100% {
+    transform: rotateX(180deg);
+  }
+}
+
+@keyframes revealIncorrectCharCell {
+  0% {
+    transform: rotateX(0deg);
+    background-color: var(--default-cell-bg-color);
+    border-color: var(--default-cell-border-color);
+    color: var(--default-cell-text-color);
+    opacity: 0;
+    max-height: 0rem;
+  }
+  50% {
+    background-color: var(--default-cell-bg-color);
+    border-color: var(--default-cell-border-color);
+    color: var(--default-cell-text-color);
+    opacity: 0;
+    max-height: 3.5rem;
+  }
+  50.1% {
+    background-color: var(--incorrect-cell-bg-color);
+    border-color: var(--incorrect-cell-bg-color);
+    opacity: 1;
   }
   100% {
     transform: rotateX(180deg);

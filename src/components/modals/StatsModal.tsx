@@ -6,28 +6,40 @@ import {
   DATE_LOCALE,
   ENABLE_ARCHIVED_GAMES,
   ENABLE_MIGRATE_STATS,
+  MAX_NUMBER_OF_LETTERS,
+  MAX_NUMBER_OF_WORDS,
+  MIN_NUMBER_OF_LETTERS,
+  MIN_NUMBER_OF_WORDS,
 } from '../../constants/settings'
 import {
   ARCHIVE_GAMEDATE_TEXT,
+  CHALLENGES_DESCRIPTION,
   GUESS_DISTRIBUTION_TEXT,
+  LENGTH_DESCRIPTION,
   NEW_WORD_TEXT,
   SHARE_TEXT,
   STATISTICS_TITLE,
 } from '../../constants/strings'
-import { GameStats } from '../../lib/localStorage'
+import { getToday } from '../../lib/dateutils'
 import { shareStatus } from '../../lib/share'
-import { solutionGameDate, tomorrow } from '../../lib/words'
+import {
+  Obj2d,
+  checkIsGameWon,
+  getGameDate,
+  getNextGameDate,
+} from '../../lib/words'
 import { Histogram } from '../stats/Histogram'
 import { MigrationIntro } from '../stats/MigrationIntro'
 import { StatBar } from '../stats/StatBar'
 import { BaseModal } from './BaseModal'
+import { SettingsSlider } from './SettingsSlider'
 
 type Props = {
   isOpen: boolean
   handleClose: () => void
-  solution: string
+  solution: string[]
   guesses: string[]
-  gameStats: GameStats
+  gameStats: Obj2d
   isLatestGame: boolean
   isGameLost: boolean
   isGameWon: boolean
@@ -38,6 +50,11 @@ type Props = {
   isDarkMode: boolean
   isHighContrastMode: boolean
   numberOfGuessesMade: number
+  numberOfWords: number
+  handleNumberOfWords: Function
+  numberOfLetters: number
+  handleNumberOfLetters: Function
+  maxChallenges: number
 }
 
 export const StatsModal = ({
@@ -56,46 +73,63 @@ export const StatsModal = ({
   isDarkMode,
   isHighContrastMode,
   numberOfGuessesMade,
+  numberOfWords,
+  handleNumberOfWords,
+  numberOfLetters,
+  handleNumberOfLetters,
+  maxChallenges,
 }: Props) => {
-  if (gameStats.totalGames <= 0) {
-    return (
-      <BaseModal
-        title={STATISTICS_TITLE}
-        isOpen={isOpen}
-        handleClose={handleClose}
-      >
-        <StatBar gameStats={gameStats} />
-        {ENABLE_MIGRATE_STATS && (
-          <MigrationIntro handleMigrateStatsButton={handleMigrateStatsButton} />
-        )}
-      </BaseModal>
-    )
-  }
   return (
     <BaseModal
       title={STATISTICS_TITLE}
       isOpen={isOpen}
       handleClose={handleClose}
     >
-      <StatBar gameStats={gameStats} />
+      <StatBar
+        gameStats={gameStats}
+        numberOfWords={numberOfWords}
+        numberOfLetters={numberOfLetters}
+      />
       <h4 className="text-lg font-medium leading-6 text-gray-900 dark:text-gray-100">
         {GUESS_DISTRIBUTION_TEXT}
       </h4>
       <Histogram
         isLatestGame={isLatestGame}
         gameStats={gameStats}
-        isGameWon={isGameWon}
+        isGameWon={checkIsGameWon(guesses, solution)}
         numberOfGuessesMade={numberOfGuessesMade}
+        numberOfWords={numberOfWords}
+        numberOfLetters={numberOfLetters}
+        maxChallenges={maxChallenges}
       />
-      {(isGameLost || isGameWon) && (
+      <SettingsSlider
+        settingName="Challenges"
+        value={numberOfWords}
+        handleValue={(value: number) => handleNumberOfWords(value)}
+        description={CHALLENGES_DESCRIPTION}
+        minValue={MIN_NUMBER_OF_WORDS}
+        maxValue={numberOfLetters === 1 ? 2 : MAX_NUMBER_OF_WORDS}
+      />
+      <SettingsSlider
+        settingName="Word Length"
+        value={numberOfLetters}
+        handleValue={(value: number) => handleNumberOfLetters(value)}
+        description={LENGTH_DESCRIPTION}
+        minValue={MIN_NUMBER_OF_LETTERS}
+        maxValue={MAX_NUMBER_OF_LETTERS}
+      />
+      {(gameStats[numberOfWords]?.[numberOfLetters]?.latestDate.getTime() ===
+        getToday().getTime() ||
+        isGameWon ||
+        isGameLost) && (
         <div className="mt-5 columns-2 items-center items-stretch justify-center text-center dark:text-white sm:mt-6">
           <div className="inline-block w-full text-left">
             {(!ENABLE_ARCHIVED_GAMES || isLatestGame) && (
               <div>
-                <h5>{NEW_WORD_TEXT}</h5>
+                <h5>{NEW_WORD_TEXT(solution)}</h5>
                 <Countdown
                   className="text-lg font-medium text-gray-900 dark:text-gray-100"
-                  date={tomorrow}
+                  date={getNextGameDate(getToday())}
                   daysInHours={true}
                 />
               </div>
@@ -106,7 +140,7 @@ export const StatsModal = ({
                 <div className="mt-1 ml-1 text-center text-sm sm:text-base">
                   <strong>{ARCHIVE_GAMEDATE_TEXT}:</strong>
                   <br />
-                  {format(solutionGameDate, 'd MMMM yyyy', {
+                  {format(getGameDate(), 'd MMMM yyyy', {
                     locale: DATE_LOCALE,
                   })}
                 </div>
@@ -126,7 +160,10 @@ export const StatsModal = ({
                   isDarkMode,
                   isHighContrastMode,
                   handleShareToClipboard,
-                  handleShareFailure
+                  handleShareFailure,
+                  maxChallenges,
+                  numberOfWords,
+                  numberOfLetters
                 )
               }}
             >

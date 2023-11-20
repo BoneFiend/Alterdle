@@ -9,9 +9,10 @@ type Props = {
   onChar: (value: string) => void
   onDelete: () => void
   onEnter: () => void
-  solution: string
+  solution: string[]
   guesses: string[]
   isRevealing?: boolean
+  numberOfLetters: number
 }
 
 export const Keyboard = ({
@@ -21,6 +22,7 @@ export const Keyboard = ({
   solution,
   guesses,
   isRevealing,
+  numberOfLetters,
 }: Props) => {
   const charStatuses = getStatuses(solution, guesses)
 
@@ -64,6 +66,7 @@ export const Keyboard = ({
             onClick={onClick}
             status={charStatuses[key]}
             isRevealing={isRevealing}
+            numberOfLetters={numberOfLetters}
           />
         ))}
       </div>
@@ -75,11 +78,17 @@ export const Keyboard = ({
             onClick={onClick}
             status={charStatuses[key]}
             isRevealing={isRevealing}
+            numberOfLetters={numberOfLetters}
           />
         ))}
       </div>
       <div className="flex justify-center">
-        <Key width={65.4} value="ENTER" onClick={onClick}>
+        <Key
+          width={65.4}
+          value="ENTER"
+          onClick={onClick}
+          numberOfLetters={numberOfLetters}
+        >
           {ENTER_TEXT}
         </Key>
         {['Z', 'X', 'C', 'V', 'B', 'N', 'M'].map((key) => (
@@ -89,9 +98,15 @@ export const Keyboard = ({
             onClick={onClick}
             status={charStatuses[key]}
             isRevealing={isRevealing}
+            numberOfLetters={numberOfLetters}
           />
         ))}
-        <Key width={65.4} value="DELETE" onClick={onClick}>
+        <Key
+          width={65.4}
+          value="DELETE"
+          onClick={onClick}
+          numberOfLetters={numberOfLetters}
+        >
           {DELETE_TEXT}
         </Key>
       </div>
