@@ -24,7 +24,6 @@ export const Key = ({
   numberOfLetters,
 }: Props) => {
 
-  const keyDelayMs = REVEAL_TIME_MS * solution.length
   const keyDelayMs = REVEAL_TIME_MS * numberOfLetters
 
   const classes = classnames(
