@@ -8,4 +8,4 @@ This game chooses words at random, so it will occasionally choose obscure or ina
 
 This game was built on top of the open source project [cwackerfuss/react-wordle](https://github.com/cwackerfuss/react-wordle). Made using React, Typescript, and Tailwind.
 
-[**Try out Alterdle!**](https://bonefiend.github.io/Alterdle/)
+[**Try out Alterdle!**](https://alterdle.bonefiend.com/)

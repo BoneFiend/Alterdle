@@ -29,9 +29,9 @@ export const shareStatus = (
     1
   )
 
-  const header = `${GAME_TITLE} #${getIndex(
-    getGameDate()
-  )} ${numberOfWords}x${numberOfLetters} ${
+  const header = `${GAME_TITLE} #${
+    getIndex(getGameDate()) + 1
+  } ${numberOfWords}x${numberOfLetters} ${
     lost ? 'X' : guesses.length
   }/${maxChallenges}${isHardMode ? '*' : ''}\n`
 

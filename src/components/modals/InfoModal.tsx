@@ -32,7 +32,14 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
       <p className="text-sm text-stone-700 dark:text-gray-300">
         This game chooses words at random, so it will occasionally choose
         obscure or inappropriate ones. If you find a particularly offensive word
-        please consider contributing to the project.{' '}
+        please consider contributing to the project, or contact me on{' '}
+        <a
+          href="https://www.reddit.com/user/BoneFiend82"
+          className="font-bold underline"
+        >
+          Reddit
+        </a>
+        .{' '}
       </p>
       <p className="mt-6 text-sm italic text-stone-700 dark:text-gray-300">
         This game was built on top of the open source project{' '}
