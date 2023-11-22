@@ -17,17 +17,17 @@ export const SettingsSlider = ({
 }: Props) => {
   return (
     <>
-      <div className="flex justify-between gap-4 py-3">
-        <div className="mt-2 text-left text-gray-500 dark:text-gray-300">
+      <div className="mb-3 flex justify-between gap-4 pt-3">
+        <div className="text-left text-stone-700 dark:text-gray-300">
           <p className="leading-none">{settingName}</p>
           {description && (
-            <p className="mt-1 text-xs text-gray-500 dark:text-gray-300">
+            <p className="mt-1 text-xs text-stone-700 dark:text-gray-300">
               {description}
             </p>
           )}
         </div>
-        <div className="mt-2 text-left text-gray-500 dark:text-gray-300">
-          <p>{value}</p>
+        <div>
+          <p className="text-left text-stone-700 dark:text-gray-300">{value}</p>
           <input
             type="range"
             min={minValue}

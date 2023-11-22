@@ -27,10 +27,10 @@ export const EmigratePanel = () => {
   }
 
   return (
-    <div className="text-sm text-gray-500 dark:text-gray-300">
+    <div className="text-sm text-stone-700 dark:text-gray-300">
       <label
         htmlFor="message"
-        className="mb-2 block text-left text-sm font-medium text-gray-900 dark:text-gray-400"
+        className="mb-2 block text-left text-sm font-medium text-stone-900 dark:text-gray-400"
       >
         Copy your migration code:
       </label>
@@ -38,14 +38,14 @@ export const EmigratePanel = () => {
         id="emigration-code"
         readOnly={true}
         rows={8}
-        className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+        className="block w-full rounded-lg border border-stone-400 bg-pink-50 p-2.5 text-sm text-stone-900  focus:border-stone-400 focus:ring-stone-400 dark:bg-stone-500 dark:text-white"
         value={emigrationCode}
       />
       <button
         disabled={!isCopyButtonEnabled}
         onClick={copyEmigrationCodeToClipboard}
         type="button"
-        className="accent-button migrate-button"
+        className="accent-button-large migrate-button"
       >
         {isCopyButtonEnabled && (
           <DuplicateIcon className="mr-2 h-6 w-6 cursor-pointer dark:stroke-white" />

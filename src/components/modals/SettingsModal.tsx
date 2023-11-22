@@ -45,15 +45,7 @@ export const SettingsModal = ({
 }: Props) => {
   return (
     <BaseModal title="Settings" isOpen={isOpen} handleClose={handleClose}>
-      <div className="mt-2 flex flex-col divide-y">
-        <SettingsSlider
-          settingName="Challenges"
-          value={numberOfWords}
-          handleValue={(value: number) => handleNumberOfWords(value)}
-          description={CHALLENGES_DESCRIPTION}
-          minValue={MIN_NUMBER_OF_WORDS}
-          maxValue={numberOfLetters === 1 ? 2 : MAX_NUMBER_OF_WORDS}
-        />
+      <div className="mt-2 flex flex-col divide-y divide-stone-300">
         <SettingsSlider
           settingName="Word Length"
           value={numberOfLetters}
@@ -61,6 +53,14 @@ export const SettingsModal = ({
           description={LENGTH_DESCRIPTION}
           minValue={MIN_NUMBER_OF_LETTERS}
           maxValue={MAX_NUMBER_OF_LETTERS}
+        />
+        <SettingsSlider
+          settingName="Challenges"
+          value={numberOfWords}
+          handleValue={(value: number) => handleNumberOfWords(value)}
+          description={CHALLENGES_DESCRIPTION}
+          minValue={MIN_NUMBER_OF_WORDS}
+          maxValue={numberOfLetters === 1 ? 2 : MAX_NUMBER_OF_WORDS}
         />
         <SettingsToggle
           settingName="Hard Mode"
@@ -73,12 +73,14 @@ export const SettingsModal = ({
           flag={isDarkMode}
           handleFlag={handleDarkMode}
         />
-        <SettingsToggle
-          settingName="High Contrast Mode"
-          flag={isHighContrastMode}
-          handleFlag={handleHighContrastMode}
-          description={HIGH_CONTRAST_MODE_DESCRIPTION}
-        />
+        <div className="-mb-3">
+          <SettingsToggle
+            settingName="High Contrast Mode"
+            flag={isHighContrastMode}
+            handleFlag={handleHighContrastMode}
+            description={HIGH_CONTRAST_MODE_DESCRIPTION}
+          />
+        </div>
       </div>
     </BaseModal>
   )

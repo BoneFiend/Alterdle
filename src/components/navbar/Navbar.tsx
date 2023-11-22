@@ -25,8 +25,8 @@ export const Navbar = ({
   setIsSettingsModalOpen,
 }: Props) => {
   return (
-    <div className="navbar">
-      <div className="navbar-content px-5 short:h-auto">
+    <div className="pb-5 short:pb-2">
+      <div className="flex h-12 items-center justify-between border-b border-b-black px-5 short:h-auto">
         <div className="flex">
           <InformationCircleIcon
             className="h-6 w-6 cursor-pointer dark:stroke-white"

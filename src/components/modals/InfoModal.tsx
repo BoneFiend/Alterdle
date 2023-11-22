@@ -14,7 +14,7 @@ type Props = {
 export const InfoModal = ({ isOpen, handleClose }: Props) => {
   return (
     <BaseModal title="Game Info" isOpen={isOpen} handleClose={handleClose}>
-      <p className="text-sm text-gray-500 dark:text-gray-300">
+      <p className="mt-2 text-sm text-stone-700 dark:text-gray-300">
         Alterdle is a fully customisable word guessing game.
         <br />
         <br />
@@ -29,12 +29,12 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         unique daily puzzles!!
       </p>
       <br />
-      <p className="text-sm text-gray-500 dark:text-gray-300">
+      <p className="text-sm text-stone-700 dark:text-gray-300">
         This game chooses words at random, so it will occasionally choose
         obscure or inappropriate ones. If you find a particularly offensive word
         please consider contributing to the project.{' '}
       </p>
-      <p className="mt-6 text-sm italic text-gray-500 dark:text-gray-300">
+      <p className="mt-6 text-sm italic text-stone-700 dark:text-gray-300">
         This game was built on top of the open source project{' '}
         <a
           href="https://github.com/cwackerfuss/react-wordle"

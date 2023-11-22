@@ -93,11 +93,10 @@ export const DatePickerModal = ({
                               prevMonthButtonDisabled &&
                               'cursor-not-allowed opacity-50'
                             }
-                            inline-flex rounded border border-gray-300 bg-white p-1 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0
-                            dark:border-gray-600 dark:bg-slate-700 dark:text-gray-200 
+                            accent-button inline-flex rounded p-1 text-sm font-medium text-gray-700 shadow-sm
                         `}
                 >
-                  <ChevronLeftIcon className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+                  <ChevronLeftIcon className="h-5 w-5 text-white dark:text-gray-300" />
                 </button>
 
                 <button
@@ -109,11 +108,10 @@ export const DatePickerModal = ({
                               nextMonthButtonDisabled &&
                               'cursor-not-allowed opacity-50'
                             }
-                            inline-flex rounded border border-gray-300 bg-white p-1 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0
-                            dark:border-gray-600 dark:bg-slate-700 dark:text-gray-200
+                            accent-button inline-flex rounded p-1 text-sm font-medium text-gray-700 shadow-sm
                         `}
                 >
-                  <ChevronRightIcon className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+                  <ChevronRightIcon className="h-5 w-5 text-white dark:text-gray-300" />
                 </button>
               </div>
             </div>
@@ -124,15 +122,15 @@ export const DatePickerModal = ({
         <button
           type="button"
           disabled={!isValidGameDate(getToday())}
-          className="accent-button disabled:border-gray-200 disabled:bg-white disabled:text-gray-900
-          disabled:focus:outline-none disabled:dark:border-gray-600 disabled:dark:bg-gray-800 disabled:dark:text-gray-400"
+          className="accent-button-large disabled:border-none disabled:bg-pink-50 disabled:text-stone-900
+          disabled:focus:outline-none disabled:dark:border-gray-600 disabled:dark:bg-stone-700 disabled:dark:text-gray-400"
           onClick={() => handleSelectDate(getToday())}
         >
           {DATEPICKER_CHOOSE_TEXT} {DATEPICKER_TODAY_TEXT}
         </button>
         <button
           type="button"
-          className="accent-button"
+          className="accent-button-large"
           disabled={selectedDate >= getToday()}
           onClick={() => handleSelectDate(selectedDate)}
         >

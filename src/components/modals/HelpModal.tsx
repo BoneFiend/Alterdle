@@ -175,7 +175,7 @@ export const HelpModal = ({
         return (
           <>
             {wordCells}
-            <p className="text-sm text-gray-500 dark:text-gray-300">
+            <p className="text-sm text-stone-700 dark:text-gray-300">
               The letter{indices.length > 1 && 's'} {letters.join(', ')}
               {indices.length > 1 && ' and '}
               {last}
@@ -188,7 +188,7 @@ export const HelpModal = ({
         return (
           <>
             {wordCells}
-            <p className="text-sm text-gray-500 dark:text-gray-300">
+            <p className="text-sm text-stone-700 dark:text-gray-300">
               There are no letters {middleText} spot.
             </p>
           </>
@@ -201,7 +201,7 @@ export const HelpModal = ({
 
   return (
     <BaseModal title="How to play" isOpen={isOpen} handleClose={handleClose}>
-      <p className="text-sm text-gray-500 dark:text-gray-300">
+      <p className="mt-2 text-sm text-stone-700 dark:text-gray-300">
         After each guess, the color of the tiles will change to show how close
         your{' '}
         {numberOfWords > 1
@@ -227,27 +227,31 @@ export const HelpModal = ({
         'absent'
       )}
       <br />
-      <p className="text-sm text-gray-500 dark:text-gray-300">
+      <p className="text-sm text-stone-700 dark:text-gray-300">
         The keyboard will display the status of letters that are in words which
         have not been guessed yet, prioritising correct letters.
       </p>
 
-      <SettingsSlider
-        settingName="Challenges"
-        value={numberOfWords}
-        handleValue={(value: number) => handleNumberOfWords(value)}
-        description={CHALLENGES_DESCRIPTION}
-        minValue={MIN_NUMBER_OF_WORDS}
-        maxValue={numberOfLetters === 1 ? 2 : MAX_NUMBER_OF_WORDS}
-      />
-      <SettingsSlider
-        settingName="Word Length"
-        value={numberOfLetters}
-        handleValue={(value: number) => handleNumberOfLetters(value)}
-        description={LENGTH_DESCRIPTION}
-        minValue={MIN_NUMBER_OF_LETTERS}
-        maxValue={MAX_NUMBER_OF_LETTERS}
-      />
+      <div className="flex flex-col divide-y divide-stone-300">
+        <SettingsSlider
+          settingName="Word Length"
+          value={numberOfLetters}
+          handleValue={(value: number) => handleNumberOfLetters(value)}
+          description={LENGTH_DESCRIPTION}
+          minValue={MIN_NUMBER_OF_LETTERS}
+          maxValue={MAX_NUMBER_OF_LETTERS}
+        />
+        <div className="-mb-3">
+          <SettingsSlider
+            settingName="Challenges"
+            value={numberOfWords}
+            handleValue={(value: number) => handleNumberOfWords(value)}
+            description={CHALLENGES_DESCRIPTION}
+            minValue={MIN_NUMBER_OF_WORDS}
+            maxValue={numberOfLetters === 1 ? 2 : MAX_NUMBER_OF_WORDS}
+          />
+        </div>
+      </div>
     </BaseModal>
   )
 }
