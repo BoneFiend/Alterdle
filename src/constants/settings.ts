@@ -18,6 +18,6 @@ export const BLOWFISH_KEY = 'xcQUAHsik#Thq&LG*8es2DsZ$3bw^e'
 export const BLOWFISH_IV = '#45XmF^w'
 export const ENABLE_ARCHIVED_GAMES = true
 export const DATE_LOCALE = enUS
-export const GAME_EPOCH = new Date(2023, 11, 22) // 22 November 2023
+export const GAME_EPOCH = new Date(2023, 10, 21) // 21 November 2023
 export const BASE_URL = 'alterdle.bonefiend.com'
 export const MAX_SHARE_WIDTH = 15 // Number of characters wide
