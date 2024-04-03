@@ -164,6 +164,7 @@ export const HelpModal = ({
             value={c.toUpperCase()}
             isCompleted={true}
             status={indices.indexOf(i) > -1 ? cellStatus : 'null'}
+            helpModal={true}
           />
         ))}
       </div>

@@ -286,6 +286,9 @@ svg.cursor-pointer:hover {
     color: var(--default-cell-text-color);
     opacity: 0;
     max-height: 0rem;
+    padding-top: 0;
+    margin-top: 0;
+    border-top: 0;
   }
   50% {
     background-color: var(--default-cell-bg-color);

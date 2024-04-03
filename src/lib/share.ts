@@ -177,7 +177,7 @@ const joinEmojiGrids = (a: string, b: string) => {
     const aLine = aLines[i] || ''
     const bLine = bLines[i] || ''
 
-    combinedLines.push(aLine + ' ' + bLine)
+    combinedLines.push(aLine + '  ' + bLine)
   }
   return combinedLines.join('\n')
 }

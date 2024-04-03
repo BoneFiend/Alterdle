@@ -5,9 +5,17 @@ type Props = {
   guess: string
   className: string
   solution: string
+  numberOfLetters: number
+  numberOfWords: number
 }
 
-export const CurrentRow = ({ guess, className, solution }: Props) => {
+export const CurrentRow = ({
+  guess,
+  className,
+  solution,
+  numberOfLetters,
+  numberOfWords,
+}: Props) => {
   const splitGuess = unicodeSplit(guess)
   const emptyCells = Array.from(Array(solution.length - splitGuess.length))
   const classes = `flex justify-center mb-1 ${className}`
@@ -23,10 +31,18 @@ export const CurrentRow = ({ guess, className, solution }: Props) => {
               ? 'incorrect'
               : 'null'
           }
+          currentRow={true}
+          numberOfLetters={numberOfLetters}
+          numberOfWords={numberOfWords}
         />
       ))}
       {emptyCells.map((_, i) => (
-        <Cell key={i} />
+        <Cell
+          key={i}
+          currentRow={true}
+          numberOfLetters={numberOfLetters}
+          numberOfWords={numberOfWords}
+        />
       ))}
     </div>
   )

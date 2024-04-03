@@ -89,7 +89,6 @@ export const ImmigratePanel = () => {
         onChange={(e) => handleImmigrationCodeChange(e)}
         id="immigration-code"
         rows={8}
-        // className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-stone-800 dark:focus:ring-stone-800"
         className="block w-full rounded-lg border border-stone-400 bg-pink-50 p-2.5 text-sm text-stone-900  focus:border-stone-400 focus:ring-stone-400 dark:bg-stone-500 dark:text-white"
       ></textarea>
       <button

@@ -78,8 +78,8 @@ function App() {
     localStorage.getItem('theme')
       ? localStorage.getItem('theme') === 'dark'
       : prefersDarkMode
-      ? true
-      : false
+        ? true
+        : false
   )
   const [isHighContrastMode, setIsHighContrastMode] = useState(
     getStoredIsHighContrastMode()
@@ -123,6 +123,9 @@ function App() {
       : false
   )
   const isHardMode = isHardModeRequested && numberOfWords === 1
+  // TODO hard mode can be enabled after the start of the game if the user changes settings.
+  // TODO dont show invalid words in hard mode
+  // TODO disable hard mode toggle (make it look disabled)
 
   useEffect(() => {
     // if no game state on load,
@@ -135,7 +138,7 @@ function App() {
         setIsHelpModalOpen(true)
       }, WELCOME_HELP_MODAL_MS)
     }
-  })
+  }, [])
 
   useEffect(() => {
     // Ensure only 2 challenges can played at once with 2 letters
@@ -143,6 +146,7 @@ function App() {
       setNumberOfWords(2)
     }
     setUrl(numberOfWords, numberOfLetters)
+    // TODO change to useReducer() maybe. it could reduce chance of "Too many calls to Location or History APIs within a short timeframe" error
   }, [numberOfLetters, numberOfWords])
 
   useEffect(() => {
@@ -384,7 +388,7 @@ function App() {
         )}
 
         <div className="mx-auto flex w-full grow flex-col pb-8 short:pb-2 short:pt-2">
-          <div className="no-scrollbar flex h-[1vh] grow flex-wrap items-center justify-center overflow-y-auto">
+          <div className="flex h-[1vh] grow flex-wrap items-start justify-center overflow-y-auto">
             {solution.map((sol: any, i: any) => (
               <Grid
                 key={i}
@@ -394,6 +398,8 @@ function App() {
                 isRevealing={isRevealing}
                 currentRowClassName={currentRowClass}
                 maxChallenges={maxChallenges}
+                numberOfLetters={numberOfLetters}
+                numberOfWords={numberOfWords}
               />
             ))}
           </div>
@@ -462,7 +468,10 @@ function App() {
           />
           <MigrateStatsModal
             isOpen={isMigrateStatsModalOpen}
-            handleClose={() => setIsMigrateStatsModalOpen(false)}
+            handleClose={() => {
+              setIsStatsModalOpen(true)
+              setIsMigrateStatsModalOpen(false)
+            }}
           />
           <SettingsModal
             isOpen={isSettingsModalOpen}
