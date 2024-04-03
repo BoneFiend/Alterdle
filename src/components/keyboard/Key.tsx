@@ -7,7 +7,7 @@ import { CharStatus } from '../../lib/statuses'
 type Props = {
   children?: ReactNode
   value: string
-  width?: number
+  longWidth?: boolean
   status?: CharStatus
   onClick: (value: string) => void
   isRevealing?: boolean
@@ -17,7 +17,7 @@ type Props = {
 export const Key = ({
   children,
   status,
-  width = 40,
+  longWidth = false,
   value,
   onClick,
   isRevealing,
@@ -26,8 +26,13 @@ export const Key = ({
   const keyDelayMs = REVEAL_TIME_MS * numberOfLetters
 
   const classes = classnames(
-    'xxshort:h-8 xxshort:w-8 xxshort:text-xxs xshort:w-10 xshort:h-10 flex short:h-12 h-14 items-center justify-center rounded mx-0.5 text-xs font-bold cursor-pointer select-none dark:text-white text-stone-900',
+    'xshort:h-10 short:h-12 h-14 sm:h-16 ',
+    'flex items-center justify-center rounded mx-0.5 font-bold cursor-pointer select-none dark:text-white text-stone-900 transition-all',
     {
+      'w-[40px] sm:w-[64px] short:w-[40px] text-lg sm:text-3xl short:text-lg':
+        !longWidth,
+      'w-[65.4px] sm:w-[96px] short:w-[65.4px] text-base sm:text-2xl short:text-base':
+        longWidth,
       'transition ease-in-out': isRevealing,
       'default-key': !status,
       absent: status === 'absent',
@@ -38,7 +43,6 @@ export const Key = ({
 
   const styles = {
     transitionDelay: isRevealing ? `${keyDelayMs}ms` : 'unset',
-    width: `${width}px`,
   }
 
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {

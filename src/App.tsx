@@ -404,7 +404,7 @@ function App() {
               />
             ))}
           </div>
-          <div className="px-1 pt-5">
+          <div className="px-1 pt-5 sm:pt-2 short:pt-2">
             <Keyboard
               onChar={onChar}
               onDelete={onDelete}

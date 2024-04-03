@@ -57,7 +57,7 @@ export const Keyboard = ({
   }, [onEnter, onDelete, onChar])
 
   return (
-    <div>
+    <div className="transition-all">
       <div className="mb-1 flex justify-center">
         {['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'].map((key) => (
           <Key
@@ -84,7 +84,7 @@ export const Keyboard = ({
       </div>
       <div className="flex justify-center">
         <Key
-          width={65.4}
+          longWidth={true}
           value="ENTER"
           onClick={onClick}
           numberOfLetters={numberOfLetters}
@@ -102,7 +102,7 @@ export const Keyboard = ({
           />
         ))}
         <Key
-          width={65.4}
+          longWidth={true}
           value="DELETE"
           onClick={onClick}
           numberOfLetters={numberOfLetters}
