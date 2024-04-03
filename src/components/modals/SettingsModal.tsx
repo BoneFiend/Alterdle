@@ -1,4 +1,7 @@
+import { CalendarIcon } from '@heroicons/react/outline'
+
 import {
+  ENABLE_ARCHIVED_GAMES,
   MAX_NUMBER_OF_LETTERS,
   MAX_NUMBER_OF_WORDS,
   MIN_NUMBER_OF_LETTERS,
@@ -6,6 +9,9 @@ import {
 } from '../../constants/settings'
 import {
   CHALLENGES_DESCRIPTION,
+  DATEPICKER_BUTTON,
+  DATEPICKER_DESCRIPTION,
+  DATEPICKER_TITLE,
   HARD_MODE_DESCRIPTION,
   HIGH_CONTRAST_MODE_DESCRIPTION,
   LENGTH_DESCRIPTION,
@@ -27,6 +33,7 @@ type Props = {
   handleNumberOfWords: Function
   numberOfLetters: number
   handleNumberOfLetters: Function
+  handleChooseDateButton: () => void
 }
 
 export const SettingsModal = ({
@@ -42,6 +49,7 @@ export const SettingsModal = ({
   handleNumberOfWords,
   numberOfLetters,
   handleNumberOfLetters,
+  handleChooseDateButton,
 }: Props) => {
   return (
     <BaseModal title="Settings" isOpen={isOpen} handleClose={handleClose}>
@@ -62,6 +70,29 @@ export const SettingsModal = ({
           minValue={MIN_NUMBER_OF_WORDS}
           maxValue={numberOfLetters === 1 ? 2 : MAX_NUMBER_OF_WORDS}
         />
+        {ENABLE_ARCHIVED_GAMES && (
+          <div className="mb-3 flex justify-between gap-4 pt-3">
+            <div className="text-left text-stone-700 dark:text-gray-300">
+              <p className="leading-none">{DATEPICKER_TITLE}</p>
+              <p className="mt-1 text-xs text-stone-700 dark:text-gray-300">
+                {DATEPICKER_DESCRIPTION}
+              </p>
+            </div>
+            <div>
+              <p className="text-left text-stone-700 dark:text-gray-300">
+                <button
+                  type="button"
+                  className="accent-button-large "
+                  onClick={handleChooseDateButton}
+                >
+                  <CalendarIcon className="mr-2 h-6 w-6 cursor-pointer dark:stroke-white" />
+                  {DATEPICKER_BUTTON}
+                </button>
+              </p>
+            </div>
+          </div>
+        )}
+
         <SettingsToggle
           settingName="Hard Mode"
           flag={isHardMode}

@@ -374,8 +374,9 @@ function App() {
           setIsInfoModalOpen={setIsInfoModalOpen}
           setIsHelpModalOpen={setIsHelpModalOpen}
           setIsStatsModalOpen={setIsStatsModalOpen}
-          setIsDatePickerModalOpen={setIsDatePickerModalOpen}
           setIsSettingsModalOpen={setIsSettingsModalOpen}
+          numberOfLetters={numberOfLetters}
+          numberOfWords={numberOfWords}
         />
 
         {!isLatestGame && (
@@ -463,8 +464,13 @@ function App() {
             handleSelectDate={(d) => {
               setIsDatePickerModalOpen(false)
               setGameDate(d)
+              setIsDatePickerModalOpen(false)
+              setIsSettingsModalOpen(false)
             }}
-            handleClose={() => setIsDatePickerModalOpen(false)}
+            handleClose={() => {
+              setIsSettingsModalOpen(true)
+              setIsDatePickerModalOpen(false)
+            }}
           />
           <MigrateStatsModal
             isOpen={isMigrateStatsModalOpen}
@@ -486,6 +492,10 @@ function App() {
             handleNumberOfWords={setNumberOfWords}
             numberOfLetters={numberOfLetters}
             handleNumberOfLetters={setNumberOfLetters}
+            handleChooseDateButton={() => {
+              setIsDatePickerModalOpen(true)
+              setIsSettingsModalOpen(false)
+            }}
           />
           <AlertContainer />
         </div>

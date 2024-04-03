@@ -1,56 +1,53 @@
 import {
-  CalendarIcon,
   ChartBarIcon,
   CogIcon,
   InformationCircleIcon,
   QuestionMarkCircleIcon,
 } from '@heroicons/react/outline'
 
-import { ENABLE_ARCHIVED_GAMES } from '../../constants/settings'
 import { GAME_TITLE } from '../../constants/strings'
 
 type Props = {
   setIsInfoModalOpen: (value: boolean) => void
   setIsHelpModalOpen: (value: boolean) => void
   setIsStatsModalOpen: (value: boolean) => void
-  setIsDatePickerModalOpen: (value: boolean) => void
   setIsSettingsModalOpen: (value: boolean) => void
+  numberOfLetters: number
+  numberOfWords: number
 }
 
 export const Navbar = ({
   setIsInfoModalOpen,
   setIsHelpModalOpen,
   setIsStatsModalOpen,
-  setIsDatePickerModalOpen,
   setIsSettingsModalOpen,
+  numberOfLetters,
+  numberOfWords,
 }: Props) => {
   return (
     <div className="pb-5 short:pb-2">
-      <div className="flex h-12 items-center justify-between border-b border-b-black px-5 short:h-auto">
+      <div className="flex h-12 items-center justify-between border-b border-b-black px-2 transition-all sm:h-16 short:h-auto">
         <div className="flex">
           <InformationCircleIcon
-            className="h-6 w-6 cursor-pointer dark:stroke-white"
+            className="h-7 w-7 cursor-pointer dark:stroke-white sm:h-8 sm:w-8 short:h-7 short:w-7"
             onClick={() => setIsInfoModalOpen(true)}
           />
           <QuestionMarkCircleIcon
-            className="ml-3 h-6 w-6 cursor-pointer dark:stroke-white"
+            className="ml-3 h-7 w-7 cursor-pointer dark:stroke-white sm:h-8 sm:w-8 short:h-7 short:w-7"
             onClick={() => setIsHelpModalOpen(true)}
           />
         </div>
-        <p className="text-xl font-bold dark:text-white">{GAME_TITLE}</p>
+        <p className="text-2xl font-bold transition-all dark:text-white sm:text-4xl short:text-xl">
+          {GAME_TITLE} {numberOfWords}x{numberOfLetters}
+        </p>
         <div className="right-icons">
           <ChartBarIcon
-            className="mr-3 h-6 w-6 cursor-pointer dark:stroke-white"
+            className="mr-3 h-7 w-7 cursor-pointer dark:stroke-white sm:h-8 sm:w-8 short:h-7 short:w-7"
             onClick={() => setIsStatsModalOpen(true)}
           />
-          {ENABLE_ARCHIVED_GAMES && (
-            <CalendarIcon
-              className="mr-3 h-6 w-6 cursor-pointer dark:stroke-white"
-              onClick={() => setIsDatePickerModalOpen(true)}
-            />
-          )}
+
           <CogIcon
-            className="h-6 w-6 cursor-pointer dark:stroke-white"
+            className="h-7 w-7 cursor-pointer dark:stroke-white sm:h-8 sm:w-8 short:h-7 short:w-7"
             onClick={() => setIsSettingsModalOpen(true)}
           />
         </div>
