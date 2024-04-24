@@ -19,6 +19,7 @@ html {
 }
 
 :root {
+  /* TODO redo themeing. Make a stronger pink, and change from brown */
   --theme-bg: theme('colors.pink.100');
   --theme-modal-bg: theme('colors.pink.100');
 
@@ -213,6 +214,10 @@ svg.cursor-pointer:hover {
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.react-datepicker__aria-live {
+  display: none !important;
 }
 
 @keyframes revealAbsentCharCell {

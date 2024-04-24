@@ -4,7 +4,7 @@ import { MAX_SHARE_WIDTH } from '../constants/settings'
 import { GAME_TITLE } from '../constants/strings'
 import { getGuessStatuses } from './statuses'
 import { getShareUrl } from './urlutils'
-import { getGameDate, getIndex, unicodeSplit } from './words'
+import { getIndex, unicodeSplit } from './words'
 
 const webShareApiDeviceTypes: string[] = ['mobile', 'smarttv', 'wearable']
 const parser = new UAParser()
@@ -22,7 +22,8 @@ export const shareStatus = (
   handleShareFailure: () => void,
   maxChallenges: number,
   numberOfWords: number,
-  numberOfLetters: number
+  numberOfLetters: number,
+  gameDate: Date
 ) => {
   const gridsPerRow = Math.max(
     Math.floor(MAX_SHARE_WIDTH / (numberOfLetters + 1)),
@@ -30,12 +31,12 @@ export const shareStatus = (
   )
 
   const header = `${GAME_TITLE} #${getIndex(
-    getGameDate()
+    gameDate
   )} ${numberOfWords}x${numberOfLetters} ${
     lost ? 'X' : guesses.length
   }/${maxChallenges}${isHardMode ? '*' : ''}\n`
 
-  const url = getShareUrl(numberOfWords, numberOfLetters)
+  const url = getShareUrl(numberOfWords, numberOfLetters, gameDate)
   var grids = ''
   var numbers = ''
 

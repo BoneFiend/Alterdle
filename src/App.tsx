@@ -1,4 +1,4 @@
-import { ClockIcon } from '@heroicons/react/outline'
+import { CalendarIcon } from '@heroicons/react/outline'
 import { format } from 'date-fns'
 import { default as GraphemeSplitter } from 'grapheme-splitter'
 import { useEffect, useMemo, useState } from 'react'
@@ -43,24 +43,30 @@ import {
   setStoredIsHighContrastMode,
 } from './lib/localStorage'
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
-import { loadNumberOfLetters, loadNumberOfWords, setUrl } from './lib/urlutils'
+import {
+  loadGameDate,
+  loadNumberOfLetters,
+  loadNumberOfWords,
+  setUrl,
+} from './lib/urlutils'
 import {
   Obj2d,
   checkIsGameWon,
   countGridsWon,
   findFirstUnusedReveal,
-  getGameDate,
   getIsLatestGame,
   getSolution,
   isWordInWordList,
-  setGameDate,
+  loadGuesses,
   unicodeLength,
   updateObj2d,
 } from './lib/words'
 
 function App() {
-  const isLatestGame = getIsLatestGame()
-  const gameDate = getGameDate()
+  const [gameDate, setGameDate] = useState<Date>(() => {
+    return loadGameDate()
+  })
+  const isLatestGame = useMemo(() => getIsLatestGame(gameDate), [gameDate])
   const prefersDarkMode = window.matchMedia(
     '(prefers-color-scheme: dark)'
   ).matches
@@ -100,16 +106,11 @@ function App() {
   const maxChallenges = numberOfWords + MAX_CHALLENGES_BONUS
 
   const solution = useMemo(
-    () =>
-      getSolution(getGameDate(), numberOfWords, numberOfLetters).newSolution,
-    [numberOfWords, numberOfLetters]
+    () => getSolution(gameDate, numberOfWords, numberOfLetters).newSolution,
+    [numberOfWords, numberOfLetters, gameDate]
   )
   const [guesses, setGuesses] = useState<Obj2d>(() => {
-    const loaded = loadGameStateFromLocalStorage(isLatestGame)
-    if (loaded?.gameDate.getTime() !== getGameDate().getTime()) {
-      return {}
-    }
-    return loaded.guesses
+    return loadGuesses(gameDate, isLatestGame)
   })
 
   const [currentGuesses, setCurrentGuesses] = useState<Obj2d>({})
@@ -141,13 +142,17 @@ function App() {
   }, [])
 
   useEffect(() => {
-    // Ensure only 2 challenges can played at once with 2 letters
+    // Ensures only 2 challenges can played at once with 2 letters
     if (numberOfLetters === 1 && numberOfWords > 2) {
       setNumberOfWords(2)
     }
-    setUrl(numberOfWords, numberOfLetters)
+    setUrl(numberOfWords, numberOfLetters, gameDate)
     // TODO change to useReducer() maybe. it could reduce chance of "Too many calls to Location or History APIs within a short timeframe" error
-  }, [numberOfLetters, numberOfWords])
+  }, [numberOfLetters, numberOfWords, gameDate])
+
+  useEffect(() => {
+    setGuesses(loadGuesses(gameDate, isLatestGame))
+  }, [gameDate, isLatestGame])
 
   useEffect(() => {
     DISCOURAGE_INAPP_BROWSERS &&
@@ -203,11 +208,11 @@ function App() {
   }
 
   useEffect(() => {
-    saveGameStateToLocalStorage(getIsLatestGame(), {
+    saveGameStateToLocalStorage(isLatestGame, {
       guesses: guesses,
-      gameDate: getGameDate(),
+      gameDate: gameDate,
     })
-  }, [guesses])
+  }, [guesses, gameDate, isLatestGame])
 
   const onChar = (value: string) => {
     if (
@@ -380,9 +385,9 @@ function App() {
         />
 
         {!isLatestGame && (
-          <div className="flex items-center justify-center">
-            <ClockIcon className="h-6 w-6 stroke-gray-600 dark:stroke-gray-300" />
-            <p className="text-base text-gray-600 dark:text-gray-300">
+          <div className="mb-1 flex items-center justify-center">
+            <CalendarIcon className="h-6 w-6 stroke-gray-600 dark:stroke-gray-300" />
+            <p className="ml-1 text-base text-gray-600 dark:text-gray-300">
               {format(gameDate, 'd MMMM yyyy', { locale: DATE_LOCALE })}
             </p>
           </div>
@@ -457,14 +462,15 @@ function App() {
             numberOfLetters={numberOfLetters}
             handleNumberOfLetters={setNumberOfLetters}
             maxChallenges={maxChallenges}
+            gameDate={gameDate}
           />
           <DatePickerModal
             isOpen={isDatePickerModalOpen}
-            initialDate={getGameDate()}
+            initialDate={gameDate}
             handleSelectDate={(d) => {
               setIsDatePickerModalOpen(false)
               setGameDate(d)
-              setIsDatePickerModalOpen(false)
+              setUrl(numberOfWords, numberOfLetters, d)
               setIsSettingsModalOpen(false)
             }}
             handleClose={() => {

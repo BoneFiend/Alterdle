@@ -37,7 +37,7 @@ export const Grid = ({
   // Amount of empty rows after wonIndex
   const empties =
     guesses.length < maxChallenges - 1 || wonIndex !== guesses.length
-      ? Array.from(Array(maxChallenges - 1 - guesses.length))
+      ? Array.from(Array(Math.max(maxChallenges - 1 - guesses.length, 0)))
       : []
 
   return (
@@ -52,41 +52,35 @@ export const Grid = ({
           numberOfWords={numberOfWords}
         />
       ))}
-      {wonIndex === guesses.length && (
+      {wonIndex === guesses.length && guesses.length < maxChallenges && (
         // Grid not won yet
-        <>
-          {guesses.length < maxChallenges && (
-            // Regular current row
-            <CurrentRow
-              guess={currentGuess}
-              className={currentRowClassName}
-              solution={solution}
-              numberOfLetters={numberOfLetters}
-              numberOfWords={numberOfWords}
-            />
-          )}
-        </>
+        // Regular current row
+        <CurrentRow
+          guess={currentGuess}
+          className={currentRowClassName}
+          solution={solution}
+          numberOfLetters={numberOfLetters}
+          numberOfWords={numberOfWords}
+        />
       )}
-      {wonIndex !== guesses.length && (
+      {midEmpties.map((_, i) => (
+        <EmptyRow
+          key={i}
+          solution={solution}
+          numberOfLetters={numberOfLetters}
+          numberOfWords={numberOfWords}
+        />
+      ))}
+      {wonIndex !== guesses.length && guesses.length < maxChallenges && (
         // Grid won
-        <>
-          {midEmpties.map((_, i) => (
-            <EmptyRow
-              key={i}
-              solution={solution}
-              numberOfLetters={numberOfLetters}
-              numberOfWords={numberOfWords}
-            />
-          ))}
-          {/* Current row that doesn't fill with currentGuess*/}
-          <CurrentRow
-            guess={''}
-            className={currentRowClassName}
-            solution={solution}
-            numberOfLetters={numberOfLetters}
-            numberOfWords={numberOfWords}
-          />
-        </>
+        // Current row that doesn't fill with currentGuess
+        <CurrentRow
+          guess={''}
+          className={currentRowClassName}
+          solution={solution}
+          numberOfLetters={numberOfLetters}
+          numberOfWords={numberOfWords}
+        />
       )}
       {empties.map((_, i) => (
         <EmptyRow

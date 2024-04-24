@@ -22,12 +22,7 @@ import {
 } from '../../constants/strings'
 import { getToday } from '../../lib/dateutils'
 import { shareStatus } from '../../lib/share'
-import {
-  Obj2d,
-  checkIsGameWon,
-  getGameDate,
-  getNextGameDate,
-} from '../../lib/words'
+import { Obj2d, checkIsGameWon, getNextGameDate } from '../../lib/words'
 import { Histogram } from '../stats/Histogram'
 import { MigrationIntro } from '../stats/MigrationIntro'
 import { StatBar } from '../stats/StatBar'
@@ -55,6 +50,7 @@ type Props = {
   numberOfLetters: number
   handleNumberOfLetters: Function
   maxChallenges: number
+  gameDate: Date
 }
 
 export const StatsModal = ({
@@ -78,6 +74,7 @@ export const StatsModal = ({
   numberOfLetters,
   handleNumberOfLetters,
   maxChallenges,
+  gameDate,
 }: Props) => {
   return (
     <BaseModal
@@ -93,7 +90,9 @@ export const StatsModal = ({
       <h4 className="text-lg font-medium leading-6 text-stone-900 dark:text-gray-100">
         {GUESS_DISTRIBUTION_TEXT}
       </h4>
-      <Histogram // TODO add a second histogram to display how many grids were won, toggle between the two
+      <Histogram
+        // TODO add a second histogram to display how many grids were won, toggle between the two
+        // Allow user to view every single histogram all at the same time in a big dumb view
         isLatestGame={isLatestGame}
         gameStats={gameStats}
         isGameWon={checkIsGameWon(guesses, solution)}
@@ -141,7 +140,7 @@ export const StatsModal = ({
                   <div className="mt-1 ml-1 text-center text-sm sm:text-base">
                     <strong>{ARCHIVE_GAMEDATE_TEXT}:</strong>
                     <br />
-                    {format(getGameDate(), 'd MMMM yyyy', {
+                    {format(gameDate, 'd MMMM yyyy', {
                       locale: DATE_LOCALE,
                     })}
                   </div>
@@ -164,7 +163,8 @@ export const StatsModal = ({
                     handleShareFailure,
                     maxChallenges,
                     numberOfWords,
-                    numberOfLetters
+                    numberOfLetters,
+                    gameDate
                   )
                 }}
               >
