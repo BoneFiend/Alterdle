@@ -2,6 +2,7 @@ import { CalendarIcon } from '@heroicons/react/outline'
 
 import {
   ENABLE_ARCHIVED_GAMES,
+  ENABLE_MIGRATE_STATS,
   MAX_NUMBER_OF_LETTERS,
   MAX_NUMBER_OF_WORDS,
   MIN_NUMBER_OF_LETTERS,
@@ -15,7 +16,9 @@ import {
   HARD_MODE_DESCRIPTION,
   HIGH_CONTRAST_MODE_DESCRIPTION,
   LENGTH_DESCRIPTION,
+  LONG_SHARE_DESCRIPTION,
 } from '../../constants/strings'
+import { MigrationIntro } from '../stats/MigrationIntro'
 import { BaseModal } from './BaseModal'
 import { SettingsSlider } from './SettingsSlider'
 import { SettingsToggle } from './SettingsToggle'
@@ -34,6 +37,9 @@ type Props = {
   numberOfLetters: number
   handleNumberOfLetters: Function
   handleChooseDateButton: () => void
+  handleMigrateStatsButton: () => void
+  longShare: boolean
+  handleLongShare: Function
 }
 
 export const SettingsModal = ({
@@ -50,6 +56,9 @@ export const SettingsModal = ({
   numberOfLetters,
   handleNumberOfLetters,
   handleChooseDateButton,
+  handleMigrateStatsButton,
+  longShare,
+  handleLongShare,
 }: Props) => {
   return (
     <BaseModal title="Settings" isOpen={isOpen} handleClose={handleClose}>
@@ -92,7 +101,6 @@ export const SettingsModal = ({
             </div>
           </div>
         )}
-
         <SettingsToggle
           settingName="Hard Mode"
           flag={isHardMode}
@@ -100,18 +108,29 @@ export const SettingsModal = ({
           description={HARD_MODE_DESCRIPTION}
         />
         <SettingsToggle
+          settingName="Long Format Share Text"
+          flag={longShare}
+          handleFlag={handleLongShare}
+          description={LONG_SHARE_DESCRIPTION}
+        />
+        <SettingsToggle
           settingName="Dark Mode"
           flag={isDarkMode}
           handleFlag={handleDarkMode}
         />
-        <div className="-mb-3">
-          <SettingsToggle
-            settingName="High Contrast Mode"
-            flag={isHighContrastMode}
-            handleFlag={handleHighContrastMode}
-            description={HIGH_CONTRAST_MODE_DESCRIPTION}
-          />
-        </div>
+        <SettingsToggle
+          settingName="High Contrast Mode"
+          flag={isHighContrastMode}
+          handleFlag={handleHighContrastMode}
+          description={HIGH_CONTRAST_MODE_DESCRIPTION}
+        />
+        {ENABLE_MIGRATE_STATS && (
+          <div>
+            <MigrationIntro
+              handleMigrateStatsButton={handleMigrateStatsButton}
+            />
+          </div>
+        )}
       </div>
     </BaseModal>
   )

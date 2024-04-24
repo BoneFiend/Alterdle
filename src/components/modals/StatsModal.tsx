@@ -5,7 +5,6 @@ import Countdown from 'react-countdown'
 import {
   DATE_LOCALE,
   ENABLE_ARCHIVED_GAMES,
-  ENABLE_MIGRATE_STATS,
   MAX_NUMBER_OF_LETTERS,
   MAX_NUMBER_OF_WORDS,
   MIN_NUMBER_OF_LETTERS,
@@ -24,7 +23,6 @@ import { getToday } from '../../lib/dateutils'
 import { shareStatus } from '../../lib/share'
 import { Obj2d, checkIsGameWon, getNextGameDate } from '../../lib/words'
 import { Histogram } from '../stats/Histogram'
-import { MigrationIntro } from '../stats/MigrationIntro'
 import { StatBar } from '../stats/StatBar'
 import { BaseModal } from './BaseModal'
 import { SettingsSlider } from './SettingsSlider'
@@ -51,6 +49,7 @@ type Props = {
   handleNumberOfLetters: Function
   maxChallenges: number
   gameDate: Date
+  longShare: boolean
 }
 
 export const StatsModal = ({
@@ -75,6 +74,7 @@ export const StatsModal = ({
   handleNumberOfLetters,
   maxChallenges,
   gameDate,
+  longShare,
 }: Props) => {
   return (
     <BaseModal
@@ -122,7 +122,7 @@ export const StatsModal = ({
           getToday().getTime() ||
           isGameWon ||
           isGameLost) && (
-          <div className="columns-2 items-center items-stretch justify-center py-3 text-center text-stone-700 dark:text-white">
+          <div className="columns-2 items-center justify-center pt-2 text-center text-stone-700 dark:text-white">
             <div className="inline-block w-full text-left">
               {(!ENABLE_ARCHIVED_GAMES || isLatestGame) && (
                 <div>
@@ -136,8 +136,8 @@ export const StatsModal = ({
               )}
               {ENABLE_ARCHIVED_GAMES && !isLatestGame && (
                 <div className="mt-2 inline-flex">
-                  <ClockIcon className="mr-1 mt-2 mt-1 h-5 w-5 stroke-black dark:stroke-white" />
-                  <div className="mt-1 ml-1 text-center text-sm sm:text-base">
+                  <ClockIcon className="mr-1 mt-1 h-5 w-5 stroke-black dark:stroke-white" />
+                  <div className="mt-0 ml-1 text-center text-sm sm:text-base">
                     <strong>{ARCHIVE_GAMEDATE_TEXT}:</strong>
                     <br />
                     {format(gameDate, 'd MMMM yyyy', {
@@ -164,7 +164,8 @@ export const StatsModal = ({
                     maxChallenges,
                     numberOfWords,
                     numberOfLetters,
-                    gameDate
+                    gameDate,
+                    longShare
                   )
                 }}
               >
@@ -172,13 +173,6 @@ export const StatsModal = ({
                 {SHARE_TEXT}
               </button>
             </div>
-          </div>
-        )}
-        {ENABLE_MIGRATE_STATS && (
-          <div>
-            <MigrationIntro
-              handleMigrateStatsButton={handleMigrateStatsButton}
-            />
           </div>
         )}
       </div>

@@ -23,7 +23,8 @@ export const shareStatus = (
   maxChallenges: number,
   numberOfWords: number,
   numberOfLetters: number,
-  gameDate: Date
+  gameDate: Date,
+  longShare: boolean
 ) => {
   const gridsPerRow = Math.max(
     Math.floor(MAX_SHARE_WIDTH / (numberOfLetters + 1)),
@@ -70,7 +71,9 @@ export const shareStatus = (
     }
     grids = grids.concat('\n', row)
   }
-  const textToShare = header.concat(numbers, '\n', url, grids)
+  const textToShare = longShare
+    ? header.concat(numbers, '\n', url, grids)
+    : header.concat(numbers, '\n', url)
   const shareData = { text: textToShare }
 
   let shareSuccess = false
@@ -178,7 +181,7 @@ const joinEmojiGrids = (a: string, b: string) => {
     const aLine = aLines[i] || ''
     const bLine = bLines[i] || ''
 
-    combinedLines.push(aLine + '  ' + bLine)
+    combinedLines.push(aLine + ' ' + bLine)
   }
   return combinedLines.join('\n')
 }

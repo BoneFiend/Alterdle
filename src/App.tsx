@@ -90,6 +90,10 @@ function App() {
   const [isHighContrastMode, setIsHighContrastMode] = useState(
     getStoredIsHighContrastMode()
   )
+
+  const [longShare, setLongShare] = useState(
+    localStorage.getItem('longShare') === 'true'
+  )
   const [isRevealing, setIsRevealing] = useState(false)
 
   const [numberOfWords, setNumberOfWords] = useState(() => {
@@ -176,6 +180,11 @@ function App() {
       document.documentElement.classList.remove('high-contrast')
     }
   }, [isDarkMode, isHighContrastMode])
+
+  const handleLongShare = (isLongShare: boolean) => {
+    setLongShare(isLongShare)
+    localStorage.setItem('longShare', isLongShare.toString())
+  }
 
   const handleDarkMode = (isDark: boolean) => {
     setIsDarkMode(isDark)
@@ -463,6 +472,7 @@ function App() {
             handleNumberOfLetters={setNumberOfLetters}
             maxChallenges={maxChallenges}
             gameDate={gameDate}
+            longShare={longShare}
           />
           <DatePickerModal
             isOpen={isDatePickerModalOpen}
@@ -481,7 +491,7 @@ function App() {
           <MigrateStatsModal
             isOpen={isMigrateStatsModalOpen}
             handleClose={() => {
-              setIsStatsModalOpen(true)
+              setIsSettingsModalOpen(true)
               setIsMigrateStatsModalOpen(false)
             }}
           />
@@ -502,6 +512,12 @@ function App() {
               setIsDatePickerModalOpen(true)
               setIsSettingsModalOpen(false)
             }}
+            handleMigrateStatsButton={() => {
+              setIsSettingsModalOpen(false)
+              setIsMigrateStatsModalOpen(true)
+            }}
+            longShare={longShare}
+            handleLongShare={handleLongShare}
           />
           <AlertContainer />
         </div>
