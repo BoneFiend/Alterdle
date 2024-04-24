@@ -27,10 +27,17 @@ export const Grid = ({
   const wonIndex = guesses.includes(solution)
     ? guesses.indexOf(solution)
     : guesses.length
-  const emptiesOffset = guesses.length - wonIndex // 0 if game was not won
+
+  // Amount of empty rows between wonIndex and currentRow
+  const midEmpties =
+    wonIndex !== guesses.length
+      ? Array.from(Array(guesses.length - wonIndex - 1))
+      : []
+
+  // Amount of empty rows after wonIndex
   const empties =
     guesses.length < maxChallenges - 1 || wonIndex !== guesses.length
-      ? Array.from(Array(maxChallenges - 1 - guesses.length + emptiesOffset))
+      ? Array.from(Array(maxChallenges - 1 - guesses.length))
       : []
 
   return (
@@ -46,8 +53,10 @@ export const Grid = ({
         />
       ))}
       {wonIndex === guesses.length && (
+        // Grid not won yet
         <>
           {guesses.length < maxChallenges && (
+            // Regular current row
             <CurrentRow
               guess={currentGuess}
               className={currentRowClassName}
@@ -56,6 +65,27 @@ export const Grid = ({
               numberOfWords={numberOfWords}
             />
           )}
+        </>
+      )}
+      {wonIndex !== guesses.length && (
+        // Grid won
+        <>
+          {midEmpties.map((_, i) => (
+            <EmptyRow
+              key={i}
+              solution={solution}
+              numberOfLetters={numberOfLetters}
+              numberOfWords={numberOfWords}
+            />
+          ))}
+          {/* Current row that doesn't fill with currentGuess*/}
+          <CurrentRow
+            guess={''}
+            className={currentRowClassName}
+            solution={solution}
+            numberOfLetters={numberOfLetters}
+            numberOfWords={numberOfWords}
+          />
         </>
       )}
       {empties.map((_, i) => (

@@ -25,7 +25,7 @@ export const Navbar = ({
   numberOfWords,
 }: Props) => {
   return (
-    <div className="pb-5 short:pb-2">
+    <div className="pb-5 sm:pb-2 short:pb-2">
       <div className="flex h-12 items-center justify-between border-b border-b-black px-2 transition-all sm:h-16 short:h-auto">
         <div className="flex">
           <InformationCircleIcon

@@ -156,7 +156,7 @@ export const HelpModal = ({
     cellStatus: CharStatus
   ) => {
     const wordCells = (
-      <div className="mb-1 mt-4 flex justify-center">
+      <div className="mb-1 mt-2 flex justify-center">
         {word.split('').map((c, i) => (
           <Cell
             key={i}
