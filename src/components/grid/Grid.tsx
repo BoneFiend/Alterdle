@@ -1,6 +1,4 @@
-import { CompletedRow } from './CompletedRow'
-import { CurrentRow } from './CurrentRow'
-import { EmptyRow } from './EmptyRow'
+import { Row } from './Row'
 import { SolutionRow } from './SolutionRow'
 
 type Props = {
@@ -24,70 +22,26 @@ export const Grid = ({
   numberOfLetters,
   numberOfWords,
 }: Props) => {
-  const wonIndex = guesses.includes(solution)
-    ? guesses.indexOf(solution)
-    : guesses.length
-
-  // Amount of empty rows between wonIndex and currentRow
-  const midEmpties =
-    wonIndex !== guesses.length
-      ? Array.from(Array(guesses.length - wonIndex - 1))
-      : []
-
-  // Amount of empty rows after wonIndex
-  const empties =
-    guesses.length < maxChallenges - 1 || wonIndex !== guesses.length
-      ? Array.from(Array(Math.max(maxChallenges - 1 - guesses.length, 0)))
-      : []
-
   return (
     <div className="max-w-full py-3 px-2 sm:px-3">
-      {guesses.slice(0, wonIndex + 1).map((guess, i) => (
-        <CompletedRow
+      {Array.from({ length: maxChallenges }, (_, i) => (
+        <Row
           key={i}
           solution={solution}
-          guess={guess}
-          isRevealing={isRevealing && guesses.length - 1 === i}
+          guess={
+            guesses.length === i
+              ? currentGuess
+              : guesses.length > i
+                ? guesses[i]
+                : ''
+          }
           numberOfLetters={numberOfLetters}
           numberOfWords={numberOfWords}
-        />
-      ))}
-      {wonIndex === guesses.length && guesses.length < maxChallenges && (
-        // Grid not won yet
-        // Regular current row
-        <CurrentRow
-          guess={currentGuess}
-          className={currentRowClassName}
-          solution={solution}
-          numberOfLetters={numberOfLetters}
-          numberOfWords={numberOfWords}
-        />
-      )}
-      {midEmpties.map((_, i) => (
-        <EmptyRow
-          key={i}
-          solution={solution}
-          numberOfLetters={numberOfLetters}
-          numberOfWords={numberOfWords}
-        />
-      ))}
-      {wonIndex !== guesses.length && guesses.length < maxChallenges && (
-        // Grid won
-        // Current row that doesn't fill with currentGuess
-        <CurrentRow
-          guess={''}
-          className={currentRowClassName}
-          solution={solution}
-          numberOfLetters={numberOfLetters}
-          numberOfWords={numberOfWords}
-        />
-      )}
-      {empties.map((_, i) => (
-        <EmptyRow
-          key={i}
-          solution={solution}
-          numberOfLetters={numberOfLetters}
-          numberOfWords={numberOfWords}
+          isCurrentRow={guesses.length === i}
+          isCompleted={guesses.length > i}
+          isNewlyCompleted={guesses.length - 1 === i}
+          currentRowClassName={currentRowClassName}
+          isRevealing={isRevealing}
         />
       ))}
       {!guesses.includes(solution) && guesses.length === maxChallenges && (
