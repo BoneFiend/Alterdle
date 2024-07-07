@@ -34,6 +34,19 @@ export const Cell = ({
 
   const classes = classnames(
     'border-solid border-2 flex items-center justify-center mx-0.5 font-bold rounded dark:text-white transition-[height] duration-300 ease-in-out',
+    [
+      'delay-[350ms]',
+      'delay-[700ms]',
+      'delay-[1050ms]',
+      'delay-[1400ms]',
+      'delay-[1750ms]',
+      'delay-[2100ms]',
+      'delay-[2450ms]',
+      'delay-[2800ms]',
+      'delay-[3150ms]',
+      'delay-[3500ms]',
+      'delay-[3850ms]',
+    ][numberOfLetters - 1],
     {
       'text-4xl w-14 h-14': !crampedGrids && !helpModal,
       'md:text-4xl text-2xl w-8 h-8 md:w-14 md:h-14 ':
