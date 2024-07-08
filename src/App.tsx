@@ -230,14 +230,14 @@ function App() {
         maxChallenges &&
       !isGameWon
     ) {
-      setCurrentGuesses(
-        updateObj2d(
-          currentGuesses,
+      setCurrentGuesses((prev) => {
+        return updateObj2d(
+          prev,
           numberOfWords,
           numberOfLetters,
           `${currentGuess}${value}`
         )
-      )
+      })
     }
   }
 
