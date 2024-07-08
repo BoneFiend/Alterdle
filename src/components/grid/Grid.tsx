@@ -26,7 +26,7 @@ export const Grid = ({
     <div className="max-w-full py-3 px-2 sm:px-3">
       {Array.from({ length: maxChallenges }, (_, i) => (
         <Row
-          key={i}
+          key={`${numberOfLetters}-${numberOfWords}-${i}`}
           solution={solution}
           guess={
             guesses.length === i

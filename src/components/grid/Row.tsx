@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { REVEAL_TIME_MS } from '../../constants/settings'
 import { getGuessStatuses } from '../../lib/statuses'
@@ -29,6 +29,8 @@ export const Row = ({
   isRevealing: initialIsRevealing,
 }: Props) => {
   const [isRevealing, setIsRevealing] = useState(initialIsRevealing)
+  const [hasRevealed, setHasRevealed] = useState(isNewlyCompleted)
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const statuses = useMemo(() => {
     return guess ? getGuessStatuses(solution, guess) : []
@@ -40,20 +42,24 @@ export const Row = ({
 
   useEffect(() => {
     // Correctly applies revealing to newly completed rows
-    if (initialIsRevealing && isNewlyCompleted) {
+    if (!hasRevealed && initialIsRevealing && isNewlyCompleted) {
       setIsRevealing(initialIsRevealing)
-      const timer = setTimeout(
+      setHasRevealed(true)
+      timerRef.current = setTimeout(
         () => {
           setIsRevealing(false)
         },
         REVEAL_TIME_MS * (solution.length + 1)
       )
-      return () => {
-        setIsRevealing(false)
-        clearTimeout(timer)
-      }
     }
-  }, [solution.length, isNewlyCompleted, initialIsRevealing, guess])
+  }, [solution.length, isNewlyCompleted, initialIsRevealing, hasRevealed])
+
+  useEffect(() => {
+    setIsRevealing(false)
+    if (timerRef.current) {
+      clearTimeout(timerRef.current)
+    }
+  }, [numberOfLetters, numberOfWords])
 
   return (
     <div
