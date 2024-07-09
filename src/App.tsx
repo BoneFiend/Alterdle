@@ -96,7 +96,7 @@ function App() {
     localStorage.getItem('longShare') === 'true'
   )
 
-  const { focussedRows, focusRow, unfocusEarliestRow, unfocusAllRows } =
+  const { isRowFocussed, focusRow, unfocusEarliestRow, unfocusAllRows } =
     useFocussedRows()
   const [shouldRefocus, setShouldRefocus] = useState(false)
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -446,7 +446,11 @@ function App() {
               onEnter={onEnter}
               solution={solution}
               guesses={guesses[numberOfWords]?.[numberOfLetters] ?? []}
-              isRevealing={focussedRows.length > 0}
+              isRevealing={
+                !isRowFocussed(
+                  (guesses[numberOfWords]?.[numberOfLetters] ?? []).length
+                )
+              }
               numberOfLetters={numberOfLetters}
             />
           </div>
