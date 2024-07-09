@@ -1,7 +1,7 @@
 import { CalendarIcon } from '@heroicons/react/outline'
 import { format } from 'date-fns'
 import { default as GraphemeSplitter } from 'grapheme-splitter'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import Div100vh from 'react-div-100vh'
 
 import { AlertContainer } from './components/alerts/AlertContainer'
@@ -61,6 +61,7 @@ import {
   unicodeLength,
   updateObj2d,
 } from './lib/words'
+import useFocussedRows from './stores/useFocussedRows'
 
 function App() {
   const [gameDate, setGameDate] = useState<Date>(() => {
@@ -94,7 +95,11 @@ function App() {
   const [longShare, setLongShare] = useState(
     localStorage.getItem('longShare') === 'true'
   )
-  const [isRevealing, setIsRevealing] = useState(false)
+
+  const { focussedRows, focusRow, unfocusEarliestRow, unfocusAllRows } =
+    useFocussedRows()
+  const [shouldRefocus, setShouldRefocus] = useState(false)
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const [numberOfWords, setNumberOfWords] = useState(() => {
     return loadNumberOfWords()
@@ -131,6 +136,7 @@ function App() {
   // TODO hard mode can be enabled after the start of the game if the user changes settings.
   // TODO dont show invalid words in hard mode
   // TODO disable hard mode toggle (make it look disabled)
+  // TODO move lots of functions here to game component
 
   useEffect(() => {
     // if no game state on load,
@@ -146,12 +152,35 @@ function App() {
   }, [])
 
   useEffect(() => {
+    if (shouldRefocus) {
+      setShouldRefocus(false)
+      unfocusAllRows()
+      const guessesCount = (guesses[numberOfWords]?.[numberOfLetters] ?? [])
+        .length
+      if (guessesCount < maxChallenges) {
+        focusRow(guessesCount)
+      }
+    }
+  }, [
+    numberOfWords,
+    numberOfLetters,
+    guesses,
+    focusRow,
+    shouldRefocus,
+    unfocusAllRows,
+    maxChallenges,
+  ])
+
+  useEffect(() => {
     // Ensures only 2 challenges can played at once with 2 letters
     if (numberOfLetters === 1 && numberOfWords > 2) {
       setNumberOfWords(2)
     }
     setUrl(numberOfWords, numberOfLetters, gameDate)
     // TODO change to useReducer() maybe. it could reduce chance of "Too many calls to Location or History APIs within a short timeframe" error
+
+    if (timerRef.current) clearTimeout(timerRef.current)
+    setShouldRefocus(true)
   }, [numberOfLetters, numberOfWords, gameDate])
 
   useEffect(() => {
@@ -224,6 +253,7 @@ function App() {
   }, [guesses, gameDate, isLatestGame])
 
   const onChar = (value: string) => {
+    focusRow((guesses[numberOfWords]?.[numberOfLetters] ?? []).length)
     if (
       unicodeLength(`${currentGuess}${value}`) <= numberOfLetters &&
       (guesses[numberOfWords]?.[numberOfLetters] ?? []).length <
@@ -264,6 +294,7 @@ function App() {
       setCurrentRowClass('jiggle')
       return showErrorAlert(NOT_ENOUGH_LETTERS_MESSAGE, {
         onClose: clearCurrentRowClass,
+        // TODO allow jiggle as frequently as you want
       })
     }
 
@@ -289,19 +320,10 @@ function App() {
       }
     }
 
-    setIsRevealing(true)
-    // Turn this back off after all cells have been revealed
-    setTimeout(
-      () => {
-        setIsRevealing(false)
-      },
-      REVEAL_TIME_MS *
-        numberOfLetters *
-        ((guesses[numberOfWords]?.[numberOfLetters] ?? []).length + 1 ===
-        maxChallenges
-          ? 2 // * 2 to allow for solution row to reveal
-          : 1)
-    )
+    timerRef.current = setTimeout(() => {
+      focusRow((guesses[numberOfWords]?.[numberOfLetters] ?? [1]).length)
+      unfocusEarliestRow()
+    }, REVEAL_TIME_MS * numberOfLetters)
 
     if (
       unicodeLength(currentGuess) === numberOfLetters &&
@@ -403,14 +425,13 @@ function App() {
         )}
 
         <div className="mx-auto flex w-full grow flex-col pb-8 short:pb-2 short:pt-2">
-          <div className="flex h-[1vh] grow flex-wrap items-start justify-center overflow-y-auto">
+          <div className="flex h-[1vh] grow flex-wrap items-start justify-center overflow-y-scroll">
             {solution.map((sol: any, i: any) => (
               <Grid
                 key={i}
                 solution={solution[i]}
                 guesses={guesses[numberOfWords]?.[numberOfLetters] ?? []}
                 currentGuess={currentGuess}
-                isRevealing={isRevealing}
                 currentRowClassName={currentRowClass}
                 maxChallenges={maxChallenges}
                 numberOfLetters={numberOfLetters}
@@ -425,7 +446,7 @@ function App() {
               onEnter={onEnter}
               solution={solution}
               guesses={guesses[numberOfWords]?.[numberOfLetters] ?? []}
-              isRevealing={isRevealing}
+              isRevealing={focussedRows.length > 0}
               numberOfLetters={numberOfLetters}
             />
           </div>

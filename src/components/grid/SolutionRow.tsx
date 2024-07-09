@@ -22,12 +22,13 @@ export const SolutionRow = ({
     <div className="flex justify-center" style={{ animationDelay }}>
       {splitGuess.map((letter, i) => (
         <Cell
-          key={i}
+          key={`${numberOfLetters}-${numberOfWords}-${i}`}
           value={letter}
           status={'incorrect'}
           position={i + solution.length}
           isRevealing={isRevealing}
           isCompleted
+          isFocussed={true}
           numberOfLetters={numberOfLetters}
           numberOfWords={numberOfWords}
         />
