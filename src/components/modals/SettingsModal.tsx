@@ -63,7 +63,7 @@ export const SettingsModal = ({
 }: Props) => {
   return (
     <BaseModal title="Settings" isOpen={isOpen} handleClose={handleClose}>
-      <div className="mt-2 flex flex-col divide-y divide-stone-300">
+      <div className="mt-2 flex flex-col divide-y divide-secondary-2">
         <SettingsSlider
           settingName="Word Length"
           value={numberOfLetters}
@@ -82,14 +82,14 @@ export const SettingsModal = ({
         />
         {ENABLE_ARCHIVED_GAMES && (
           <div className="mb-3 flex justify-between gap-4 pt-3">
-            <div className="text-left text-stone-700 dark:text-gray-300">
+            <div className="text-left text-secondary">
               <p className="leading-none">{DATEPICKER_TITLE}</p>
-              <p className="mt-1 text-xs text-stone-700 dark:text-gray-300">
+              <p className="mt-1 text-xs text-secondary">
                 {DATEPICKER_DESCRIPTION}
               </p>
             </div>
             <div>
-              <p className="text-left text-stone-700 dark:text-gray-300">
+              <p className="text-left text-secondary">
                 <Button onClick={handleChooseDateButton}>
                   <CalendarIcon className="mr-2 h-6 w-6 cursor-pointer dark:stroke-white" />
                   {DATEPICKER_BUTTON}

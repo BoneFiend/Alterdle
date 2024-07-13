@@ -85,21 +85,21 @@ export const DatePickerModal = ({
                   onClick={decreaseMonth}
                   disabled={prevMonthButtonDisabled}
                 >
-                  <ChevronLeftIcon className="h-5 w-5 text-white dark:text-gray-300" />
+                  <ChevronLeftIcon className="h-5 w-5" />
                 </Button>
                 <Button
                   variant="basic"
                   onClick={increaseMonth}
                   disabled={nextMonthButtonDisabled}
                 >
-                  <ChevronRightIcon className="h-5 w-5 text-white dark:text-gray-300" />
+                  <ChevronRightIcon className="h-5 w-5" />
                 </Button>
               </div>
             </div>
           )}
         />
       </div>
-      <p className="mt-1 text-sm text-stone-700 dark:text-gray-300">
+      <p className="mt-1 text-sm text-secondary">
         Only your guesses from today's Alterdle will be saved.
       </p>
       <div className="flex columns-2 items-stretch justify-center gap-2 text-center dark:text-white">

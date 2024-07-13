@@ -16,8 +16,8 @@ export const SettingsToggle = ({
   const toggleHolder = classnames(
     'w-14 h-8 flex shrink-0 items-center rounded-full p-1 duration-300 ease-in-out cursor-pointer',
     {
-      'accent-bg': flag,
-      'bg-stone-400': !flag,
+      'bg-accent': flag,
+      'bg-accent-disabled': !flag,
     }
   )
   const toggleButton = classnames(
@@ -30,12 +30,10 @@ export const SettingsToggle = ({
   return (
     <>
       <div className="mb-3 flex justify-between gap-4 pt-3">
-        <div className="text-left text-stone-700 dark:text-gray-300">
+        <div className="text-left text-secondary">
           <p className="leading-none">{settingName}</p>
           {description && (
-            <p className="mt-1 text-xs text-stone-700 dark:text-gray-300">
-              {description}
-            </p>
+            <p className="mt-1 text-xs text-secondary">{description}</p>
           )}
         </div>
         <div className={toggleHolder} onClick={() => handleFlag(!flag)}>

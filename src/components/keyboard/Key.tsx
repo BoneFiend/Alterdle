@@ -23,18 +23,21 @@ export const Key = ({
   numberOfLetters,
 }: Props) => {
   const classes = classnames(
-    'xshort:h-10 short:h-12 h-14 sm:h-16 ',
-    'flex items-center justify-center rounded mx-0.5 font-bold cursor-pointer select-none dark:text-white text-stone-900 transition-all',
+    'xshort:h-10 short:h-12 h-14 sm:h-16',
+    'flex items-center justify-center rounded-lg mx-0.5 font-bold cursor-pointer select-none transition-all',
     {
       'w-[40px] sm:w-[64px] short:w-[40px] text-lg sm:text-3xl short:text-lg':
         !longWidth,
       'w-[65.4px] sm:w-[96px] short:w-[65.4px] text-base sm:text-2xl short:text-base':
         longWidth,
       'transition ease-in-out': isRevealing,
-      'default-key': !status,
-      absent: status === 'absent',
-      'correct correct-key': status === 'correct',
-      'present present-key': status === 'present',
+      'bg-key text-stone-900 dark:text-white hover:bg-key-deep active:bg-key-deeper':
+        !status,
+      'bg-absent text-white': status === 'absent',
+      'bg-correct text-white hover:bg-correct-deep active:bg-correct-deeper':
+        status === 'correct',
+      'bg-present text-white hover:bg-present-deep active:bg-present-deeper':
+        status === 'present',
     }
   )
 

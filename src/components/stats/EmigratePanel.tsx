@@ -28,7 +28,7 @@ export const EmigratePanel = () => {
   }
 
   return (
-    <div className="text-sm text-stone-700 dark:text-gray-300">
+    <div className="text-sm text-secondary">
       <label
         htmlFor="message"
         className="mb-2 block text-left text-sm font-medium text-stone-900 dark:text-gray-400"
@@ -45,11 +45,9 @@ export const EmigratePanel = () => {
       <Button
         disabled={!isCopyButtonEnabled}
         onClick={copyEmigrationCodeToClipboard}
-        className="migrate-button"
+        className="w-min"
       >
-        {isCopyButtonEnabled && (
-          <DuplicateIcon className="mr-2 h-6 w-6 cursor-pointer dark:stroke-white" />
-        )}
+        <DuplicateIcon className="mr-2 h-6 w-6 cursor-pointer dark:stroke-white" />
         {copyButtonText}
       </Button>
     </div>

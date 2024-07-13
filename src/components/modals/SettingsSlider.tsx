@@ -18,16 +18,15 @@ export const SettingsSlider = ({
   return (
     <>
       <div className="mb-3 flex justify-between gap-4 pt-3">
-        <div className="text-left text-stone-700 dark:text-gray-300">
+        <div className="text-left text-secondary">
           <p className="leading-none">{settingName}</p>
           {description && (
-            <p className="mt-1 text-xs text-stone-700 dark:text-gray-300">
-              {description}
-            </p>
+            <p className="mt-1 text-xs text-secondary">{description}</p>
           )}
         </div>
         <div>
-          <p className="text-left text-stone-700 dark:text-gray-300">{value}</p>
+          <p className="text-left text-secondary">{value}</p>
+          {/* TODO replace this <input/> with a react component for concistency */}
           <input
             type="range"
             min={minValue}

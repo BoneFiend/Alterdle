@@ -3,159 +3,72 @@
 @tailwind utilities;
 
 html {
-  background-color: var(--theme-bg);
-}
-
-.theme-bg {
-  background-color: var(--theme-bg);
-}
-
-.modal-bg {
-  background-color: var(--theme-modal-bg);
-}
-
-.accent-bg {
-  background-color: var(--theme-accent-bg);
+  background-color: var(--primary-1);
 }
 
 :root {
   /* TODO redo themeing. Make a stronger pink, and change from brown */
-  --theme-bg: theme('colors.pink.100');
-  --theme-modal-bg: theme('colors.pink.100');
+  --primary-1: theme('colors.pink.100');
+  --primary-2: theme('colors.pink.100');
 
-  --theme-accent-bg: theme('colors.sky.600');
-  --theme-accent-hover: theme('colors.sky.700');
-  --theme-accent-focus: theme('colors.sky.800');
+  --secondary-1: theme('colors.stone.700');
+  --secondary-2: theme('colors.stone.300');
+
+  --accent: theme('colors.sky.600');
+  --accent-deep: theme('colors.sky.700');
+  --accent-deeper: theme('colors.sky.800');
+  --accent-disabled: theme('colors.stone.400');
 
   --animation-speed: 1000ms;
   --animation-speed-fast: 250ms;
 
-  --default-cell-bg-color: theme('colors.pink.100');
-  --default-cell-border-color: theme('colors.black');
-  --default-cell-text-color: theme('colors.black');
+  --cell: theme('colors.pink.100');
+  --cell-border: theme('colors.black');
+  --blank: theme('colors.black');
 
-  --absent-cell-bg-color: theme('colors.stone.500');
-  --correct-cell-bg-color: theme('colors.green.500');
-  --present-cell-bg-color: theme('colors.amber.400');
-  --incorrect-cell-bg-color: theme('colors.red.600');
+  --absent: theme('colors.stone.500');
+  --correct: theme('colors.green.500');
+  --present: theme('colors.amber.400');
+  --incorrect: theme('colors.red.600');
 
-  --correct-key-hover-bg-color: theme('colors.green.600');
-  --present-key-hover-bg-color: theme('colors.yellow.600');
+  --correct-deep: theme('colors.green.600');
+  --present-deep: theme('colors.yellow.600');
 
-  --correct-key-active-bg-color: theme('colors.green.700');
-  --present-key-active-bg-color: theme('colors.yellow.700');
+  --correct-deeper: theme('colors.green.700');
+  --present-deeper: theme('colors.yellow.700');
 
-  --default-key-bg-color: theme('colors.stone.300');
-  --default-key-hover-color: theme('colors.stone.400');
-  --default-key-active-color: theme('colors.stone.600');
+  --key: theme('colors.stone.300');
+  --key-deep: theme('colors.stone.400');
+  --key-deeper: theme('colors.stone.600');
 }
 
 .dark {
-  --theme-bg: theme('colors.stone.700');
-  --theme-modal-bg: theme('colors.stone.600');
+  --primary-1: theme('colors.stone.700');
+  --primary-2: theme('colors.stone.600');
+  --accent-disabled: theme('colors.stone.700');
 
-  --default-cell-bg-color: theme('colors.stone.700');
-  --default-cell-border-color: theme('colors.pink.100');
-  --default-cell-text-color: theme('colors.white');
-  --absent-cell-bg-color: theme('colors.stone.800');
+  --secondary-1: theme('colors.gray.300');
+  --secondary-2: theme('colors.stone.300');
 
-  --default-key-bg-color: theme('colors.stone.500');
-  --default-key-hover-color: theme('colors.stone.600');
-  --default-key-active-color: theme('colors.stone.800');
+  --cell: theme('colors.stone.700');
+  --cell-border: theme('colors.pink.100');
+  --blank: theme('colors.white');
+  --absent: theme('colors.stone.800');
+
+  --key: theme('colors.stone.500');
+  --key-deep: theme('colors.stone.600');
+  --key-deeper: theme('colors.stone.800');
 }
 
 .high-contrast {
-  --correct-cell-bg-color: theme('colors.orange.500');
-  --present-cell-bg-color: theme('colors.cyan.500');
+  --correct: theme('colors.orange.500');
+  --present: theme('colors.cyan.500');
 
-  --correct-key-hover-bg-color: theme('colors.orange.600');
-  --present-key-hover-bg-color: theme('colors.cyan.600');
+  --correct-deep: theme('colors.orange.600');
+  --present-deep: theme('colors.cyan.600');
 
-  --correct-key-active-bg-color: theme('colors.orange.700');
-  --present-key-active-bg-color: theme('colors.cyan.700');
-}
-
-.accent-button-large {
-  background-color: var(--theme-accent-bg);
-  @apply mt-2 inline-flex w-full items-center justify-center rounded-md border border-transparent px-4 py-2 text-center text-base font-medium text-white shadow-sm;
-}
-
-.accent-button {
-  background-color: var(--theme-accent-bg);
-}
-
-.accent-button-large:hover,
-.accent-button:hover {
-  background-color: var(--theme-accent-hover);
-}
-
-.accent-button-large:focus,
-.accent-button:focus {
-  background-color: var(--theme-accent-focus);
-}
-
-.migrate-button {
-  @apply w-min text-left;
-}
-
-.migrate-button:disabled {
-  @apply disabled:bg-pink-50 disabled:text-stone-900 disabled:dark:bg-stone-700 disabled:dark:text-gray-400;
-}
-
-.cell-bg {
-  background-color: var(--default-cell-bg-color);
-}
-
-.absent {
-  background-color: var(--absent-cell-bg-color);
-  border-color: var(--absent-cell-bg-color);
-  color: white;
-}
-
-.correct {
-  background-color: var(--correct-cell-bg-color);
-  border-color: var(--correct-cell-bg-color);
-  color: white;
-}
-
-.present {
-  background-color: var(--present-cell-bg-color);
-  border-color: var(--present-cell-bg-color);
-  color: white;
-}
-
-.incorrect {
-  background-color: var(--incorrect-cell-bg-color);
-  border-color: var(--incorrect-cell-bg-color);
-  color: white;
-}
-
-.correct-key:hover {
-  background-color: var(--correct-key-hover-bg-color);
-}
-
-.present-key:hover {
-  background-color: var(--present-key-hover-bg-color);
-}
-
-.correct-key:active {
-  background-color: var(--correct-key-active-bg-color);
-}
-
-.present-key:active {
-  background-color: var(--present-key-active-bg-color);
-}
-
-.default-key {
-  background-color: var(--default-key-bg-color);
-}
-
-.default-key:hover {
-  background-color: var(--default-key-hover-color);
-}
-
-.default-key:active {
-  background-color: var(--default-key-active-color);
+  --correct-deeper: theme('colors.orange.700');
+  --present-deeper: theme('colors.cyan.700');
 }
 
 .cell-fill-animation {
@@ -201,19 +114,6 @@ svg.cursor-pointer:hover {
 .jiggle {
   animation: jiggle linear;
   animation-duration: var(--animation-speed-fast);
-}
-
-.right-icons {
-  display: flex;
-}
-
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 }
 
 .react-datepicker__aria-live {
@@ -441,26 +341,26 @@ svg.cursor-pointer:hover {
 }
 
 .react-datepicker__day--selecting-range-start {
-  border-color: var(--theme-accent-bg);
+  border-color: var(--accent);
   @apply border-2 bg-white;
 }
 
 .react-datepicker__day--selecting-range-end {
-  border-color: var(--theme-accent-bg);
+  border-color: var(--accent);
   @apply border-2 bg-white;
 }
 
 .react-datepicker__day--selected {
-  background-color: var(--theme-accent-bg);
+  background-color: var(--accent);
   @apply text-white dark:text-white;
 }
 
 .react-datepicker__day--range-start {
-  background-color: var(--theme-accent-bg);
+  background-color: var(--accent);
   @apply text-white hover:bg-white hover:text-gray-700;
 }
 
 .react-datepicker__day--range-end {
-  background-color: var(--theme-accent-bg);
+  background-color: var(--accent);
   @apply text-white hover:bg-white hover:text-gray-700;
 }

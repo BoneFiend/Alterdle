@@ -176,7 +176,7 @@ export const HelpModal = ({
         return (
           <>
             {wordCells}
-            <p className="text-sm text-stone-700 dark:text-gray-300">
+            <p className="text-sm text-secondary">
               The letter{indices.length > 1 && 's'} {letters.join(', ')}
               {indices.length > 1 && ' and '}
               {last}
@@ -189,7 +189,7 @@ export const HelpModal = ({
         return (
           <>
             {wordCells}
-            <p className="text-sm text-stone-700 dark:text-gray-300">
+            <p className="text-sm text-secondary">
               There are no letters {middleText} spot.
             </p>
           </>
@@ -202,7 +202,7 @@ export const HelpModal = ({
 
   return (
     <BaseModal title="How to play" isOpen={isOpen} handleClose={handleClose}>
-      <p className="mt-2 text-sm text-stone-700 dark:text-gray-300">
+      <p className="mt-2 text-sm text-secondary">
         After each guess, the color of the tiles will change to show how close
         your{' '}
         {numberOfWords > 1
@@ -228,12 +228,12 @@ export const HelpModal = ({
         'absent'
       )}
       <br />
-      <p className="text-sm text-stone-700 dark:text-gray-300">
+      <p className="text-sm text-secondary">
         The keyboard will display the status of letters that are in words which
         have not been guessed yet, prioritising correct letters.
       </p>
 
-      <div className="flex flex-col divide-y divide-stone-300">
+      <div className="flex flex-col divide-y divide-secondary-2">
         <SettingsSlider
           settingName="Word Length"
           value={numberOfLetters}

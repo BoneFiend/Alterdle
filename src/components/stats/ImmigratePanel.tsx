@@ -95,11 +95,9 @@ export const ImmigratePanel = () => {
       <Button
         disabled={!isSaveButtonEnabled}
         onClick={handleSaveButton}
-        className="migrate-button"
+        className="w-min"
       >
-        {isSaveButtonEnabled && (
-          <SaveIcon className="mr-2 h-6 w-6 cursor-pointer dark:stroke-white" />
-        )}
+        <SaveIcon className="mr-2 h-6 w-6 cursor-pointer dark:stroke-white" />
         Save
       </Button>
     </div>

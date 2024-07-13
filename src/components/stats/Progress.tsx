@@ -16,7 +16,7 @@ export const Progress = ({
   const currentRowClass = classNames(
     'text-xs font-medium text-white text-center p-0.5',
     {
-      'accent-bg': isCurrentDayStatRow,
+      'bg-accent': isCurrentDayStatRow,
       'bg-stone-500 dark:bg-stone-800': !isCurrentDayStatRow,
     }
   )
