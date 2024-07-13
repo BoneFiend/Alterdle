@@ -6,6 +6,7 @@ import {
   saveGameStateToLocalStorage,
   saveStatsToLocalStorage,
 } from '../../lib/localStorage'
+import { Button } from '../inputs/Button'
 import { MigrationStats } from '../modals/MigrateStatsModal'
 
 export const ImmigratePanel = () => {
@@ -91,17 +92,16 @@ export const ImmigratePanel = () => {
         rows={8}
         className="block w-full rounded-lg border border-stone-400 bg-pink-50 p-2.5 text-sm text-stone-900  focus:border-stone-400 focus:ring-stone-400 dark:bg-stone-500 dark:text-white"
       ></textarea>
-      <button
+      <Button
         disabled={!isSaveButtonEnabled}
         onClick={handleSaveButton}
-        type="button"
-        className="accent-button-large migrate-button"
+        className="migrate-button"
       >
         {isSaveButtonEnabled && (
           <SaveIcon className="mr-2 h-6 w-6 cursor-pointer dark:stroke-white" />
         )}
         Save
-      </button>
+      </Button>
     </div>
   )
 }

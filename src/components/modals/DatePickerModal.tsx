@@ -11,6 +11,7 @@ import {
 } from '../../constants/strings'
 import { getToday, getYesterday } from '../../lib/dateutils'
 import { getLastGameDate, isValidGameDate, periodInDays } from '../../lib/words'
+import { Button } from '../inputs/Button'
 import { BaseModal } from './BaseModal'
 
 type Props = {
@@ -79,35 +80,20 @@ export const DatePickerModal = ({
               </span>
 
               <div className="space-x-2">
-                <button
+                <Button
+                  variant="basic"
                   onClick={decreaseMonth}
                   disabled={prevMonthButtonDisabled}
-                  type="button"
-                  className={`
-                            ${
-                              prevMonthButtonDisabled &&
-                              'cursor-not-allowed opacity-50'
-                            }
-                            accent-button inline-flex rounded p-1 text-sm font-medium text-gray-700 shadow-sm
-                        `}
                 >
                   <ChevronLeftIcon className="h-5 w-5 text-white dark:text-gray-300" />
-                </button>
-
-                <button
+                </Button>
+                <Button
+                  variant="basic"
                   onClick={increaseMonth}
                   disabled={nextMonthButtonDisabled}
-                  type="button"
-                  className={`
-                            ${
-                              nextMonthButtonDisabled &&
-                              'cursor-not-allowed opacity-50'
-                            }
-                            accent-button inline-flex rounded p-1 text-sm font-medium text-gray-700 shadow-sm
-                        `}
                 >
                   <ChevronRightIcon className="h-5 w-5 text-white dark:text-gray-300" />
-                </button>
+                </Button>
               </div>
             </div>
           )}
@@ -117,25 +103,20 @@ export const DatePickerModal = ({
         Only your guesses from today's Alterdle will be saved.
       </p>
       <div className="flex columns-2 items-stretch justify-center gap-2 text-center dark:text-white">
-        <button
-          type="button"
+        <Button
           disabled={!isValidGameDate(getToday())}
-          className="accent-button-large disabled:border-none disabled:bg-pink-50 disabled:text-stone-900
-          disabled:focus:outline-none disabled:dark:border-gray-600 disabled:dark:bg-stone-700 disabled:dark:text-gray-400"
           onClick={() => handleSelectDate(getToday())}
         >
           {DATEPICKER_CHOOSE_TEXT} {DATEPICKER_TODAY_TEXT}
-        </button>
-        <button
-          type="button"
-          className="accent-button-large"
+        </Button>
+        <Button
           disabled={selectedDate >= getToday()}
           onClick={() => handleSelectDate(selectedDate)}
         >
           {DATEPICKER_CHOOSE_TEXT}
           <br />
           {format(selectedDate, buttonDateFormat, formatOptions)}
-        </button>
+        </Button>
       </div>
     </BaseModal>
   )

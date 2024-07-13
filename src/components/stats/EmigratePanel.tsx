@@ -5,6 +5,7 @@ import { copyTextToClipboard } from '../../lib/clipboard'
 import { encrypt } from '../../lib/encryption'
 import { loadGameStateFromLocalStorage } from '../../lib/localStorage'
 import { loadStats } from '../../lib/stats'
+import { Button } from '../inputs/Button'
 import { MigrationStats } from '../modals/MigrateStatsModal'
 
 export const EmigratePanel = () => {
@@ -41,17 +42,16 @@ export const EmigratePanel = () => {
         className="block w-full rounded-lg border border-stone-400 bg-pink-50 p-2.5 text-sm text-stone-900  focus:border-stone-400 focus:ring-stone-400 dark:bg-stone-500 dark:text-white"
         value={emigrationCode}
       />
-      <button
+      <Button
         disabled={!isCopyButtonEnabled}
         onClick={copyEmigrationCodeToClipboard}
-        type="button"
-        className="accent-button-large migrate-button"
+        className="migrate-button"
       >
         {isCopyButtonEnabled && (
           <DuplicateIcon className="mr-2 h-6 w-6 cursor-pointer dark:stroke-white" />
         )}
         {copyButtonText}
-      </button>
+      </Button>
     </div>
   )
 }

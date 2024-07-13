@@ -22,6 +22,7 @@ import {
 import { getToday } from '../../lib/dateutils'
 import { shareStatus } from '../../lib/share'
 import { Obj2d, checkIsGameWon, getNextGameDate } from '../../lib/words'
+import { Button } from '../inputs/Button'
 import { Histogram } from '../stats/Histogram'
 import { StatBar } from '../stats/StatBar'
 import { BaseModal } from './BaseModal'
@@ -148,9 +149,7 @@ export const StatsModal = ({
               )}
             </div>
             <div>
-              <button
-                type="button"
-                className="accent-button-large"
+              <Button
                 onClick={() => {
                   shareStatus(
                     solution,
@@ -171,7 +170,7 @@ export const StatsModal = ({
               >
                 <ShareIcon className="mr-2 h-6 w-6 cursor-pointer dark:stroke-white" />
                 {SHARE_TEXT}
-              </button>
+              </Button>
             </div>
           </div>
         )}

@@ -18,6 +18,7 @@ import {
   LENGTH_DESCRIPTION,
   LONG_SHARE_DESCRIPTION,
 } from '../../constants/strings'
+import { Button } from '../inputs/Button'
 import { MigrationIntro } from '../stats/MigrationIntro'
 import { BaseModal } from './BaseModal'
 import { SettingsSlider } from './SettingsSlider'
@@ -89,14 +90,10 @@ export const SettingsModal = ({
             </div>
             <div>
               <p className="text-left text-stone-700 dark:text-gray-300">
-                <button
-                  type="button"
-                  className="accent-button-large "
-                  onClick={handleChooseDateButton}
-                >
+                <Button onClick={handleChooseDateButton}>
                   <CalendarIcon className="mr-2 h-6 w-6 cursor-pointer dark:stroke-white" />
                   {DATEPICKER_BUTTON}
-                </button>
+                </Button>
               </p>
             </div>
           </div>
