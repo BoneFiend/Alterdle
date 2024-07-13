@@ -291,7 +291,7 @@ function App() {
     }
 
     if (!(unicodeLength(currentGuess) === numberOfLetters)) {
-      setCurrentRowClass('jiggle')
+      setCurrentRowClass('animate-jiggle')
       return showErrorAlert(NOT_ENOUGH_LETTERS_MESSAGE, {
         onClose: clearCurrentRowClass,
         // TODO allow jiggle as frequently as you want

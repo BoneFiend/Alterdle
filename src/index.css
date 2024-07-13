@@ -20,7 +20,9 @@ html {
   --accent-disabled: theme('colors.stone.400');
 
   --cell: theme('colors.pink.100');
-  --cell-border: theme('colors.black');
+  --cell-border: theme('colors.stone.300');
+  --cell-border-value: theme('colors.stone.500');
+
   --blank: theme('colors.black');
 
   --absent: theme('colors.stone.500');
@@ -48,8 +50,11 @@ html {
   --secondary-2: theme('colors.stone.300');
 
   --cell: theme('colors.stone.700');
-  --cell-border: theme('colors.pink.100');
+  --cell-border: theme('colors.stone.500');
+  --cell-border-value: theme('colors.stone.300');
+
   --blank: theme('colors.white');
+
   --absent: theme('colors.stone.800');
 
   --key: theme('colors.stone.500');

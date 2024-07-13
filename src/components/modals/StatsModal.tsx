@@ -102,7 +102,7 @@ export const StatsModal = ({
         numberOfLetters={numberOfLetters}
         maxChallenges={maxChallenges}
       />
-      <div className="flex flex-col divide-y divide-stone-300">
+      <div className="flex flex-col divide-y divide-secondary-2">
         <SettingsSlider
           settingName="Word Length"
           value={numberOfLetters}
@@ -123,13 +123,13 @@ export const StatsModal = ({
           getToday().getTime() ||
           isGameWon ||
           isGameLost) && (
-          <div className="columns-2 items-center justify-center pt-2 text-center text-stone-700 dark:text-white">
+          <div className="columns-2 items-center justify-center pt-2 text-center text-secondary">
             <div className="inline-block w-full text-left">
               {(!ENABLE_ARCHIVED_GAMES || isLatestGame) && (
                 <div>
                   <h5>{NEW_WORD_TEXT(solution)}</h5>
                   <Countdown
-                    className="text-lg font-medium text-stone-700 dark:text-white"
+                    className="text-lg font-medium text-secondary"
                     date={getNextGameDate(getToday())}
                     daysInHours={true}
                   />

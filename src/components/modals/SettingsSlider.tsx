@@ -34,6 +34,7 @@ export const SettingsSlider = ({
             value={value}
             onChange={(e) => handleValue(Number(e.target.value))}
             step="1"
+            className="cursor-pointer"
           />
         </div>
       </div>

@@ -23,8 +23,11 @@ module.exports = {
           deeper: 'var(--accent-deeper)',
           disabled: 'var(--accent-disabled)',
         },
-        cell: 'var(--cell)',
-        'cell-border': 'var(--cell-border)',
+        cell: {
+          DEFAULT: 'var(--cell)',
+          border: 'var(--cell-border)',
+          'border-value': 'var(--cell-border-value)',
+        },
         blank: 'var(--blank)',
         absent: 'var(--absent)',
         correct: {
@@ -54,12 +57,12 @@ module.exports = {
           '0%': {
             transform: 'rotateX(0deg)',
             backgroundColor: 'var(--cell)',
-            borderColor: 'var(--cell-border)',
+            borderColor: 'var(--cell-border-value)',
             color: 'var(--blank)',
           },
           '50%': {
             backgroundColor: 'var(--cell)',
-            borderColor: 'var(--cell-border)',
+            borderColor: 'var(--cell-border-value)',
             color: 'var(--blank)',
           },
           '50.1%': {
