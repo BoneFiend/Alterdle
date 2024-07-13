@@ -1,4 +1,3 @@
-import { REVEAL_TIME_MS } from '../../constants/settings'
 import { unicodeSplit } from '../../lib/words'
 import { Cell } from './Cell'
 
@@ -16,16 +15,15 @@ export const SolutionRow = ({
   numberOfWords,
 }: Props) => {
   const splitGuess = unicodeSplit(solution)
-  const animationDelay = `${solution.length * REVEAL_TIME_MS}ms`
 
   return (
-    <div className="flex justify-center" style={{ animationDelay }}>
+    <div className="flex justify-center">
       {splitGuess.map((letter, i) => (
         <Cell
           key={`${numberOfLetters}-${numberOfWords}-${i}`}
           value={letter}
           status={'incorrect'}
-          position={i + solution.length}
+          position={i}
           isRevealing={isRevealing}
           isCompleted
           isFocussed={true}

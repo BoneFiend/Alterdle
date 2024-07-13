@@ -50,7 +50,8 @@ export const Cell = ({
       'bg-incorrect border-incorrect text-white shadowed':
         status === 'incorrect',
       'animate-cell-fill': isFilled,
-      'animate-cell-reveal': shouldReveal,
+      'animate-cell-reveal': shouldReveal && status !== 'incorrect',
+      'animate-cell-reveal-incorrect': shouldReveal && status === 'incorrect',
     }
   )
 

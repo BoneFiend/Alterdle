@@ -72,6 +72,33 @@ module.exports = {
           },
           '100%': { transform: 'rotateX(180deg)' },
         },
+        'cell-reveal-incorrect': {
+          '0%': {
+            transform: 'rotateX(0deg)',
+            backgroundColor: 'var(--cell)',
+            borderColor: 'var(--cell-border-value)',
+            color: 'var(--blank)',
+            opacity: 0,
+            maxHeight: '0rem',
+            paddingTop: 0,
+            marginTop: 0,
+            borderTop: 0,
+          },
+          '50%': {
+            backgroundColor: 'var(--cell)',
+            borderColor: 'var(--cell-border-value)',
+            color: 'var(--blank)',
+            opacity: 0,
+            maxHeight: '3.5rem',
+          },
+          '50.1%': {
+            backgroundColor: 'inherit',
+            borderColor: 'inherit',
+            color: 'inherit',
+            opacity: 1,
+          },
+          '100%': { transform: 'rotateX(180deg)' },
+        },
         'letter-flip': {
           '0%': { transform: 'rotateX(0deg)' },
           '100%': { transform: 'rotateX(180deg)' },
@@ -87,6 +114,7 @@ module.exports = {
       animation: {
         'cell-fill': 'cell-fill 0.15s linear',
         'cell-reveal': 'cell-reveal 0.35s linear backwards',
+        'cell-reveal-incorrect': 'cell-reveal-incorrect 0.35s linear backwards',
         'letter-flip': 'letter-flip 0.35s linear backwards',
         jiggle: 'jiggle 0.25s linear',
       },
