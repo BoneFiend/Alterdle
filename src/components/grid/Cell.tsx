@@ -49,14 +49,17 @@ export const Cell = ({
       'bg-present border-present text-white shadowed': status === 'present',
       'bg-incorrect border-incorrect text-white shadowed':
         status === 'incorrect',
-      'cell-fill-animation': isFilled,
-      'cell-reveal': shouldReveal,
+      'animate-cell-fill': isFilled,
+      'animate-cell-reveal': shouldReveal,
     }
   )
 
   return (
     <div className={classes} style={{ animationDelay }}>
-      <div className="letter-container" style={{ animationDelay }}>
+      <div
+        className={shouldReveal ? 'animate-letter-flip' : ''}
+        style={{ animationDelay }}
+      >
         {value}
       </div>
     </div>

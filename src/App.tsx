@@ -299,7 +299,7 @@ function App() {
     }
 
     if (!isWordInWordList(currentGuess)) {
-      setCurrentRowClass('jiggle')
+      setCurrentRowClass('animate-jiggle')
       return showErrorAlert(WORD_NOT_FOUND_MESSAGE, {
         onClose: clearCurrentRowClass,
       })
@@ -313,7 +313,7 @@ function App() {
         solution[0]
       )
       if (firstMissingReveal) {
-        setCurrentRowClass('jiggle')
+        setCurrentRowClass('animate-jiggle')
         return showErrorAlert(firstMissingReveal, {
           onClose: clearCurrentRowClass,
         })

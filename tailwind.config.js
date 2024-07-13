@@ -44,6 +44,49 @@ module.exports = {
           deeper: 'var(--key-deeper)',
         },
       },
+      keyframes: {
+        'cell-fill': {
+          '0%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.1)' },
+          '100%': { transform: 'scale(1)' },
+        },
+        'cell-reveal': {
+          '0%': {
+            transform: 'rotateX(0deg)',
+            backgroundColor: 'var(--cell)',
+            borderColor: 'var(--cell-border)',
+            color: 'var(--blank)',
+          },
+          '50%': {
+            backgroundColor: 'var(--cell)',
+            borderColor: 'var(--cell-border)',
+            color: 'var(--blank)',
+          },
+          '50.1%': {
+            backgroundColor: 'inherit',
+            borderColor: 'inherit',
+            color: 'inherit',
+          },
+          '100%': { transform: 'rotateX(180deg)' },
+        },
+        'letter-flip': {
+          '0%': { transform: 'rotateX(0deg)' },
+          '100%': { transform: 'rotateX(180deg)' },
+        },
+        jiggle: {
+          '0%': { transform: 'translate(0, 0)' },
+          '25%': { transform: 'translate(-0.5rem, 0)' },
+          '50%': { transform: 'translate(0.5rem, 0)' },
+          '75%': { transform: 'translate(-0.5rem, 0)' },
+          '100%': { transform: 'translate(0, 0)' },
+        },
+      },
+      animation: {
+        'cell-fill': 'cell-fill 0.15s linear',
+        'cell-reveal': 'cell-reveal 0.35s linear backwards',
+        'letter-flip': 'letter-flip 0.35s linear backwards',
+        jiggle: 'jiggle 0.25s linear',
+      },
     },
   },
   plugins: [require('@tailwindcss/forms')],
