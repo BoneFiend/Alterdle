@@ -185,6 +185,7 @@ function App() {
 
   useEffect(() => {
     setGuesses(loadGuesses(gameDate, isLatestGame))
+    setGamesWon({})
   }, [gameDate, isLatestGame])
 
   useEffect(() => {
