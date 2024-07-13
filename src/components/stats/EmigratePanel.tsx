@@ -39,7 +39,7 @@ export const EmigratePanel = () => {
         id="emigration-code"
         readOnly={true}
         rows={8}
-        className="block w-full rounded-lg border border-stone-400 bg-pink-50 p-2.5 text-sm text-stone-900  focus:border-stone-400 focus:ring-stone-400 dark:bg-stone-500 dark:text-white"
+        className="block w-full rounded-lg border border-accent-disabled bg-primary-light p-2.5 text-sm text-blank focus:border-accent-disabled focus:ring-accent-disabled"
         value={emigrationCode}
       />
       <Button

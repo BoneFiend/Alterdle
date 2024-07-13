@@ -10,6 +10,7 @@ html {
   /* TODO redo themeing. Make a stronger pink, and change from brown */
   --primary-1: theme('colors.pink.100');
   --primary-2: theme('colors.pink.100');
+  --primary-light: theme('colors.pink.50');
 
   --secondary-1: theme('colors.stone.700');
   --secondary-2: theme('colors.stone.300');
@@ -44,6 +45,8 @@ html {
 .dark {
   --primary-1: theme('colors.stone.700');
   --primary-2: theme('colors.stone.600');
+  --primary-light: theme('colors.stone.500');
+
   --accent-disabled: theme('colors.stone.700');
 
   --secondary-1: theme('colors.gray.300');
