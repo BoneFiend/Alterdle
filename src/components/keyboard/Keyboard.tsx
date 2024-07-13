@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { DELETE_TEXT, ENTER_TEXT } from '../../constants/strings'
 import { getStatuses } from '../../lib/statuses'
@@ -24,7 +24,13 @@ export const Keyboard = ({
   isRevealing,
   numberOfLetters,
 }: Props) => {
-  const charStatuses = getStatuses(solution, guesses)
+  const [charStatuses, setCharStatuses] = useState(
+    getStatuses(solution, guesses)
+  )
+
+  useEffect(() => {
+    if (!isRevealing) setCharStatuses(getStatuses(solution, guesses))
+  }, [isRevealing, solution, guesses])
 
   const onClick = (value: string) => {
     if (value === 'ENTER') {

@@ -1,7 +1,6 @@
 import classnames from 'classnames'
 import { ReactNode } from 'react'
 
-import { REVEAL_TIME_MS } from '../../constants/settings'
 import { CharStatus } from '../../lib/statuses'
 
 type Props = {
@@ -23,8 +22,6 @@ export const Key = ({
   isRevealing,
   numberOfLetters,
 }: Props) => {
-  const keyDelayMs = REVEAL_TIME_MS * numberOfLetters
-
   const classes = classnames(
     'xshort:h-10 short:h-12 h-14 sm:h-16 ',
     'flex items-center justify-center rounded mx-0.5 font-bold cursor-pointer select-none dark:text-white text-stone-900 transition-all',
@@ -41,10 +38,6 @@ export const Key = ({
     }
   )
 
-  const styles = {
-    transitionDelay: isRevealing ? `${keyDelayMs}ms` : 'unset',
-  }
-
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
     onClick(value)
     event.currentTarget.blur()
@@ -52,7 +45,6 @@ export const Key = ({
 
   return (
     <button
-      style={styles}
       aria-label={`${value}${status ? ' ' + status : ''}`}
       className={classes}
       onClick={handleClick}
