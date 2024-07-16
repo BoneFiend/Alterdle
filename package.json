@@ -9,6 +9,7 @@
     "lint": "prettier --check src",
     "start": "react-scripts start",
     "test": "react-scripts test",
+    "preinstall": "npx only-allow pnpm",
     "prepare": "husky install"
   },
   "dependencies": {
