@@ -17,6 +17,21 @@ export const WIN_MESSAGES = [
   'Outstanding performance',
   'Superb',
 ]
+export const LOSE_MESSAGES = [
+  "We'll get 'em next time",
+  'Bad luck!',
+  'Next time for sure',
+  'Good try!',
+  'That was a hard one',
+  'I know you have what it takes',
+  "You miss every shot you don't take",
+  'Chin up',
+  'In the ashes of defeat, a phoenix of triumph is born',
+  "Don't give up. I know you can do it!",
+  'Good effort but not quite enough',
+  'The maze of failure is merely a detour to the road of success',
+  'The silent river runs deep, carrying the whispers of ancient resolve',
+]
 export const GAME_COPIED_MESSAGE = 'Copied to clipboard'
 export const NOT_ENOUGH_LETTERS_MESSAGE = 'Not enough letters'
 export const WORD_NOT_FOUND_MESSAGE = 'Word not found'
@@ -30,13 +45,6 @@ export const HARD_MODE_DESCRIPTION =
 export const HIGH_CONTRAST_MODE_DESCRIPTION = 'For improved color vision'
 export const CHALLENGES_DESCRIPTION = 'How many words to guess'
 export const LENGTH_DESCRIPTION = 'Length of each word'
-export const CORRECT_WORD_MESSAGE = (solution: string[]) => {
-  const sol = [...solution]
-  const last = sol.pop()
-  return `The word${solution.length > 1 ? 's were' : ' was'} ${sol.join(
-    ', '
-  )} ${solution.length > 1 ? 'and' : ''}  ${last}`
-}
 export const WRONG_SPOT_MESSAGE = (guess: string, position: number) =>
   `Must use ${guess} in position ${position}`
 export const NOT_CONTAINED_MESSAGE = (letter: string) =>

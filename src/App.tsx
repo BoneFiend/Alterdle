@@ -19,16 +19,15 @@ import {
   DISCOURAGE_INAPP_BROWSERS,
   LONG_ALERT_TIME_MS,
   MAX_CHALLENGES_BONUS,
-  MEDIUM_ALERT_TIME_MS,
   REVEAL_TIME_MS,
   WELCOME_HELP_MODAL_MS,
 } from './constants/settings'
 import {
-  CORRECT_WORD_MESSAGE,
   DISCOURAGE_INAPP_BROWSER_TEXT,
   GAME_COPIED_MESSAGE,
   HARD_MODE_CHEATING_MESSAGE,
   HARD_MODE_RESTRICTION_MESSAGE,
+  LOSE_MESSAGES,
   NOT_ENOUGH_LETTERS_MESSAGE,
   SHARE_FAILURE_TEXT,
   WIN_MESSAGES,
@@ -389,17 +388,14 @@ function App() {
         setGamesWon(
           updateObj2d(gamesWon, numberOfWords, numberOfLetters, false)
         )
-        showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
-          delayMs: REVEAL_TIME_MS * numberOfLetters * 2 + 1,
-          durationMs:
-            numberOfWords < 5 ? MEDIUM_ALERT_TIME_MS : LONG_ALERT_TIME_MS,
+
+        const loseMessage =
+          LOSE_MESSAGES[Math.floor(Math.random() * LOSE_MESSAGES.length)]
+        const delayMs = REVEAL_TIME_MS * numberOfLetters * 2
+        showErrorAlert(loseMessage, {
+          delayMs,
+          onClose: () => setIsStatsModalOpen(true),
         })
-        setTimeout(
-          () => {
-            setIsStatsModalOpen(true)
-          },
-          (numberOfLetters + 1) * REVEAL_TIME_MS * 2
-        )
       }
     }
   }
