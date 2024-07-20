@@ -11,7 +11,6 @@ type Props = {
   numberOfWords: number
   isCurrentRow: boolean
   isCompleted: boolean
-  isNewlyCompleted: boolean
   currentRowClassName: string
   isFocussed?: boolean
 }
@@ -23,7 +22,6 @@ export const Row = ({
   numberOfWords,
   isCurrentRow,
   isCompleted,
-  isNewlyCompleted,
   currentRowClassName,
   isFocussed,
 }: Props) => {
@@ -44,7 +42,7 @@ export const Row = ({
       {Array.from({ length: numberOfLetters }, (_, i) => (
         <Cell
           key={i}
-          value={guess ? splitGuess[i] : undefined}
+          value={splitGuess ? splitGuess[i] : undefined}
           status={
             !isCurrentRow
               ? statuses[i]
@@ -52,7 +50,7 @@ export const Row = ({
                 ? 'incorrect'
                 : 'null'
           }
-          isRevealing={isFocussed && !isCurrentRow}
+          isRevealing={isFocussed && !isCurrentRow && !!guess}
           isCompleted={isCompleted}
           position={i}
           isFocussed={isFocussed}

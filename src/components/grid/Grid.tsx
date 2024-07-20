@@ -23,24 +23,29 @@ export const Grid = ({
 }: Props) => {
   const { isRowFocussed } = useFocussedRows()
 
+  const wonIndex = guesses.includes(solution)
+    ? guesses.indexOf(solution)
+    : guesses.length
+
   return (
-    <div className="max-w-full py-3 px-2 sm:px-3">
+    <div className="max-w-full px-2 py-3 sm:px-3">
       {Array.from({ length: maxChallenges }, (_, i) => (
         <Row
-          key={`${numberOfLetters}-${numberOfWords}-${i}`}
+          key={`${numberOfLetters}-${numberOfWords}-${i}`} // TODO this is causing performance issues
           solution={solution}
           guess={
-            guesses.length === i
-              ? currentGuess
-              : guesses.length > i
-                ? guesses[i]
-                : ''
+            wonIndex < i
+              ? ''
+              : guesses.length === i
+                ? currentGuess
+                : guesses.length > i
+                  ? guesses[i]
+                  : ''
           }
           numberOfLetters={numberOfLetters}
           numberOfWords={numberOfWords}
           isCurrentRow={guesses.length === i}
           isCompleted={guesses.length > i}
-          isNewlyCompleted={guesses.length - 1 === i}
           currentRowClassName={currentRowClassName}
           isFocussed={isRowFocussed(i)}
         />
