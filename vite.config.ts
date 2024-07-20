@@ -20,8 +20,6 @@ export default defineConfig({
   },
   define: {
     'process.env': {
-      VITE_GAME_DESCRIPTION: JSON.stringify(process.env.VITE_GAME_DESCRIPTION),
-      VITE_GAME_NAME: JSON.stringify(process.env.VITE_GAME_NAME),
       VITE_GOOGLE_MEASUREMENT_ID: JSON.stringify(
         process.env.VITE_GOOGLE_MEASUREMENT_ID
       ),

@@ -1,4 +1,4 @@
-export const GAME_TITLE = process.env.REACT_APP_GAME_NAME!
+export const GAME_TITLE = 'Alterdle'
 
 export const WIN_MESSAGES = [
   'Great Job!',
