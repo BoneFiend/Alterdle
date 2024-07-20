@@ -1,7 +1,9 @@
+import { describe, expect, it } from 'vitest'
+
 import { generateEmojiGrid } from './share'
 
 describe('generateEmojiGrid', () => {
-  test('generates grid for ascii', () => {
+  it('generates grid for ascii', () => {
     const guesses = ['EDCBA', 'VWXYZ', 'ABCDE']
     const tiles = ['C', 'P', 'A'] // Correct, Present, Absent
 
@@ -11,7 +13,8 @@ describe('generateEmojiGrid', () => {
     expect(gridParts[1]).toBe('AAAAA')
     expect(gridParts[2]).toBe('CCCCC')
   })
-  test('generates grid for emoji', () => {
+
+  it('generates grid for emoji', () => {
     const guesses = ['5️⃣4️⃣3️⃣2️⃣1️⃣', '♠️♥️♦️♣️🔔', '1️⃣2️⃣3️⃣4️⃣5️⃣']
     const tiles = ['C', 'P', 'A'] // Correct, Present, Absent
 

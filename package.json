@@ -17,7 +17,7 @@
     "@headlessui/react": "^2.1.2",
     "@heroicons/react": "^1.0.6",
     "@tailwindcss/forms": "^0.5.2",
-    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/jest-dom": "^6.4.6",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^29.5.4",
@@ -45,12 +45,6 @@
     "vite-tsconfig-paths": "^4.3.2",
     "web-vitals": "^3.4.0",
     "zustand": "^4.5.4"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
