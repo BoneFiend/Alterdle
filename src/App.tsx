@@ -80,6 +80,25 @@ function App() {
   const [isDatePickerModalOpen, setIsDatePickerModalOpen] = useState(false)
   const [isMigrateStatsModalOpen, setIsMigrateStatsModalOpen] = useState(false)
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false)
+
+  const isAnyModalOpen = useMemo(
+    () =>
+      isHelpModalOpen ||
+      isStatsModalOpen ||
+      isSettingsModalOpen ||
+      isMigrateStatsModalOpen ||
+      isInfoModalOpen ||
+      isDatePickerModalOpen,
+    [
+      isHelpModalOpen,
+      isStatsModalOpen,
+      isSettingsModalOpen,
+      isMigrateStatsModalOpen,
+      isInfoModalOpen,
+      isDatePickerModalOpen,
+    ]
+  )
+
   const [currentRowClass, setCurrentRowClass] = useState('')
   const [isDarkMode, setIsDarkMode] = useState(
     localStorage.getItem('theme')
@@ -259,6 +278,13 @@ function App() {
   }, [guesses, gameDate, isLatestGame])
 
   const onChar = (value: string) => {
+    if (
+      isAnyModalOpen ||
+      isGameWon ||
+      isGameLost ||
+      (guesses[numberOfWords]?.[numberOfLetters] || []).length === maxChallenges
+    )
+      return
     focusRow((guesses[numberOfWords]?.[numberOfLetters] ?? []).length)
     if (
       unicodeLength(`${currentGuess}${value}`) <= numberOfLetters &&
@@ -278,6 +304,7 @@ function App() {
   }
 
   const onDelete = () => {
+    if (isAnyModalOpen) return
     setCurrentGuesses(
       updateObj2d(
         currentGuesses,
@@ -292,9 +319,7 @@ function App() {
   }
 
   const onEnter = () => {
-    if (isGameWon || isGameLost) {
-      return
-    }
+    if (isGameWon || isGameLost || isAnyModalOpen) return
 
     if (!(unicodeLength(currentGuess) === numberOfLetters)) {
       setCurrentRowClass('animate-jiggle')
