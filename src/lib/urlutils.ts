@@ -12,6 +12,7 @@ import {
   MIN_NUMBER_OF_LETTERS,
   MIN_NUMBER_OF_WORDS,
 } from '../constants/settings'
+import { GAME_TITLE } from '../constants/strings'
 import { getToday } from './dateutils'
 import { getIsLatestGame } from './words'
 
@@ -40,6 +41,13 @@ export const setUrl = (
     '',
     newUrl.toString()
   )
+}
+
+export const setWindowTitle = (
+  numberOfWords: number,
+  numberOfLetters: number
+) => {
+  document.title = `${GAME_TITLE} - ${numberOfWords}x${numberOfLetters}`
 }
 
 export const getShareUrl = (

@@ -47,6 +47,7 @@ import {
   loadNumberOfLetters,
   loadNumberOfWords,
   setUrl,
+  setWindowTitle,
 } from './lib/urlutils'
 import {
   Obj2d,
@@ -106,10 +107,10 @@ function App() {
   const [numberOfLetters, setNumberOfLetters] = useState(() => {
     return loadNumberOfLetters()
   })
+
   const [gamesWon, setGamesWon] = useState<Obj2d>({})
   const isGameWon = gamesWon[numberOfWords]?.[numberOfLetters] ?? false
-  const isGameLost =
-    gamesWon[numberOfWords]?.[numberOfLetters] === false ?? false
+  const isGameLost = gamesWon[numberOfWords]?.[numberOfLetters] === false
 
   const maxChallenges = numberOfWords + MAX_CHALLENGES_BONUS
 
@@ -175,12 +176,17 @@ function App() {
     if (numberOfLetters === 1 && numberOfWords > 2) {
       setNumberOfWords(2)
     }
-    setUrl(numberOfWords, numberOfLetters, gameDate)
-    // TODO change to useReducer() maybe. it could reduce chance of "Too many calls to Location or History APIs within a short timeframe" error
+
+    const timeoutId = setTimeout(() => {
+      setUrl(numberOfWords, numberOfLetters, gameDate)
+      setWindowTitle(numberOfWords, numberOfLetters)
+    }, 1000)
 
     if (timerRef.current) clearTimeout(timerRef.current)
     setShouldRefocus(true)
-  }, [numberOfLetters, numberOfWords, gameDate])
+
+    return () => clearTimeout(timeoutId)
+  }, [numberOfLetters, numberOfWords, gameDate, ,])
 
   useEffect(() => {
     setGuesses(loadGuesses(gameDate, isLatestGame))
