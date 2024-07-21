@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { DELETE_TEXT, ENTER_TEXT } from '../../constants/strings'
 import { getStatuses } from '../../lib/statuses'
 import { localeAwareUpperCase } from '../../lib/words'
+import useActiveKeys from '../../stores/useActiveKeys'
 import { Key } from './Key'
 
 type Props = {
@@ -32,6 +33,8 @@ export const Keyboard = ({
     if (!isRevealing) setCharStatuses(getStatuses(solution, guesses))
   }, [isRevealing, solution, guesses])
 
+  const { activateKey, disactivateKey, isKeyActive } = useActiveKeys()
+
   const onClick = (value: string) => {
     if (value === 'ENTER') {
       onEnter()
@@ -42,23 +45,32 @@ export const Keyboard = ({
     }
   }
 
-  useEffect(() => {
-    const listener = (e: KeyboardEvent) => {
-      if (e.code === 'Enter') {
-        onEnter()
-      } else if (e.code === 'Backspace') {
-        onDelete()
-      } else {
-        const key = localeAwareUpperCase(e.key)
-        // TODO: check this test if the range works with non-english letters
-        if (key.length === 1 && key >= 'A' && key <= 'Z') {
-          onChar(key)
-        }
+  const keyDown = (e: KeyboardEvent) => {
+    activateKey(localeAwareUpperCase(e.key))
+    if (e.code === 'Backspace') {
+      onDelete()
+    }
+  }
+
+  const keyUp = (e: KeyboardEvent) => {
+    disactivateKey(localeAwareUpperCase(e.key))
+    if (e.code === 'Enter') {
+      onEnter()
+    } else {
+      const key = localeAwareUpperCase(e.key)
+      // TODO: check this test if the range works with non-english letters
+      if (key.length === 1 && key >= 'A' && key <= 'Z') {
+        onChar(key)
       }
     }
-    window.addEventListener('keyup', listener)
+  }
+
+  useEffect(() => {
+    window.addEventListener('keyup', keyUp)
+    window.addEventListener('keydown', keyDown)
     return () => {
-      window.removeEventListener('keyup', listener)
+      window.removeEventListener('keyup', keyUp)
+      window.removeEventListener('keydown', keyDown)
     }
   }, [onEnter, onDelete, onChar])
 
@@ -72,7 +84,7 @@ export const Keyboard = ({
             onClick={onClick}
             status={charStatuses[key]}
             isRevealing={isRevealing}
-            numberOfLetters={numberOfLetters}
+            isActive={isKeyActive(key)}
           />
         ))}
       </div>
@@ -84,7 +96,7 @@ export const Keyboard = ({
             onClick={onClick}
             status={charStatuses[key]}
             isRevealing={isRevealing}
-            numberOfLetters={numberOfLetters}
+            isActive={isKeyActive(key)}
           />
         ))}
       </div>
@@ -93,7 +105,7 @@ export const Keyboard = ({
           longWidth={true}
           value="ENTER"
           onClick={onClick}
-          numberOfLetters={numberOfLetters}
+          isActive={isKeyActive('ENTER')}
         >
           {ENTER_TEXT}
         </Key>
@@ -104,14 +116,14 @@ export const Keyboard = ({
             onClick={onClick}
             status={charStatuses[key]}
             isRevealing={isRevealing}
-            numberOfLetters={numberOfLetters}
+            isActive={isKeyActive(key)}
           />
         ))}
         <Key
           longWidth={true}
           value="DELETE"
           onClick={onClick}
-          numberOfLetters={numberOfLetters}
+          isActive={isKeyActive('BACKSPACE')}
         >
           {DELETE_TEXT}
         </Key>

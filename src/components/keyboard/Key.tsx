@@ -10,7 +10,7 @@ type Props = {
   status?: CharStatus
   onClick: (value: string) => void
   isRevealing?: boolean
-  numberOfLetters: number
+  isActive: boolean
 }
 
 export const Key = ({
@@ -20,7 +20,7 @@ export const Key = ({
   value,
   onClick,
   isRevealing,
-  numberOfLetters,
+  isActive,
 }: Props) => {
   const classes = classnames(
     'xshort:h-10 short:h-12 h-14 sm:h-16',
@@ -31,13 +31,16 @@ export const Key = ({
       'w-[65.4px] sm:w-[96px] short:w-[65.4px] text-base sm:text-2xl short:text-base':
         longWidth,
       'transition ease-in-out': isRevealing,
-      'bg-key text-stone-900 dark:text-white hover:bg-key-deep active:bg-key-deeper':
+      'bg-key text-white dark:text-white hover:bg-key-deep active:bg-key-deeper':
         !status,
       'bg-absent text-white': status === 'absent',
       'bg-correct text-white hover:bg-correct-deep active:bg-correct-deeper':
         status === 'correct',
       'bg-present text-white hover:bg-present-deep active:bg-present-deeper':
         status === 'present',
+      'bg-key-deeper transition-none': isActive && !status,
+      'bg-correct-deeper transition-none': isActive && status === 'correct',
+      'bg-present-deeper transition-none': isActive && status === 'present',
     }
   )
 
