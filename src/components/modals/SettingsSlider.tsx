@@ -1,3 +1,5 @@
+import { Slider } from '@nextui-org/slider'
+
 type Props = {
   settingName: string
   value: number
@@ -16,28 +18,35 @@ export const SettingsSlider = ({
   maxValue,
 }: Props) => {
   return (
-    <>
-      <div className="mb-3 flex justify-between gap-4 pt-3">
-        <div className="text-left text-secondary">
-          <p className="leading-none">{settingName}</p>
-          {description && (
-            <p className="mt-1 text-xs text-secondary">{description}</p>
-          )}
-        </div>
-        <div>
-          <p className="text-left text-secondary">{value}</p>
-          {/* TODO replace this <input/> with a react component for concistency */}
-          <input
-            type="range"
-            min={minValue}
-            max={maxValue}
-            value={value}
-            onChange={(e) => handleValue(Number(e.target.value))}
-            step="1"
-            className="cursor-pointer"
-          />
-        </div>
+    <div className="mb-3 flex justify-between gap-4 pt-3">
+      <div className="text-left text-secondary transition-colors duration-500">
+        <p className="leading-none">{settingName}</p>
+        {description && (
+          <p className="mt-1 text-xs text-secondary transition-colors duration-500">
+            {description}
+          </p>
+        )}
       </div>
-    </>
+      <div className="flex gap-3">
+        <p className="text-secondary transition-colors duration-500">{value}</p>
+        <Slider
+          aria-label={settingName}
+          minValue={minValue}
+          maxValue={maxValue}
+          value={value}
+          onChange={(e) => handleValue(Number(e))}
+          step={1}
+          showSteps
+          color="warning"
+          className="w-36"
+          classNames={{
+            filler: 'transition-colors duration-500',
+            thumb: 'transition-colors duration-500 after:bg-white',
+            track: 'bg-accent-disabled transition-colors duration-500',
+            step: 'transition-colors duration-500',
+          }}
+        />
+      </div>
+    </div>
   )
 }
