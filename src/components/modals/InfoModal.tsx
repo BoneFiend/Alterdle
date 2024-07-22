@@ -36,6 +36,8 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         <a
           href="https://www.reddit.com/user/BoneFiend82"
           className="font-bold underline"
+          target="_blank"
+          rel="noreferrer"
         >
           Reddit
         </a>
@@ -46,6 +48,8 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         <a
           href="https://github.com/BoneFiend/alterdle"
           className="font-bold underline"
+          target="_blank"
+          rel="noreferrer"
         >
           here
         </a>
