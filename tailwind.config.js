@@ -68,11 +68,13 @@ module.exports = {
             backgroundColor: 'transparent',
             borderColor: 'var(--cell-border-value)',
             color: 'var(--blank)',
+            'text-shadow': '0px 0px 0px #000000',
           },
           '50%': {
             backgroundColor: 'transparent',
             borderColor: 'var(--cell-border-value)',
             color: 'var(--blank)',
+            'text-shadow': '0px 0px 0px #000000',
           },
           '50.1%': {
             backgroundColor: 'inherit',
@@ -122,9 +124,9 @@ module.exports = {
       },
       animation: {
         'cell-fill': 'cell-fill 0.15s linear',
-        'cell-reveal': 'cell-reveal 0.35s linear backwards',
-        'cell-reveal-incorrect': 'cell-reveal-incorrect 0.35s linear backwards',
-        'letter-flip': 'letter-flip 0.35s linear backwards',
+        'cell-reveal': 'cell-reveal linear backwards',
+        'cell-reveal-incorrect': 'cell-reveal-incorrect linear backwards',
+        'letter-flip': 'letter-flip linear backwards',
         jiggle: 'jiggle 0.25s linear',
       },
     },
