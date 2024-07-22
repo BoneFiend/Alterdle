@@ -15,8 +15,13 @@ module.exports = {
       },
       colors: {
         primary: {
-          DEFAULT: 'var(--primary-1)',
+          1: 'var(--primary-1)',
           2: 'var(--primary-2)',
+          '1-light-mode': 'var(--primary-1-light-mode)',
+          '2-light-mode': 'var(--primary-2-light-mode)',
+          '1-dark-mode': 'var(--primary-1-dark-mode)',
+          '2-dark-mode': 'var(--primary-2-dark-mode)',
+          light: 'var(--primary-light)',
         },
         secondary: {
           DEFAULT: 'var(--secondary-1)',
@@ -29,8 +34,7 @@ module.exports = {
           disabled: 'var(--accent-disabled)',
         },
         cell: {
-          DEFAULT: 'var(--cell)',
-          border: 'var(--cell-border)',
+          deep: 'var(--cell-border)',
           'border-value': 'var(--cell-border-value)',
         },
         blank: 'var(--blank)',
@@ -61,12 +65,12 @@ module.exports = {
         'cell-reveal': {
           '0%': {
             transform: 'rotateX(0deg)',
-            backgroundColor: 'var(--cell)',
+            backgroundColor: 'transparent',
             borderColor: 'var(--cell-border-value)',
             color: 'var(--blank)',
           },
           '50%': {
-            backgroundColor: 'var(--cell)',
+            backgroundColor: 'transparent',
             borderColor: 'var(--cell-border-value)',
             color: 'var(--blank)',
           },
@@ -80,7 +84,7 @@ module.exports = {
         'cell-reveal-incorrect': {
           '0%': {
             transform: 'rotateX(0deg)',
-            backgroundColor: 'var(--cell)',
+            backgroundColor: 'transparent',
             borderColor: 'var(--cell-border-value)',
             color: 'var(--blank)',
             opacity: 0,
@@ -90,7 +94,7 @@ module.exports = {
             borderTop: 0,
           },
           '50%': {
-            backgroundColor: 'var(--cell)',
+            backgroundColor: 'transparent',
             borderColor: 'var(--cell-border-value)',
             color: 'var(--blank)',
             opacity: 0,
@@ -126,6 +130,23 @@ module.exports = {
     },
   },
   darkMode: 'class',
+  plugins: [
+    require('@tailwindcss/forms'),
+    nextui({
+      themes: {
+        light: {
+          colors: {
+            warning: 'rgba(111, 6, 116)', // This is actually the accent colour
+          },
+        },
+        dark: {
+          colors: {
+            warning: 'rgba(255, 93, 115)',
+          },
+        },
+      },
+    }),
+  ],
   future: {
     hoverOnlyWhenSupported: true,
   },

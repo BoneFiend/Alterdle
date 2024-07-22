@@ -24,7 +24,7 @@ export const Key = ({
 }: Props) => {
   const classes = classnames(
     'xshort:h-10 short:h-12 h-14 sm:h-16',
-    'flex items-center justify-center rounded-lg mx-0.5 font-bold cursor-pointer select-none transition-all',
+    'flex items-center justify-center rounded-lg sm:rounded-xl mx-0.5 font-bold cursor-pointer select-none transition-all',
     {
       'w-[40px] sm:w-[64px] short:w-[40px] text-lg sm:text-3xl short:text-lg':
         !longWidth,
@@ -34,9 +34,9 @@ export const Key = ({
       'bg-key text-white dark:text-white hover:bg-key-deep active:bg-key-deeper':
         !status,
       'bg-absent text-white': status === 'absent',
-      'bg-correct text-white hover:bg-correct-deep active:bg-correct-deeper':
+      'bg-correct shadowed text-white hover:bg-correct-deep active:bg-correct-deeper':
         status === 'correct',
-      'bg-present text-white hover:bg-present-deep active:bg-present-deeper':
+      'bg-present shadowed text-white hover:bg-present-deep active:bg-present-deeper':
         status === 'present',
       'bg-key-deeper transition-none': isActive && !status,
       'bg-correct-deeper transition-none': isActive && status === 'correct',

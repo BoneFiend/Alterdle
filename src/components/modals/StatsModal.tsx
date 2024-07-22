@@ -137,8 +137,8 @@ export const StatsModal = ({
               )}
               {ENABLE_ARCHIVED_GAMES && !isLatestGame && (
                 <div className="mt-2 inline-flex">
-                  <ClockIcon className="mr-1 mt-1 h-5 w-5 stroke-black dark:stroke-white" />
-                  <div className="mt-0 ml-1 text-center text-sm sm:text-base">
+                  <ClockIcon className="mr-1 mt-1 h-5 w-5 stroke-blank" />
+                  <div className="ml-1 mt-0 text-center text-sm sm:text-base">
                     <strong>{ARCHIVE_GAMEDATE_TEXT}:</strong>
                     <br />
                     {format(gameDate, 'd MMMM yyyy', {
@@ -168,7 +168,7 @@ export const StatsModal = ({
                   )
                 }}
               >
-                <ShareIcon className="mr-2 h-6 w-6 cursor-pointer dark:stroke-white" />
+                <ShareIcon className="mr-2 h-6 w-6 cursor-pointer" />
                 {SHARE_TEXT}
               </Button>
             </div>

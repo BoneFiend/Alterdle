@@ -17,7 +17,7 @@ export const Progress = ({
     'text-xs font-medium text-white text-center p-0.5',
     {
       'bg-accent': isCurrentDayStatRow,
-      'bg-stone-500 dark:bg-stone-800': !isCurrentDayStatRow,
+      'bg-accent-disabled': !isCurrentDayStatRow,
     }
   )
   return (

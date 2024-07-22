@@ -102,7 +102,7 @@ export const DatePickerModal = ({
       <p className="mt-1 text-sm text-secondary">
         Only your guesses from today's Alterdle will be saved.
       </p>
-      <div className="flex columns-2 items-stretch justify-center gap-2 text-center dark:text-white">
+      <div className="flex columns-2 items-stretch justify-center gap-2">
         <Button
           disabled={!isValidGameDate(getToday())}
           onClick={() => handleSelectDate(getToday())}

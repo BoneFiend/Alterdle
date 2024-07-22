@@ -97,7 +97,7 @@ export const ImmigratePanel = () => {
         onClick={handleSaveButton}
         className="w-min"
       >
-        <SaveIcon className="mr-2 h-6 w-6 cursor-pointer dark:stroke-white" />
+        <SaveIcon className="mr-2 h-6 w-6 cursor-pointer" />
         Save
       </Button>
     </div>

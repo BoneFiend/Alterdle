@@ -3,7 +3,7 @@ import classnames from 'classnames'
 import React from 'react'
 
 const variants = cva(
-  'inline-flex items-center justify-center shadow-sm text-white bg-accent hover:bg-accent-deep active:bg-accent-deeper disabled:bg-accent-disabled',
+  'inline-flex items-center justify-center shadow-sm text-white dark:text-secondary bg-accent hover:bg-accent-deep active:bg-accent-deeper disabled:bg-accent-disabled',
   {
     variants: {
       variant: {

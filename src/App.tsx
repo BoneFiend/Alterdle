@@ -433,7 +433,9 @@ function App() {
 
   return (
     <Div100vh>
-      <div className="flex h-full flex-col">
+      <div className="fixed h-full w-full bg-gradient-to-b from-primary-1-light-mode to-primary-2-light-mode" />
+      <div className="fixed h-full w-full bg-gradient-to-b from-primary-1-dark-mode to-primary-2-dark-mode opacity-0 transition-opacity duration-500 dark:opacity-100" />
+      <div className="3xl relative flex h-full flex-col bg-transparent ">
         <Navbar
           setIsInfoModalOpen={setIsInfoModalOpen}
           setIsHelpModalOpen={setIsHelpModalOpen}

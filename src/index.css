@@ -2,67 +2,64 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  background-color: var(--primary-1);
-}
-
 :root {
-  /* TODO redo themeing. Make a stronger pink, and change from brown */
-  --primary-1: theme('colors.pink.100');
-  --primary-2: theme('colors.pink.100');
+  --primary-1-light-mode: rgba(246, 141, 196); /* pink-400 */
+  --primary-2-light-mode: rgba(251, 219, 237); /* pink-100 */
+
+  --primary-1-dark-mode: theme('colors.fuchsia.950');
+  --primary-2-dark-mode: #5e455c;
+
+  --primary-1: var(--primary-1-light-mode);
+  --primary-2: var(--primary-2-light-mode);
   --primary-light: theme('colors.pink.50');
 
-  --secondary-1: theme('colors.stone.700');
-  --secondary-2: theme('colors.stone.300');
+  --secondary-1: rgba(13, 22, 11);
+  --secondary-2: rgba(13, 22, 11, 0.5);
 
-  --accent: theme('colors.sky.600');
-  --accent-deep: theme('colors.sky.700');
-  --accent-deeper: theme('colors.sky.800');
-  --accent-disabled: theme('colors.stone.400');
+  --accent: hsl(var(--nextui-warning));
+  --accent-deep: rgba(92, 5, 97);
+  --accent-deeper: rgba(74, 4, 78);
+  --accent-disabled: rgba(55, 3, 58, 0.4);
 
-  --cell: theme('colors.pink.100');
-  --cell-border: theme('colors.stone.300');
-  --cell-border-value: theme('colors.stone.500');
+  --cell-border: rgba(71, 58, 51, 0.4);
+  --cell-border-value: rgba(71, 58, 51, 1);
 
   --blank: theme('colors.black');
 
-  --absent: theme('colors.stone.500');
-  --correct: theme('colors.green.500');
-  --present: theme('colors.amber.400');
-  --incorrect: theme('colors.red.600');
+  --absent: rgba(71, 58, 51, 0.9);
+  --correct: rgba(3, 181, 77);
+  --present: rgba(242, 198, 24);
+  --incorrect: rgba(201, 36, 3);
 
   --correct-deep: theme('colors.green.600');
-  --present-deep: theme('colors.yellow.600');
+  --present-deep: rgba(212, 172, 12);
 
   --correct-deeper: theme('colors.green.700');
-  --present-deeper: theme('colors.yellow.700');
+  --present-deeper: rgba(174, 141, 10);
 
-  --key: theme('colors.stone.300');
-  --key-deep: theme('colors.stone.400');
-  --key-deeper: theme('colors.stone.600');
+  --key: rgba(151, 126, 114, 0.9);
+  --key-deep: rgba(129, 106, 95);
+  --key-deeper: rgba(106, 87, 78);
 }
 
 .dark {
-  --primary-1: theme('colors.stone.700');
-  --primary-2: theme('colors.stone.600');
-  --primary-light: theme('colors.stone.500');
+  --primary-1: var(--primary-1-dark-mode);
+  --primary-2: var(--primary-2-dark-mode);
+  --primary-light: rgba(117, 87, 115);
 
-  --accent-disabled: theme('colors.stone.700');
+  --secondary-1: rgba(254, 255, 234);
+  --secondary-2: rgba(253, 255, 214, 0.5);
 
-  --secondary-1: theme('colors.gray.300');
-  --secondary-2: theme('colors.stone.300');
+  --accent-deep: rgba(255, 51, 78);
+  --accent-deeper: rgba(255, 31, 61);
+  --accent-disabled: rgba(37, 31, 24, 0.7);
 
-  --cell: theme('colors.stone.700');
-  --cell-border: theme('colors.stone.500');
-  --cell-border-value: theme('colors.stone.300');
+  --cell-border: rgba(169, 146, 125, 0.4);
+  --cell-border-value: rgba(169, 146, 125);
 
   --blank: theme('colors.white');
 
-  --absent: theme('colors.stone.800');
-
-  --key: theme('colors.stone.500');
-  --key-deep: theme('colors.stone.600');
-  --key-deeper: theme('colors.stone.800');
+  --absent: rgba(37, 31, 24, 0.9);
 }
 
 .high-contrast {
@@ -103,11 +100,11 @@ html {
 }
 
 .react-datepicker-right {
-  @apply absolute right-0 left-auto top-11 transform-none !important;
+  @apply absolute left-auto right-0 top-11 transform-none !important;
 }
 
 .react-datepicker__portal {
-  @apply absolute top-12 right-0 z-10 w-72 transform-none rounded border-2 border-gray-200 bg-white px-3 py-2 text-sm shadow;
+  @apply absolute right-0 top-12 z-10 w-72 transform-none rounded border-2 border-gray-200 bg-white px-3 py-2 text-sm shadow;
 }
 
 .react-datepicker__month-container {

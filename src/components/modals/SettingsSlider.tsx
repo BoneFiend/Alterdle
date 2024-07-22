@@ -38,10 +38,11 @@ export const SettingsSlider = ({
           step={1}
           showSteps
           color="warning"
-          className="w-36"
+          className="w-44"
           classNames={{
             filler: 'transition-colors duration-500',
-            thumb: 'transition-colors duration-500 after:bg-white',
+            thumb:
+              'hover:bg-accent-deep data-[dragging=true]:bg-accent-deeper hover:duration-0 active:bg-accent-deeper transition-colors duration-500 after:bg-white dark:after:bg-secondary',
             track: 'bg-accent-disabled transition-colors duration-500',
             step: 'transition-colors duration-500',
           }}

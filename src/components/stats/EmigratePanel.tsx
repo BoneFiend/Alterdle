@@ -47,7 +47,7 @@ export const EmigratePanel = () => {
         onClick={copyEmigrationCodeToClipboard}
         className="w-min"
       >
-        <DuplicateIcon className="mr-2 h-6 w-6 cursor-pointer dark:stroke-white" />
+        <DuplicateIcon className="mr-2 h-6 w-6 cursor-pointer" />
         {copyButtonText}
       </Button>
     </div>

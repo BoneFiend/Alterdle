@@ -82,16 +82,16 @@ export const SettingsModal = ({
         />
         {ENABLE_ARCHIVED_GAMES && (
           <div className="mb-3 flex justify-between gap-4 pt-3">
-            <div className="text-left text-secondary">
+            <div className="text-left text-secondary transition-colors duration-500">
               <p className="leading-none">{DATEPICKER_TITLE}</p>
-              <p className="mt-1 text-xs text-secondary">
+              <p className="mt-1 text-xs text-secondary transition-colors duration-500">
                 {DATEPICKER_DESCRIPTION}
               </p>
             </div>
             <div>
-              <p className="text-left text-secondary">
+              <p className="text-left text-secondary transition-colors duration-500">
                 <Button onClick={handleChooseDateButton}>
-                  <CalendarIcon className="mr-2 h-6 w-6 cursor-pointer dark:stroke-white" />
+                  <CalendarIcon className="mr-2 h-6 w-6 cursor-pointer" />
                   {DATEPICKER_BUTTON}
                 </Button>
               </p>
