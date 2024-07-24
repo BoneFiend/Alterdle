@@ -87,8 +87,8 @@ importers:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
       typescript:
-        specifier: ^4.5.4
-        version: 4.5.4
+        specifier: ^5.5.4
+        version: 5.5.4
       ua-parser-js:
         specifier: ^1.0.35
         version: 1.0.35
@@ -100,10 +100,10 @@ importers:
         version: 2.0.1
       vite-plugin-svgr:
         specifier: ^4.2.0
-        version: 4.2.0(rollup@4.19.0)(typescript@4.5.4)(vite@5.3.4(@types/node@16.11.19))
+        version: 4.2.0(rollup@4.19.0)(typescript@5.5.4)(vite@5.3.4(@types/node@16.11.19))
       vite-tsconfig-paths:
         specifier: ^4.3.2
-        version: 4.3.2(typescript@4.5.4)(vite@5.3.4(@types/node@16.11.19))
+        version: 4.3.2(typescript@5.5.4)(vite@5.3.4(@types/node@16.11.19))
       web-vitals:
         specifier: ^3.4.0
         version: 3.4.0
@@ -3424,9 +3424,9 @@ packages:
   tslib@2.6.3:
     resolution: {integrity: sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==}
 
-  typescript@4.5.4:
-    resolution: {integrity: sha512-VgYs2A2QIRuGphtzFV7aQJduJ2gyfTljngLzjpfW9FoYZF6xuw1W0vW9ghCKLfcWrCFxK81CSGRAvS1pn4fIUg==}
-    engines: {node: '>=4.2.0'}
+  typescript@5.5.4:
+    resolution: {integrity: sha512-Mtq29sKDAEYP7aljRgtPOpTvOfbwRWlS6dPRzwjdE+C0R4brX/GUyhHSecbHMFLNBLcJIPt9nl9yG5TZ1weH+Q==}
+    engines: {node: '>=14.17'}
     hasBin: true
 
   ua-parser-js@1.0.35:
@@ -5918,12 +5918,12 @@ snapshots:
       '@svgr/babel-plugin-transform-react-native-svg': 8.1.0(@babel/core@7.24.9)
       '@svgr/babel-plugin-transform-svg-component': 8.0.0(@babel/core@7.24.9)
 
-  '@svgr/core@8.1.0(typescript@4.5.4)':
+  '@svgr/core@8.1.0(typescript@5.5.4)':
     dependencies:
       '@babel/core': 7.24.9
       '@svgr/babel-preset': 8.1.0(@babel/core@7.24.9)
       camelcase: 6.3.0
-      cosmiconfig: 8.3.6(typescript@4.5.4)
+      cosmiconfig: 8.3.6(typescript@5.5.4)
       snake-case: 3.0.4
     transitivePeerDependencies:
       - supports-color
@@ -5934,11 +5934,11 @@ snapshots:
       '@babel/types': 7.23.4
       entities: 4.5.0
 
-  '@svgr/plugin-jsx@8.1.0(@svgr/core@8.1.0(typescript@4.5.4))':
+  '@svgr/plugin-jsx@8.1.0(@svgr/core@8.1.0(typescript@5.5.4))':
     dependencies:
       '@babel/core': 7.24.9
       '@svgr/babel-preset': 8.1.0(@babel/core@7.24.9)
-      '@svgr/core': 8.1.0(typescript@4.5.4)
+      '@svgr/core': 8.1.0(typescript@5.5.4)
       '@svgr/hast-util-to-babel-ast': 8.0.0
       svg-parser: 2.0.4
     transitivePeerDependencies:
@@ -6395,14 +6395,14 @@ snapshots:
 
   convert-source-map@2.0.0: {}
 
-  cosmiconfig@8.3.6(typescript@4.5.4):
+  cosmiconfig@8.3.6(typescript@5.5.4):
     dependencies:
       import-fresh: 3.3.0
       js-yaml: 4.1.0
       parse-json: 5.2.0
       path-type: 4.0.0
     optionalDependencies:
-      typescript: 4.5.4
+      typescript: 5.5.4
 
   cross-spawn@7.0.3:
     dependencies:
@@ -7618,15 +7618,15 @@ snapshots:
 
   ts-interface-checker@0.1.13: {}
 
-  tsconfck@3.1.1(typescript@4.5.4):
+  tsconfck@3.1.1(typescript@5.5.4):
     optionalDependencies:
-      typescript: 4.5.4
+      typescript: 5.5.4
 
   tslib@2.3.1: {}
 
   tslib@2.6.3: {}
 
-  typescript@4.5.4: {}
+  typescript@5.5.4: {}
 
   ua-parser-js@1.0.35: {}
 
@@ -7705,22 +7705,22 @@ snapshots:
       dotenv: 8.2.0
       dotenv-expand: 5.1.0
 
-  vite-plugin-svgr@4.2.0(rollup@4.19.0)(typescript@4.5.4)(vite@5.3.4(@types/node@16.11.19)):
+  vite-plugin-svgr@4.2.0(rollup@4.19.0)(typescript@5.5.4)(vite@5.3.4(@types/node@16.11.19)):
     dependencies:
       '@rollup/pluginutils': 5.1.0(rollup@4.19.0)
-      '@svgr/core': 8.1.0(typescript@4.5.4)
-      '@svgr/plugin-jsx': 8.1.0(@svgr/core@8.1.0(typescript@4.5.4))
+      '@svgr/core': 8.1.0(typescript@5.5.4)
+      '@svgr/plugin-jsx': 8.1.0(@svgr/core@8.1.0(typescript@5.5.4))
       vite: 5.3.4(@types/node@16.11.19)
     transitivePeerDependencies:
       - rollup
       - supports-color
       - typescript
 
-  vite-tsconfig-paths@4.3.2(typescript@4.5.4)(vite@5.3.4(@types/node@16.11.19)):
+  vite-tsconfig-paths@4.3.2(typescript@5.5.4)(vite@5.3.4(@types/node@16.11.19)):
     dependencies:
       debug: 4.3.4
       globrex: 0.1.2
-      tsconfck: 3.1.1(typescript@4.5.4)
+      tsconfck: 3.1.1(typescript@5.5.4)
     optionalDependencies:
       vite: 5.3.4(@types/node@16.11.19)
     transitivePeerDependencies:
