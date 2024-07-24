@@ -18,7 +18,7 @@ export const BaseModal = ({ title, children, isOpen, handleClose }: Props) => {
   return (
     <Dialog
       as="div"
-      className="fixed inset-0 z-10 overflow-y-auto "
+      className="fixed inset-0 z-10 overflow-y-auto"
       open={isOpen}
       onClose={handleClose}
     >
@@ -47,7 +47,7 @@ export const BaseModal = ({ title, children, isOpen, handleClose }: Props) => {
             <div
               className={classnames(
                 'fixed h-full w-full',
-                'bg-gradient-to-tl from-primary-1-light-mode to-primary-2-light-mode '
+                'bg-gradient-to-tl from-primary-1-light-mode to-primary-2-light-mode'
               )}
             />
             <div

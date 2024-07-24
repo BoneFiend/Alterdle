@@ -25,7 +25,7 @@ export const MigrateStatsModal = ({ isOpen, handleClose }: Props) => {
       isOpen={isOpen}
       handleClose={handleClose}
     >
-      <p className="mt-4 mb-4 text-sm text-gray-500 dark:text-gray-300">
+      <p className="mb-4 mt-4 text-sm text-gray-500 dark:text-gray-300">
         Copy the migration code on your old device and paste into the input on
         the new device.
       </p>
