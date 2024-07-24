@@ -26,7 +26,7 @@
 
   --blank: theme('colors.black');
 
-  --absent: rgba(71, 58, 51, 0.9);
+  --absent: rgba(88, 68, 66);
   --correct: rgba(3, 181, 77);
   --present: rgba(242, 198, 24);
   --incorrect: rgba(201, 36, 3);
