@@ -171,6 +171,7 @@ function App() {
   }, [])
 
   useEffect(() => {
+    // TODO shouldRefocus means there is a 1 tick delay on refocusing
     if (shouldRefocus) {
       setShouldRefocus(false)
       unfocusAllRows()
@@ -205,7 +206,7 @@ function App() {
     setShouldRefocus(true)
 
     return () => clearTimeout(timeoutId)
-  }, [numberOfLetters, numberOfWords, gameDate, ,])
+  }, [numberOfLetters, numberOfWords, gameDate])
 
   useEffect(() => {
     setGuesses(loadGuesses(gameDate, isLatestGame))
@@ -278,6 +279,7 @@ function App() {
   }, [guesses, gameDate, isLatestGame])
 
   const onChar = (value: string) => {
+    setShouldRefocus(false)
     if (
       isAnyModalOpen ||
       isGameWon ||

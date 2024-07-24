@@ -31,7 +31,7 @@ export const Grid = ({
     <div className="max-w-full px-2 py-3 sm:px-3">
       {Array.from({ length: maxChallenges }, (_, i) => (
         <Row
-          key={`${numberOfLetters}-${numberOfWords}-${i}`} // TODO this is causing performance issues
+          key={i}
           solution={solution}
           guess={
             wonIndex < i
