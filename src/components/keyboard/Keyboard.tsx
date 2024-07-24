@@ -33,7 +33,7 @@ export const Keyboard = ({
     if (!isRevealing) setCharStatuses(getStatuses(solution, guesses))
   }, [isRevealing, solution, guesses])
 
-  const { activateKey, disactivateKey, isKeyActive } = useActiveKeys()
+  const { activateKey, deactivateKey, isKeyActive } = useActiveKeys()
 
   const onClick = (value: string) => {
     if (value === 'ENTER') {
@@ -47,18 +47,20 @@ export const Keyboard = ({
 
   const keyDown = (e: KeyboardEvent) => {
     activateKey(localeAwareUpperCase(e.key))
+    setTimeout(() => {
+      deactivateKey(localeAwareUpperCase(e.key))
+    }, 5000)
     if (e.code === 'Backspace') {
       onDelete()
     }
   }
 
   const keyUp = (e: KeyboardEvent) => {
-    disactivateKey(localeAwareUpperCase(e.key))
+    deactivateKey(localeAwareUpperCase(e.key))
     if (e.code === 'Enter') {
       onEnter()
     } else {
       const key = localeAwareUpperCase(e.key)
-      // TODO: check this test if the range works with non-english letters
       if (key.length === 1 && key >= 'A' && key <= 'Z') {
         onChar(key)
       }

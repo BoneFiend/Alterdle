@@ -3,7 +3,7 @@ import { create } from 'zustand'
 interface ActiveKeys {
   activeKeys: string[]
   activateKey: (index: string) => void
-  disactivateKey: (index: string) => void
+  deactivateKey: (index: string) => void
   isKeyActive: (index: string) => boolean
 }
 
@@ -20,7 +20,7 @@ const useActiveKeys = create<ActiveKeys>((set, get) => ({
       return state
     }),
 
-  disactivateKey: (index: string) =>
+  deactivateKey: (index: string) =>
     set((state) => ({
       activeKeys: state.activeKeys.slice(1),
     })),
