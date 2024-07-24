@@ -1,6 +1,6 @@
 import { type VariantProps, cva } from 'class-variance-authority'
 import classnames from 'classnames'
-import React from 'react'
+import React, { useState } from 'react'
 
 const variants = cva(
   'inline-flex items-center justify-center shadow-sm text-white dark:text-secondary bg-accent hover:bg-accent-deep active:bg-accent-deeper disabled:bg-accent-disabled',
@@ -24,10 +24,18 @@ interface Props
 
 export const Button = React.forwardRef<HTMLButtonElement, Props>(
   ({ children, className, variant, type = 'button', ...props }, ref) => {
+    const [isHovered, setIsHovered] = useState(false)
+
     return (
       <button
-        className={classnames(variants({ variant, className }))}
+        className={classnames(
+          variants({ variant, className }),
+          isHovered && 'transition-none',
+          !isHovered && 'transition-colors duration-500'
+        )}
         type={type}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         {...props}
       >
         {children}
