@@ -1,11 +1,11 @@
 FROM node:20.14.12-alpine3.14 AS node_modules
 WORKDIR /app
 COPY package-lock.json package.json ./
-RUN npm install
+RUN pnpm install
 COPY . .
 
 FROM node_modules AS prod_builder
-RUN npm run build
+RUN pnpm build
 
 ## Production image
 FROM nginx:1.25.2-alpine AS prod
@@ -21,4 +21,4 @@ USER alterdle
 ## Development image
 FROM node_modules AS dev
 EXPOSE 3000
-CMD npm run start
+CMD pnpm start
