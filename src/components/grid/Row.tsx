@@ -13,6 +13,7 @@ type Props = {
   isCompleted: boolean
   currentRowClassName: string
   isFocussed?: boolean
+  isHardMode: boolean
 }
 
 export const Row = ({
@@ -24,6 +25,7 @@ export const Row = ({
   isCompleted,
   currentRowClassName,
   isFocussed,
+  isHardMode,
 }: Props) => {
   const statuses = useMemo(() => {
     return guess ? getGuessStatuses(solution, guess) : []
@@ -46,7 +48,9 @@ export const Row = ({
           status={
             !isCurrentRow
               ? statuses[i]
-              : guess?.length === solution.length && !isWordInWordList(guess)
+              : guess?.length === solution.length &&
+                  !isWordInWordList(guess) &&
+                  !isHardMode
                 ? 'incorrect'
                 : 'null'
           }

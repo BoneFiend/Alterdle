@@ -14,6 +14,7 @@ import {
   DATEPICKER_DESCRIPTION,
   DATEPICKER_TITLE,
   HARD_MODE_DESCRIPTION,
+  HARD_MODE_RESTRICTION_MESSAGE,
   HIGH_CONTRAST_MODE_DESCRIPTION,
   LENGTH_DESCRIPTION,
   LONG_SHARE_DESCRIPTION,
@@ -100,7 +101,12 @@ export const SettingsModal = ({
           settingName="Hard Mode"
           flag={isHardMode}
           handleFlag={handleHardMode}
-          description={HARD_MODE_DESCRIPTION}
+          description={
+            numberOfWords === 1
+              ? HARD_MODE_DESCRIPTION
+              : HARD_MODE_RESTRICTION_MESSAGE
+          }
+          disabled={numberOfWords > 1}
         />
         <SettingsToggle
           settingName="Long Format Share Text"

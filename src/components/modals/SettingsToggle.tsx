@@ -5,6 +5,7 @@ type Props = {
   flag: boolean
   handleFlag: Function
   description?: string
+  disabled?: boolean
 }
 
 export const SettingsToggle = ({
@@ -12,18 +13,20 @@ export const SettingsToggle = ({
   flag,
   handleFlag,
   description,
+  disabled,
 }: Props) => {
   const toggleHolder = classnames(
     'w-14 h-8 flex shrink-0 items-center dark:shadow-lg rounded-full p-1 duration-300 ease-in-out',
     {
-      'bg-accent': flag,
-      'bg-accent-disabled': !flag,
+      'bg-accent': flag && !disabled,
+      'bg-accent-disabled': !flag || disabled,
     }
   )
   const toggleButton = classnames(
-    'bg-white dark:text-secondary w-6 h-6 rounded-full shadow-lg transform duration-300 ease-in-out',
+    'bg-white dark:text-secondary w-6 h-6 rounded-full shadow-lg transition-all duration-300 ease-in-out',
     {
       'translate-x-6': flag,
+      'opacity-10': disabled,
     }
   )
 

@@ -9,6 +9,7 @@ type Props = {
   currentGuess: string
   currentRowClassName: string
   maxChallenges: number
+  isHardMode: boolean
 }
 
 export const Grid = ({
@@ -17,6 +18,7 @@ export const Grid = ({
   currentGuess,
   currentRowClassName,
   maxChallenges,
+  isHardMode,
 }: Props) => {
   const { isRowFocussed } = useFocussedRows()
   const { numberOfWords, numberOfLetters } = useGameSettings()
@@ -46,6 +48,7 @@ export const Grid = ({
           isCompleted={guesses.length > i}
           currentRowClassName={currentRowClassName}
           isFocussed={isRowFocussed(i)}
+          isHardMode={isHardMode}
         />
       ))}
       {!guesses.includes(solution) &&

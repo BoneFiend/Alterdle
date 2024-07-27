@@ -133,9 +133,6 @@ function App() {
     [isHardModePreferred, numberOfWords]
   )
   // TODO hard mode can be enabled after the start of the game if the user changes settings.
-  // TODO dont show invalid words in hard mode
-  // TODO disable hard mode toggle (make it look disabled)
-  // TODO move lots of functions here to game component
 
   useEffect(() => {
     // if no game state on load,
@@ -192,7 +189,6 @@ function App() {
   }, [showErrorAlert])
 
   const handleHardMode = (isHard: boolean) => {
-    // TODO create useHardMode custom hook
     if (numberOfWords === 1) {
       if (
         (guesses[numberOfWords]?.[numberOfLetters] ?? []).length === 0 ||
@@ -405,6 +401,7 @@ function App() {
                 currentGuess={currentGuess}
                 currentRowClassName={currentRowClass}
                 maxChallenges={maxChallenges}
+                isHardMode={isHardMode}
               />
             ))}
           </div>
