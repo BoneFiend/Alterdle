@@ -2,6 +2,7 @@ import { UAParser } from 'ua-parser-js'
 
 import { MAX_SHARE_WIDTH } from '../constants/settings'
 import { GAME_TITLE } from '../constants/strings'
+import useClientSettings from '../stores/clientSettings'
 import { getGuessStatuses } from './statuses'
 import { getShareUrl } from './urlutils'
 import { getIndex, unicodeSplit } from './words'
@@ -16,16 +17,15 @@ export const shareStatus = (
   guesses: string[],
   lost: boolean,
   isHardMode: boolean,
-  isDarkMode: boolean,
-  isHighContrastMode: boolean,
   handleShareToClipboard: () => void,
   handleShareFailure: () => void,
   maxChallenges: number,
   numberOfWords: number,
   numberOfLetters: number,
-  gameDate: Date,
-  longShare: boolean
+  gameDate: Date
 ) => {
+  const { isDarkMode, isHighContrastMode, isLongShare } = useClientSettings()
+
   const gridsPerRow = Math.max(
     Math.floor(MAX_SHARE_WIDTH / (numberOfLetters + 1)),
     1
@@ -71,7 +71,7 @@ export const shareStatus = (
     }
     grids = grids.concat('\n', row)
   }
-  const textToShare = longShare
+  const textToShare = isLongShare
     ? header.concat(numbers, '\n', url, grids)
     : header.concat(numbers, '\n', url)
   const shareData = { text: textToShare }

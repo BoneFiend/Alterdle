@@ -18,6 +18,7 @@ import {
   LENGTH_DESCRIPTION,
   LONG_SHARE_DESCRIPTION,
 } from '../../constants/strings'
+import useClientSettings from '../../stores/clientSettings'
 import { Button } from '../inputs/Button'
 import { MigrationIntro } from '../stats/MigrationIntro'
 import { BaseModal } from './BaseModal'
@@ -29,18 +30,12 @@ type Props = {
   handleClose: () => void
   isHardMode: boolean
   handleHardMode: Function
-  isDarkMode: boolean
-  handleDarkMode: Function
-  isHighContrastMode: boolean
-  handleHighContrastMode: Function
   numberOfWords: number
   handleNumberOfWords: Function
   numberOfLetters: number
   handleNumberOfLetters: Function
   handleChooseDateButton: () => void
   handleMigrateStatsButton: () => void
-  longShare: boolean
-  handleLongShare: Function
 }
 
 export const SettingsModal = ({
@@ -48,19 +43,22 @@ export const SettingsModal = ({
   handleClose,
   isHardMode,
   handleHardMode,
-  isDarkMode,
-  handleDarkMode,
-  isHighContrastMode,
-  handleHighContrastMode,
   numberOfWords,
   handleNumberOfWords,
   numberOfLetters,
   handleNumberOfLetters,
   handleChooseDateButton,
   handleMigrateStatsButton,
-  longShare,
-  handleLongShare,
 }: Props) => {
+  const {
+    isDarkMode,
+    setIsDarkMode,
+    isHighContrastMode,
+    setIsHighContrastMode,
+    isLongShare,
+    setIsLongShare,
+  } = useClientSettings()
+
   return (
     <BaseModal title="Settings" isOpen={isOpen} handleClose={handleClose}>
       <div className="mt-2 flex flex-col divide-y divide-secondary-2">
@@ -106,19 +104,19 @@ export const SettingsModal = ({
         />
         <SettingsToggle
           settingName="Long Format Share Text"
-          flag={longShare}
-          handleFlag={handleLongShare}
+          flag={isLongShare}
+          handleFlag={setIsLongShare}
           description={LONG_SHARE_DESCRIPTION}
         />
         <SettingsToggle
           settingName="Dark Mode"
           flag={isDarkMode}
-          handleFlag={handleDarkMode}
+          handleFlag={setIsDarkMode}
         />
         <SettingsToggle
           settingName="High Contrast Mode"
           flag={isHighContrastMode}
-          handleFlag={handleHighContrastMode}
+          handleFlag={setIsHighContrastMode}
           description={HIGH_CONTRAST_MODE_DESCRIPTION}
         />
         {ENABLE_MIGRATE_STATS && (

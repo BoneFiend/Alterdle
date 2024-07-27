@@ -36,10 +36,8 @@ import {
 import { useAlert } from './context/AlertContext'
 import { isInAppBrowser } from './lib/browser'
 import {
-  getStoredIsHighContrastMode,
   loadGameStateFromLocalStorage,
   saveGameStateToLocalStorage,
-  setStoredIsHighContrastMode,
 } from './lib/localStorage'
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import {
@@ -61,6 +59,7 @@ import {
   unicodeLength,
   updateObj2d,
 } from './lib/words'
+import useClientSettings from './stores/clientSettings'
 import useFocussedRows from './stores/useFocussedRows'
 
 function App() {
@@ -68,9 +67,6 @@ function App() {
     return loadGameDate()
   })
   const isLatestGame = useMemo(() => getIsLatestGame(gameDate), [gameDate])
-  const prefersDarkMode = window.matchMedia(
-    '(prefers-color-scheme: dark)'
-  ).matches
 
   const { showError: showErrorAlert, showSuccess: showSuccessAlert } =
     useAlert()
@@ -100,20 +96,9 @@ function App() {
   )
 
   const [currentRowClass, setCurrentRowClass] = useState('')
-  const [isDarkMode, setIsDarkMode] = useState(
-    localStorage.getItem('theme')
-      ? localStorage.getItem('theme') === 'dark'
-      : prefersDarkMode
-        ? true
-        : false
-  )
-  const [isHighContrastMode, setIsHighContrastMode] = useState(
-    getStoredIsHighContrastMode()
-  )
 
-  const [longShare, setLongShare] = useState(
-    localStorage.getItem('longShare') === 'true'
-  )
+  const { loadAllSettings, isHardModePreferred, setIsHardModePreferred } =
+    useClientSettings()
 
   const { isRowFocussed, focusRow, unfocusEarliestRow, unfocusAllRows } =
     useFocussedRows()
@@ -146,12 +131,10 @@ function App() {
 
   const [stats, setStats] = useState(() => loadStats())
 
-  const [isHardModeRequested, setIsHardModeRequested] = useState(
-    localStorage.getItem('gameMode')
-      ? localStorage.getItem('gameMode') === 'hard'
-      : false
+  const isHardMode = useMemo(
+    () => isHardModePreferred && numberOfWords === 1,
+    [isHardModePreferred, numberOfWords]
   )
-  const isHardMode = isHardModeRequested && numberOfWords === 1
   // TODO hard mode can be enabled after the start of the game if the user changes settings.
   // TODO dont show invalid words in hard mode
   // TODO disable hard mode toggle (make it look disabled)
@@ -160,6 +143,7 @@ function App() {
   useEffect(() => {
     // if no game state on load,
     // show the user the how-to info modal
+    loadAllSettings()
     if (
       !loadGameStateFromLocalStorage(true) &&
       !loadGameStateFromLocalStorage(false)
@@ -222,49 +206,19 @@ function App() {
       })
   }, [showErrorAlert])
 
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
-
-    if (isHighContrastMode) {
-      document.documentElement.classList.add('high-contrast')
-    } else {
-      document.documentElement.classList.remove('high-contrast')
-    }
-  }, [isDarkMode, isHighContrastMode])
-
-  const handleLongShare = (isLongShare: boolean) => {
-    setLongShare(isLongShare)
-    localStorage.setItem('longShare', isLongShare.toString())
-  }
-
-  const handleDarkMode = (isDark: boolean) => {
-    setIsDarkMode(isDark)
-    localStorage.setItem('theme', isDark ? 'dark' : 'light')
-  }
-
   const handleHardMode = (isHard: boolean) => {
     if (numberOfWords === 1) {
       if (
         (guesses[numberOfWords]?.[numberOfLetters] ?? []).length === 0 ||
-        localStorage.getItem('gameMode') === 'hard'
+        isHardModePreferred
       ) {
-        setIsHardModeRequested(isHard)
-        localStorage.setItem('gameMode', isHard ? 'hard' : 'normal')
+        setIsHardModePreferred(isHard)
       } else {
         showErrorAlert(HARD_MODE_CHEATING_MESSAGE)
       }
     } else {
       showErrorAlert(HARD_MODE_RESTRICTION_MESSAGE)
     }
-  }
-
-  const handleHighContrastMode = (isHighContrast: boolean) => {
-    setIsHighContrastMode(isHighContrast)
-    setStoredIsHighContrastMode(isHighContrast)
   }
 
   const clearCurrentRowClass = () => {
@@ -513,13 +467,7 @@ function App() {
                 durationMs: LONG_ALERT_TIME_MS,
               })
             }
-            handleMigrateStatsButton={() => {
-              setIsStatsModalOpen(false)
-              setIsMigrateStatsModalOpen(true)
-            }}
             isHardMode={isHardMode}
-            isDarkMode={isDarkMode}
-            isHighContrastMode={isHighContrastMode}
             numberOfGuessesMade={
               (guesses[numberOfWords]?.[numberOfLetters] ?? []).length
             }
@@ -529,7 +477,6 @@ function App() {
             handleNumberOfLetters={setNumberOfLetters}
             maxChallenges={maxChallenges}
             gameDate={gameDate}
-            longShare={longShare}
           />
           <DatePickerModal
             isOpen={isDatePickerModalOpen}
@@ -557,10 +504,6 @@ function App() {
             handleClose={() => setIsSettingsModalOpen(false)}
             isHardMode={isHardMode}
             handleHardMode={handleHardMode}
-            isDarkMode={isDarkMode}
-            handleDarkMode={handleDarkMode}
-            isHighContrastMode={isHighContrastMode}
-            handleHighContrastMode={handleHighContrastMode}
             numberOfWords={numberOfWords}
             handleNumberOfWords={setNumberOfWords}
             numberOfLetters={numberOfLetters}
@@ -573,8 +516,6 @@ function App() {
               setIsSettingsModalOpen(false)
               setIsMigrateStatsModalOpen(true)
             }}
-            longShare={longShare}
-            handleLongShare={handleLongShare}
           />
           <AlertContainer />
         </div>

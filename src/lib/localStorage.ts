@@ -2,7 +2,11 @@ import { Obj2d } from './words'
 
 const gameStateKey = 'alterdleGameState'
 const archiveGameStateKey = 'alterdleArchiveGameState'
+
+const darkModeKey = 'theme'
 const highContrastKey = 'highContrast'
+const longShareKey = 'longShare'
+const gameModeKey = 'gameMode'
 const gameStatKey = 'alterdleGameStats'
 
 export type StoredGameState = {
@@ -51,6 +55,27 @@ export const loadStatsFromLocalStorage = () => {
   return stats
 }
 
+export const setStoredIsDarkMode = (isDarkMode: boolean) => {
+  if (
+    window.matchMedia('(prefers-color-scheme: dark)').matches === isDarkMode
+  ) {
+    localStorage.removeItem(darkModeKey)
+  } else {
+    localStorage.setItem(darkModeKey, isDarkMode ? 'dark' : 'light')
+  }
+}
+
+export const getStoredIsDarkMode = () => {
+  const darkMode = localStorage.getItem(darkModeKey)
+  const prefersDarkMode = window.matchMedia(
+    '(prefers-color-scheme: dark)'
+  ).matches
+
+  const isDarkMode =
+    darkMode === 'dark' || (darkMode === null && prefersDarkMode)
+  return isDarkMode
+}
+
 export const setStoredIsHighContrastMode = (isHighContrast: boolean) => {
   if (isHighContrast) {
     localStorage.setItem(highContrastKey, '1')
@@ -62,4 +87,26 @@ export const setStoredIsHighContrastMode = (isHighContrast: boolean) => {
 export const getStoredIsHighContrastMode = () => {
   const highContrast = localStorage.getItem(highContrastKey)
   return highContrast === '1'
+}
+
+export const setStoredIsLongShare = (isLongShare: boolean) => {
+  if (isLongShare) {
+    localStorage.setItem(longShareKey, '1')
+  } else {
+    localStorage.removeItem(longShareKey)
+  }
+}
+
+export const getStoredIsLongShare = () => {
+  const longShare = localStorage.getItem(longShareKey)
+  return longShare === '1'
+}
+
+export const setStoredGameMode = (isHardMode: boolean) => {
+  localStorage.setItem(gameModeKey, isHardMode ? 'hard' : 'normal')
+}
+
+export const getStoredGameMode = () => {
+  const hardMode = localStorage.getItem(gameModeKey)
+  return hardMode === 'hard'
 }

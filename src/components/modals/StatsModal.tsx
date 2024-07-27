@@ -39,10 +39,7 @@ type Props = {
   isGameWon: boolean
   handleShareToClipboard: () => void
   handleShareFailure: () => void
-  handleMigrateStatsButton: () => void
   isHardMode: boolean
-  isDarkMode: boolean
-  isHighContrastMode: boolean
   numberOfGuessesMade: number
   numberOfWords: number
   handleNumberOfWords: Function
@@ -50,7 +47,6 @@ type Props = {
   handleNumberOfLetters: Function
   maxChallenges: number
   gameDate: Date
-  longShare: boolean
 }
 
 export const StatsModal = ({
@@ -64,10 +60,7 @@ export const StatsModal = ({
   isGameWon,
   handleShareToClipboard,
   handleShareFailure,
-  handleMigrateStatsButton,
   isHardMode,
-  isDarkMode,
-  isHighContrastMode,
   numberOfGuessesMade,
   numberOfWords,
   handleNumberOfWords,
@@ -75,7 +68,6 @@ export const StatsModal = ({
   handleNumberOfLetters,
   maxChallenges,
   gameDate,
-  longShare,
 }: Props) => {
   return (
     <BaseModal
@@ -156,15 +148,12 @@ export const StatsModal = ({
                     guesses,
                     isGameLost,
                     isHardMode,
-                    isDarkMode,
-                    isHighContrastMode,
                     handleShareToClipboard,
                     handleShareFailure,
                     maxChallenges,
                     numberOfWords,
                     numberOfLetters,
-                    gameDate,
-                    longShare
+                    gameDate
                   )
                 }}
               >
