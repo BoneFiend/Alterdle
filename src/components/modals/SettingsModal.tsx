@@ -18,8 +18,8 @@ import {
   LENGTH_DESCRIPTION,
   LONG_SHARE_DESCRIPTION,
 } from '../../constants/strings'
-import useClientSettings from '../../stores/clientSettings'
-import useGameSettings from '../../stores/gameSettings'
+import useClientSettings from '../../stores/useClientSettings'
+import useGameSettings from '../../stores/useGameSettings'
 import { Button } from '../inputs/Button'
 import { MigrationIntro } from '../stats/MigrationIntro'
 import { BaseModal } from './BaseModal'

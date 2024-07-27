@@ -6,7 +6,7 @@ import {
 } from '@heroicons/react/outline'
 
 import { GAME_TITLE } from '../../constants/strings'
-import useGameSettings from '../../stores/gameSettings'
+import useGameSettings from '../../stores/useGameSettings'
 
 type Props = {
   setIsInfoModalOpen: (value: boolean) => void

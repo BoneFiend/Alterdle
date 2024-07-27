@@ -1,5 +1,5 @@
-import useGameSettings from '../../stores/gameSettings'
 import useFocussedRows from '../../stores/useFocussedRows'
+import useGameSettings from '../../stores/useGameSettings'
 import { Row } from './Row'
 import { SolutionRow } from './SolutionRow'
 

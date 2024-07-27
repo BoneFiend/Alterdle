@@ -53,9 +53,9 @@ import {
   unicodeLength,
   updateObj2d,
 } from './lib/words'
-import useClientSettings from './stores/clientSettings'
-import useGameSettings from './stores/gameSettings'
+import useClientSettings from './stores/useClientSettings'
 import useFocussedRows from './stores/useFocussedRows'
+import useGameSettings from './stores/useGameSettings'
 
 function App() {
   const { numberOfWords, numberOfLetters, gameDate, setGameDate } =

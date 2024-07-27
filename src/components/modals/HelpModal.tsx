@@ -9,7 +9,7 @@ import {
   LENGTH_DESCRIPTION,
 } from '../../constants/strings'
 import { CharStatus } from '../../lib/statuses'
-import useGameSettings from '../../stores/gameSettings'
+import useGameSettings from '../../stores/useGameSettings'
 import { Cell } from '../grid/Cell'
 import { BaseModal } from './BaseModal'
 import { SettingsSlider } from './SettingsSlider'
