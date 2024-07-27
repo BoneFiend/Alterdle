@@ -1,3 +1,4 @@
+import useGameSettings from '../../stores/gameSettings'
 import useFocussedRows from '../../stores/useFocussedRows'
 import { Row } from './Row'
 import { SolutionRow } from './SolutionRow'
@@ -8,8 +9,6 @@ type Props = {
   currentGuess: string
   currentRowClassName: string
   maxChallenges: number
-  numberOfLetters: number
-  numberOfWords: number
 }
 
 export const Grid = ({
@@ -18,10 +17,9 @@ export const Grid = ({
   currentGuess,
   currentRowClassName,
   maxChallenges,
-  numberOfLetters,
-  numberOfWords,
 }: Props) => {
   const { isRowFocussed } = useFocussedRows()
+  const { numberOfWords, numberOfLetters } = useGameSettings()
 
   const wonIndex = guesses.includes(solution)
     ? guesses.indexOf(solution)

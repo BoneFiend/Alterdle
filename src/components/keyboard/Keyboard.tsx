@@ -13,7 +13,6 @@ type Props = {
   solution: string[]
   guesses: string[]
   isRevealing?: boolean
-  numberOfLetters: number
 }
 
 export const Keyboard = ({
@@ -23,7 +22,6 @@ export const Keyboard = ({
   solution,
   guesses,
   isRevealing,
-  numberOfLetters,
 }: Props) => {
   const [charStatuses, setCharStatuses] = useState(
     getStatuses(solution, guesses)

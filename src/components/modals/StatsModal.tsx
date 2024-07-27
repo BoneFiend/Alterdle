@@ -22,6 +22,8 @@ import {
 import { getToday } from '../../lib/dateutils'
 import { shareStatus } from '../../lib/share'
 import { Obj2d, checkIsGameWon, getNextGameDate } from '../../lib/words'
+import useClientSettings from '../../stores/clientSettings'
+import useGameSettings from '../../stores/gameSettings'
 import { Button } from '../inputs/Button'
 import { Histogram } from '../stats/Histogram'
 import { StatBar } from '../stats/StatBar'
@@ -41,12 +43,7 @@ type Props = {
   handleShareFailure: () => void
   isHardMode: boolean
   numberOfGuessesMade: number
-  numberOfWords: number
-  handleNumberOfWords: Function
-  numberOfLetters: number
-  handleNumberOfLetters: Function
   maxChallenges: number
-  gameDate: Date
 }
 
 export const StatsModal = ({
@@ -62,13 +59,17 @@ export const StatsModal = ({
   handleShareFailure,
   isHardMode,
   numberOfGuessesMade,
-  numberOfWords,
-  handleNumberOfWords,
-  numberOfLetters,
-  handleNumberOfLetters,
   maxChallenges,
-  gameDate,
 }: Props) => {
+  const { isDarkMode, isHighContrastMode, isLongShare } = useClientSettings()
+  const {
+    numberOfWords,
+    numberOfLetters,
+    setNumberOfWords,
+    setNumberOfLetters,
+    gameDate,
+  } = useGameSettings()
+
   return (
     <BaseModal
       title={STATISTICS_TITLE}
@@ -98,7 +99,7 @@ export const StatsModal = ({
         <SettingsSlider
           settingName="Word Length"
           value={numberOfLetters}
-          handleValue={(value: number) => handleNumberOfLetters(value)}
+          handleValue={setNumberOfLetters}
           description={LENGTH_DESCRIPTION}
           minValue={MIN_NUMBER_OF_LETTERS}
           maxValue={MAX_NUMBER_OF_LETTERS}
@@ -106,7 +107,7 @@ export const StatsModal = ({
         <SettingsSlider
           settingName="Challenges"
           value={numberOfWords}
-          handleValue={(value: number) => handleNumberOfWords(value)}
+          handleValue={setNumberOfWords}
           description={CHALLENGES_DESCRIPTION}
           minValue={MIN_NUMBER_OF_WORDS}
           maxValue={numberOfLetters === 1 ? 2 : MAX_NUMBER_OF_WORDS}
@@ -148,12 +149,15 @@ export const StatsModal = ({
                     guesses,
                     isGameLost,
                     isHardMode,
+                    isDarkMode,
+                    isHighContrastMode,
                     handleShareToClipboard,
                     handleShareFailure,
                     maxChallenges,
                     numberOfWords,
                     numberOfLetters,
-                    gameDate
+                    gameDate,
+                    isLongShare
                   )
                 }}
               >

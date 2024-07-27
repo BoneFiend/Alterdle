@@ -40,13 +40,7 @@ import {
   saveGameStateToLocalStorage,
 } from './lib/localStorage'
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
-import {
-  loadGameDate,
-  loadNumberOfLetters,
-  loadNumberOfWords,
-  setUrl,
-  setWindowTitle,
-} from './lib/urlutils'
+import { setUrl } from './lib/urlutils'
 import {
   Obj2d,
   checkIsGameWon,
@@ -60,12 +54,13 @@ import {
   updateObj2d,
 } from './lib/words'
 import useClientSettings from './stores/clientSettings'
+import useGameSettings from './stores/gameSettings'
 import useFocussedRows from './stores/useFocussedRows'
 
 function App() {
-  const [gameDate, setGameDate] = useState<Date>(() => {
-    return loadGameDate()
-  })
+  const { numberOfWords, numberOfLetters, gameDate, setGameDate } =
+    useGameSettings()
+
   const isLatestGame = useMemo(() => getIsLatestGame(gameDate), [gameDate])
 
   const { showError: showErrorAlert, showSuccess: showSuccessAlert } =
@@ -105,18 +100,18 @@ function App() {
   const [shouldRefocus, setShouldRefocus] = useState(false)
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const [numberOfWords, setNumberOfWords] = useState(() => {
-    return loadNumberOfWords()
-  })
-  const [numberOfLetters, setNumberOfLetters] = useState(() => {
-    return loadNumberOfLetters()
-  })
-
   const [gamesWon, setGamesWon] = useState<Obj2d>({})
-  const isGameWon = gamesWon[numberOfWords]?.[numberOfLetters] ?? false
-  const isGameLost = gamesWon[numberOfWords]?.[numberOfLetters] === false
+  const { isGameWon, isGameLost } = useMemo(() => {
+    return {
+      isGameWon: gamesWon[numberOfWords]?.[numberOfLetters] ?? false,
+      isGameLost: gamesWon[numberOfWords]?.[numberOfLetters] === false,
+    }
+  }, [gamesWon, numberOfWords, numberOfLetters])
 
-  const maxChallenges = numberOfWords + MAX_CHALLENGES_BONUS
+  const maxChallenges = useMemo(
+    () => numberOfWords + MAX_CHALLENGES_BONUS,
+    [numberOfWords]
+  )
 
   const solution = useMemo(
     () => getSolution(gameDate, numberOfWords, numberOfLetters).newSolution,
@@ -127,8 +122,10 @@ function App() {
   })
 
   const [currentGuesses, setCurrentGuesses] = useState<Obj2d>({})
-  const currentGuess = currentGuesses[numberOfWords]?.[numberOfLetters] ?? ''
-
+  const currentGuess = useMemo(
+    () => currentGuesses[numberOfWords]?.[numberOfLetters] ?? '',
+    [currentGuesses, numberOfWords, numberOfLetters]
+  )
   const [stats, setStats] = useState(() => loadStats())
 
   const isHardMode = useMemo(
@@ -176,20 +173,8 @@ function App() {
   ])
 
   useEffect(() => {
-    // Ensures only 2 challenges can played at once with 2 letters
-    if (numberOfLetters === 1 && numberOfWords > 2) {
-      setNumberOfWords(2)
-    }
-
-    const timeoutId = setTimeout(() => {
-      setUrl(numberOfWords, numberOfLetters, gameDate)
-      setWindowTitle(numberOfWords, numberOfLetters)
-    }, 1000)
-
     if (timerRef.current) clearTimeout(timerRef.current)
     setShouldRefocus(true)
-
-    return () => clearTimeout(timeoutId)
   }, [numberOfLetters, numberOfWords, gameDate])
 
   useEffect(() => {
@@ -207,6 +192,7 @@ function App() {
   }, [showErrorAlert])
 
   const handleHardMode = (isHard: boolean) => {
+    // TODO create useHardMode custom hook
     if (numberOfWords === 1) {
       if (
         (guesses[numberOfWords]?.[numberOfLetters] ?? []).length === 0 ||
@@ -282,6 +268,7 @@ function App() {
       return showErrorAlert(NOT_ENOUGH_LETTERS_MESSAGE, {
         onClose: clearCurrentRowClass,
         // TODO allow jiggle as frequently as you want
+        // TODO pressing enter on a won game shows wrong popup after reloading
       })
     }
 
@@ -397,8 +384,6 @@ function App() {
           setIsHelpModalOpen={setIsHelpModalOpen}
           setIsStatsModalOpen={setIsStatsModalOpen}
           setIsSettingsModalOpen={setIsSettingsModalOpen}
-          numberOfLetters={numberOfLetters}
-          numberOfWords={numberOfWords}
         />
 
         {!isLatestGame && (
@@ -420,8 +405,6 @@ function App() {
                 currentGuess={currentGuess}
                 currentRowClassName={currentRowClass}
                 maxChallenges={maxChallenges}
-                numberOfLetters={numberOfLetters}
-                numberOfWords={numberOfWords}
               />
             ))}
           </div>
@@ -437,16 +420,11 @@ function App() {
                   (guesses[numberOfWords]?.[numberOfLetters] ?? []).length
                 )
               }
-              numberOfLetters={numberOfLetters}
             />
           </div>
           <HelpModal
             isOpen={isHelpModalOpen}
             handleClose={() => setIsHelpModalOpen(false)}
-            numberOfWords={numberOfWords}
-            handleNumberOfWords={setNumberOfWords}
-            numberOfLetters={numberOfLetters}
-            handleNumberOfLetters={setNumberOfLetters}
           />
           <InfoModal
             isOpen={isInfoModalOpen}
@@ -471,12 +449,7 @@ function App() {
             numberOfGuessesMade={
               (guesses[numberOfWords]?.[numberOfLetters] ?? []).length
             }
-            numberOfWords={numberOfWords}
-            handleNumberOfWords={setNumberOfWords}
-            numberOfLetters={numberOfLetters}
-            handleNumberOfLetters={setNumberOfLetters}
             maxChallenges={maxChallenges}
-            gameDate={gameDate}
           />
           <DatePickerModal
             isOpen={isDatePickerModalOpen}
@@ -504,10 +477,6 @@ function App() {
             handleClose={() => setIsSettingsModalOpen(false)}
             isHardMode={isHardMode}
             handleHardMode={handleHardMode}
-            numberOfWords={numberOfWords}
-            handleNumberOfWords={setNumberOfWords}
-            numberOfLetters={numberOfLetters}
-            handleNumberOfLetters={setNumberOfLetters}
             handleChooseDateButton={() => {
               setIsDatePickerModalOpen(true)
               setIsSettingsModalOpen(false)

@@ -6,14 +6,13 @@ import {
 } from '@heroicons/react/outline'
 
 import { GAME_TITLE } from '../../constants/strings'
+import useGameSettings from '../../stores/gameSettings'
 
 type Props = {
   setIsInfoModalOpen: (value: boolean) => void
   setIsHelpModalOpen: (value: boolean) => void
   setIsStatsModalOpen: (value: boolean) => void
   setIsSettingsModalOpen: (value: boolean) => void
-  numberOfLetters: number
-  numberOfWords: number
 }
 
 export const Navbar = ({
@@ -21,9 +20,9 @@ export const Navbar = ({
   setIsHelpModalOpen,
   setIsStatsModalOpen,
   setIsSettingsModalOpen,
-  numberOfLetters,
-  numberOfWords,
 }: Props) => {
+  const { numberOfWords, numberOfLetters } = useGameSettings()
+
   return (
     <div className="select-none pb-5 transition-all sm:pb-2 short:pb-2">
       <div className="flex h-12 items-center justify-between border-b-2 border-secondary-2 px-2 transition-all sm:h-16 short:h-auto">

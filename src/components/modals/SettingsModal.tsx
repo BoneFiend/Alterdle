@@ -19,6 +19,7 @@ import {
   LONG_SHARE_DESCRIPTION,
 } from '../../constants/strings'
 import useClientSettings from '../../stores/clientSettings'
+import useGameSettings from '../../stores/gameSettings'
 import { Button } from '../inputs/Button'
 import { MigrationIntro } from '../stats/MigrationIntro'
 import { BaseModal } from './BaseModal'
@@ -30,10 +31,6 @@ type Props = {
   handleClose: () => void
   isHardMode: boolean
   handleHardMode: Function
-  numberOfWords: number
-  handleNumberOfWords: Function
-  numberOfLetters: number
-  handleNumberOfLetters: Function
   handleChooseDateButton: () => void
   handleMigrateStatsButton: () => void
 }
@@ -43,10 +40,6 @@ export const SettingsModal = ({
   handleClose,
   isHardMode,
   handleHardMode,
-  numberOfWords,
-  handleNumberOfWords,
-  numberOfLetters,
-  handleNumberOfLetters,
   handleChooseDateButton,
   handleMigrateStatsButton,
 }: Props) => {
@@ -59,13 +52,20 @@ export const SettingsModal = ({
     setIsLongShare,
   } = useClientSettings()
 
+  const {
+    numberOfWords,
+    numberOfLetters,
+    setNumberOfWords,
+    setNumberOfLetters,
+  } = useGameSettings()
+
   return (
     <BaseModal title="Settings" isOpen={isOpen} handleClose={handleClose}>
       <div className="mt-2 flex flex-col divide-y divide-secondary-2">
         <SettingsSlider
           settingName="Word Length"
           value={numberOfLetters}
-          handleValue={(value: number) => handleNumberOfLetters(value)}
+          handleValue={setNumberOfLetters}
           description={LENGTH_DESCRIPTION}
           minValue={MIN_NUMBER_OF_LETTERS}
           maxValue={MAX_NUMBER_OF_LETTERS}
@@ -73,7 +73,7 @@ export const SettingsModal = ({
         <SettingsSlider
           settingName="Challenges"
           value={numberOfWords}
-          handleValue={(value: number) => handleNumberOfWords(value)}
+          handleValue={setNumberOfWords}
           description={CHALLENGES_DESCRIPTION}
           minValue={MIN_NUMBER_OF_WORDS}
           maxValue={numberOfLetters === 1 ? 2 : MAX_NUMBER_OF_WORDS}

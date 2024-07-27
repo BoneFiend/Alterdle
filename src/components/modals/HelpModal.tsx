@@ -9,6 +9,7 @@ import {
   LENGTH_DESCRIPTION,
 } from '../../constants/strings'
 import { CharStatus } from '../../lib/statuses'
+import useGameSettings from '../../stores/gameSettings'
 import { Cell } from '../grid/Cell'
 import { BaseModal } from './BaseModal'
 import { SettingsSlider } from './SettingsSlider'
@@ -16,10 +17,6 @@ import { SettingsSlider } from './SettingsSlider'
 type Props = {
   isOpen: boolean
   handleClose: () => void
-  numberOfWords: number
-  handleNumberOfWords: Function
-  numberOfLetters: number
-  handleNumberOfLetters: Function
 }
 
 type TutorialWords = {
@@ -134,14 +131,14 @@ const tutorials: { [key: number]: TutorialWords } = {
   11: t11,
 }
 
-export const HelpModal = ({
-  isOpen,
-  handleClose,
-  numberOfWords,
-  handleNumberOfWords,
-  numberOfLetters,
-  handleNumberOfLetters,
-}: Props) => {
+export const HelpModal = ({ isOpen, handleClose }: Props) => {
+  const {
+    numberOfWords,
+    numberOfLetters,
+    setNumberOfWords,
+    setNumberOfLetters,
+  } = useGameSettings()
+
   const first = tutorials[numberOfLetters].first
   const firstCorrect = tutorials[numberOfLetters].firstCorrect
   const second = tutorials[numberOfLetters].second
@@ -237,7 +234,7 @@ export const HelpModal = ({
         <SettingsSlider
           settingName="Word Length"
           value={numberOfLetters}
-          handleValue={(value: number) => handleNumberOfLetters(value)}
+          handleValue={setNumberOfLetters}
           description={LENGTH_DESCRIPTION}
           minValue={MIN_NUMBER_OF_LETTERS}
           maxValue={MAX_NUMBER_OF_LETTERS}
@@ -246,7 +243,7 @@ export const HelpModal = ({
           <SettingsSlider
             settingName="Challenges"
             value={numberOfWords}
-            handleValue={(value: number) => handleNumberOfWords(value)}
+            handleValue={setNumberOfWords}
             description={CHALLENGES_DESCRIPTION}
             minValue={MIN_NUMBER_OF_WORDS}
             maxValue={numberOfLetters === 1 ? 2 : MAX_NUMBER_OF_WORDS}
