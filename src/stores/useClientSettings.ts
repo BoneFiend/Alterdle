@@ -37,12 +37,6 @@ const useClientSettings = create<clientSettings>((set, get) => ({
   },
 
   setIsDarkMode: (isDarkMode: boolean) => {
-    // TODO move the classList edits to another file for theming
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
     setStoredIsDarkMode(isDarkMode)
     set(() => ({
       isDarkMode: isDarkMode,
@@ -50,12 +44,6 @@ const useClientSettings = create<clientSettings>((set, get) => ({
   },
 
   setIsHighContrastMode: (isHighContrastMode: boolean) => {
-    if (isHighContrastMode) {
-      document.documentElement.classList.add('high-contrast')
-    } else {
-      document.documentElement.classList.remove('high-contrast')
-    }
-
     setStoredIsHighContrastMode(isHighContrastMode)
     set(() => ({
       isHighContrastMode: isHighContrastMode,

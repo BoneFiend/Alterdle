@@ -31,6 +31,7 @@ export const LOSE_MESSAGES = [
   'Good effort but not quite enough',
   'The maze of failure is merely a detour to the road of success',
   'The silent river runs deep, carrying the whispers of ancient resolve',
+  'It is what it is',
 ]
 export const GAME_COPIED_MESSAGE = 'Copied to clipboard'
 export const NOT_ENOUGH_LETTERS_MESSAGE = 'Not enough letters'

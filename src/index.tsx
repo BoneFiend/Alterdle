@@ -6,6 +6,7 @@ import { createRoot } from 'react-dom/client'
 
 import App from './App'
 import { AlertProvider } from './context/AlertContext'
+import Theme from './context/Theme'
 import reportWebVitals from './reportWebVitals'
 
 const container = document.getElementById('root')!
@@ -15,6 +16,7 @@ root.render(
   <React.StrictMode>
     <NextUIProvider>
       <AlertProvider>
+        <Theme />
         <App />
       </AlertProvider>
     </NextUIProvider>
