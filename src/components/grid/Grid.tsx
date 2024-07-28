@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+
 import useFocussedRows from '../../stores/useFocussedRows'
 import useGameSettings from '../../stores/useGameSettings'
 import { Row } from './Row'
@@ -23,9 +25,11 @@ export const Grid = ({
   const { isRowFocussed } = useFocussedRows()
   const { numberOfWords, numberOfLetters } = useGameSettings()
 
-  const wonIndex = guesses.includes(solution)
-    ? guesses.indexOf(solution)
-    : guesses.length
+  const wonIndex = useMemo(
+    () =>
+      guesses.includes(solution) ? guesses.indexOf(solution) : guesses.length,
+    [guesses, solution]
+  )
 
   return (
     <div className="max-w-full px-2 py-3 sm:px-3">

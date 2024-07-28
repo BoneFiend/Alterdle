@@ -1,4 +1,5 @@
 import { CalendarIcon } from '@heroicons/react/outline'
+import classNames from 'classnames'
 import { format } from 'date-fns'
 import { default as GraphemeSplitter } from 'grapheme-splitter'
 import { useEffect, useMemo, useRef, useState } from 'react'
@@ -92,8 +93,12 @@ function App() {
 
   const [currentRowClass, setCurrentRowClass] = useState('')
 
-  const { loadAllSettings, isHardModePreferred, setIsHardModePreferred } =
-    useClientSettings()
+  const {
+    loadAllSettings,
+    isDarkMode,
+    isHardModePreferred,
+    setIsHardModePreferred,
+  } = useClientSettings()
 
   const { isRowFocussed, focusRow, unfocusEarliestRow, unfocusAllRows } =
     useFocussedRows()
@@ -372,8 +377,17 @@ function App() {
 
   return (
     <Div100vh>
-      <div className="fixed h-full w-full bg-gradient-to-b from-primary-1-light-mode to-primary-2-light-mode" />
-      <div className="fixed h-full w-full bg-gradient-to-b from-primary-1-dark-mode to-primary-2-dark-mode opacity-0 transition-opacity duration-500 dark:opacity-100" />
+      {(!isDarkMode || isSettingsModalOpen) && (
+        <div className="fixed h-full w-full bg-gradient-to-b from-primary-1-light-mode to-primary-2-light-mode" />
+      )}
+      {(isDarkMode || isSettingsModalOpen) && (
+        <div
+          className={classNames(
+            'fixed h-full w-full bg-gradient-to-b from-primary-1-dark-mode to-primary-2-dark-mode opacity-0 transition-opacity duration-500 dark:opacity-100',
+            isSettingsModalOpen && 'will-change-[opacity]'
+          )}
+        />
+      )}
       <div className="3xl relative flex h-full flex-col bg-transparent">
         <Navbar
           setIsInfoModalOpen={setIsInfoModalOpen}
@@ -393,7 +407,7 @@ function App() {
 
         <div className="mx-auto flex w-full grow flex-col pb-8 short:pb-2 short:pt-2">
           <div className="flex h-[1vh] grow flex-wrap items-start justify-center overflow-y-scroll">
-            {solution.map((sol: any, i: any) => (
+            {solution.map((_, i: any) => (
               <Grid
                 key={i}
                 solution={solution[i]}

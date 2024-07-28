@@ -61,7 +61,12 @@ export const SettingsModal = ({
   } = useGameSettings()
 
   return (
-    <BaseModal title="Settings" isOpen={isOpen} handleClose={handleClose}>
+    <BaseModal
+      title="Settings"
+      isOpen={isOpen}
+      handleClose={handleClose}
+      isSettingsModal
+    >
       <div className="mt-2 flex flex-col divide-y divide-secondary-2">
         <SettingsSlider
           settingName="Word Length"
