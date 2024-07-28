@@ -9,8 +9,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v4
       - run: |
           pnpm install
       - run: |
-          pnpm run test
+          pnpm test

@@ -9,11 +9,11 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - run: npm install
+      - uses: pnpm/action-setup@v4
+      - run: pnpm install
       - name: Prettify code
         uses: creyD/prettier_action@v4.3
         with:
-          prettier_version: 3.0.2
+          prettier_version: 3.3.3
           prettier_options: --check src
           prettier_plugins: '@trivago/prettier-plugin-sort-imports prettier-plugin-tailwindcss'
