@@ -16,6 +16,8 @@ jobs:
 
     steps:
       - uses: pnpm/action-setup@v4
+        with:
+              version: 9
       - uses: docker://dkhamsing/awesome_bot:latest
         with:
           args: /github/workspace/README.md --allow-redirect --white-list http://localhost,http://localhost:5173,https://github.com/cwackerfuss/react-wordle/blob/main/.env

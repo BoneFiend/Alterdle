@@ -20,6 +20,8 @@ jobs:
 
     steps:
       - uses: pnpm/action-setup@v4
+        with:
+            version: 9
       - name: Use Node.js ${{ matrix.node-version }}
         uses: dafnik/setup-node-pnpm@v3
         with:
