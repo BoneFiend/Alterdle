@@ -7,21 +7,17 @@ import {
 
 import { GAME_TITLE } from '../../constants/strings'
 import useGameSettings from '../../stores/useGameSettings'
+import useModalStore from '../../stores/useModalStore'
 
-type Props = {
-  setIsInfoModalOpen: (value: boolean) => void
-  setIsHelpModalOpen: (value: boolean) => void
-  setIsStatsModalOpen: (value: boolean) => void
-  setIsSettingsModalOpen: (value: boolean) => void
-}
-
-export const Navbar = ({
-  setIsInfoModalOpen,
-  setIsHelpModalOpen,
-  setIsStatsModalOpen,
-  setIsSettingsModalOpen,
-}: Props) => {
+export const Navbar = () => {
   const { numberOfWords, numberOfLetters } = useGameSettings()
+
+  const {
+    setIsHelpModalOpen,
+    setIsStatsModalOpen,
+    setIsSettingsModalOpen,
+    setIsInfoModalOpen,
+  } = useModalStore()
 
   return (
     <div className="select-none pb-5 transition-all sm:pb-2 short:pb-2">

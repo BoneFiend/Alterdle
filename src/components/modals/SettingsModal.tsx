@@ -21,6 +21,7 @@ import {
 } from '../../constants/strings'
 import useClientSettings from '../../stores/useClientSettings'
 import useGameSettings from '../../stores/useGameSettings'
+import useModalStore from '../../stores/useModalStore'
 import { Button } from '../inputs/Button'
 import { MigrationIntro } from '../stats/MigrationIntro'
 import { BaseModal } from './BaseModal'
@@ -28,22 +29,18 @@ import { SettingsSlider } from './SettingsSlider'
 import { SettingsToggle } from './SettingsToggle'
 
 type Props = {
-  isOpen: boolean
-  handleClose: () => void
   isHardMode: boolean
   handleHardMode: Function
-  handleChooseDateButton: () => void
-  handleMigrateStatsButton: () => void
 }
 
-export const SettingsModal = ({
-  isOpen,
-  handleClose,
-  isHardMode,
-  handleHardMode,
-  handleChooseDateButton,
-  handleMigrateStatsButton,
-}: Props) => {
+export const SettingsModal = ({ isHardMode, handleHardMode }: Props) => {
+  const {
+    isSettingsModalOpen,
+    setIsDatePickerModalOpen,
+    setIsSettingsModalOpen,
+    setIsMigrateStatsModalOpen,
+  } = useModalStore()
+
   const {
     isDarkMode,
     setIsDarkMode,
@@ -60,10 +57,24 @@ export const SettingsModal = ({
     setNumberOfLetters,
   } = useGameSettings()
 
+  const handleChooseDateButton = () => {
+    setIsDatePickerModalOpen(true)
+    setIsSettingsModalOpen(false)
+  }
+
+  const handleMigrateStatsButton = () => {
+    setIsSettingsModalOpen(false)
+    setIsMigrateStatsModalOpen(true)
+  }
+
+  const handleClose = () => {
+    setIsSettingsModalOpen(false)
+  }
+
   return (
     <BaseModal
       title="Settings"
-      isOpen={isOpen}
+      isOpen={isSettingsModalOpen}
       handleClose={handleClose}
       isSettingsModal
     >

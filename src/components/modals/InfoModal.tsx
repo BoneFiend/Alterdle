@@ -4,16 +4,22 @@ import {
   MIN_NUMBER_OF_LETTERS,
   MIN_NUMBER_OF_WORDS,
 } from '../../constants/settings'
+import useModalStore from '../../stores/useModalStore'
 import { BaseModal } from './BaseModal'
 
-type Props = {
-  isOpen: boolean
-  handleClose: () => void
-}
+export const InfoModal = () => {
+  const { isInfoModalOpen, setIsInfoModalOpen } = useModalStore()
 
-export const InfoModal = ({ isOpen, handleClose }: Props) => {
+  const handleClose = () => {
+    setIsInfoModalOpen(false)
+  }
+
   return (
-    <BaseModal title="Game Info" isOpen={isOpen} handleClose={handleClose}>
+    <BaseModal
+      title="Game Info"
+      isOpen={isInfoModalOpen}
+      handleClose={handleClose}
+    >
       <p className="mt-2 text-sm text-secondary">
         Alterdle is a fully customisable word guessing game.
         <br />

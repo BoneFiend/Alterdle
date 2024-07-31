@@ -57,6 +57,7 @@ import {
 import useClientSettings from './stores/useClientSettings'
 import useFocussedRows from './stores/useFocussedRows'
 import useGameSettings from './stores/useGameSettings'
+import useModalStore from './stores/useModalStore'
 
 function App() {
   const { numberOfWords, numberOfLetters, gameDate, setGameDate } =
@@ -66,30 +67,13 @@ function App() {
 
   const { showError: showErrorAlert, showSuccess: showSuccessAlert } =
     useAlert()
-  const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
-  const [isHelpModalOpen, setIsHelpModalOpen] = useState(false)
-  const [isStatsModalOpen, setIsStatsModalOpen] = useState(false)
-  const [isDatePickerModalOpen, setIsDatePickerModalOpen] = useState(false)
-  const [isMigrateStatsModalOpen, setIsMigrateStatsModalOpen] = useState(false)
-  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false)
 
-  const isAnyModalOpen = useMemo(
-    () =>
-      isHelpModalOpen ||
-      isStatsModalOpen ||
-      isSettingsModalOpen ||
-      isMigrateStatsModalOpen ||
-      isInfoModalOpen ||
-      isDatePickerModalOpen,
-    [
-      isHelpModalOpen,
-      isStatsModalOpen,
-      isSettingsModalOpen,
-      isMigrateStatsModalOpen,
-      isInfoModalOpen,
-      isDatePickerModalOpen,
-    ]
-  )
+  const {
+    isSettingsModalOpen,
+    isAnyModalOpen,
+    setIsHelpModalOpen,
+    setIsStatsModalOpen,
+  } = useModalStore()
 
   const [currentRowClass, setCurrentRowClass] = useState('')
 
@@ -389,22 +373,15 @@ function App() {
         />
       )}
       <div className="3xl relative flex h-full flex-col bg-transparent">
-        <Navbar
-          setIsInfoModalOpen={setIsInfoModalOpen}
-          setIsHelpModalOpen={setIsHelpModalOpen}
-          setIsStatsModalOpen={setIsStatsModalOpen}
-          setIsSettingsModalOpen={setIsSettingsModalOpen}
-        />
-
+        <Navbar />
         {!isLatestGame && (
           <div className="mb-1 flex items-center justify-center">
-            <CalendarIcon className="h-6 w-6 stroke-gray-600 dark:stroke-gray-300" />
-            <p className="ml-1 text-base text-gray-600 dark:text-gray-300">
+            <CalendarIcon className="h-6 w-6 stroke-secondary" />
+            <p className="ml-1 text-base text-secondary">
               {format(gameDate, 'd MMMM yyyy', { locale: DATE_LOCALE })}
             </p>
           </div>
         )}
-
         <div className="mx-auto flex w-full grow flex-col pb-8 short:pb-2 short:pt-2">
           <div className="flex h-[1vh] grow flex-wrap items-start justify-center overflow-y-scroll">
             {solution.map((_, i: any) => (
@@ -433,17 +410,9 @@ function App() {
               }
             />
           </div>
-          <HelpModal
-            isOpen={isHelpModalOpen}
-            handleClose={() => setIsHelpModalOpen(false)}
-          />
-          <InfoModal
-            isOpen={isInfoModalOpen}
-            handleClose={() => setIsInfoModalOpen(false)}
-          />
+          <HelpModal />
+          <InfoModal />
           <StatsModal
-            isOpen={isStatsModalOpen}
-            handleClose={() => setIsStatsModalOpen(false)}
             solution={solution}
             guesses={guesses[numberOfWords]?.[numberOfLetters] ?? []}
             gameStats={stats}
@@ -462,40 +431,11 @@ function App() {
             }
             maxChallenges={maxChallenges}
           />
-          <DatePickerModal
-            isOpen={isDatePickerModalOpen}
-            initialDate={gameDate}
-            handleSelectDate={(d) => {
-              setIsDatePickerModalOpen(false)
-              setGameDate(d)
-              setUrl(numberOfWords, numberOfLetters, d)
-              setIsSettingsModalOpen(false)
-            }}
-            handleClose={() => {
-              setIsSettingsModalOpen(true)
-              setIsDatePickerModalOpen(false)
-            }}
-          />
-          <MigrateStatsModal
-            isOpen={isMigrateStatsModalOpen}
-            handleClose={() => {
-              setIsSettingsModalOpen(true)
-              setIsMigrateStatsModalOpen(false)
-            }}
-          />
+          <DatePickerModal />
+          <MigrateStatsModal />
           <SettingsModal
-            isOpen={isSettingsModalOpen}
-            handleClose={() => setIsSettingsModalOpen(false)}
             isHardMode={isHardMode}
             handleHardMode={handleHardMode}
-            handleChooseDateButton={() => {
-              setIsDatePickerModalOpen(true)
-              setIsSettingsModalOpen(false)
-            }}
-            handleMigrateStatsButton={() => {
-              setIsSettingsModalOpen(false)
-              setIsMigrateStatsModalOpen(true)
-            }}
           />
           <AlertContainer />
         </div>

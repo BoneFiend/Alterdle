@@ -10,14 +10,10 @@ import {
 } from '../../constants/strings'
 import { CharStatus } from '../../lib/statuses'
 import useGameSettings from '../../stores/useGameSettings'
+import useModalStore from '../../stores/useModalStore'
 import { Cell } from '../grid/Cell'
 import { BaseModal } from './BaseModal'
 import { SettingsSlider } from './SettingsSlider'
-
-type Props = {
-  isOpen: boolean
-  handleClose: () => void
-}
 
 type TutorialWords = {
   first: string
@@ -131,7 +127,9 @@ const tutorials: { [key: number]: TutorialWords } = {
   11: t11,
 }
 
-export const HelpModal = ({ isOpen, handleClose }: Props) => {
+export const HelpModal = () => {
+  const { isHelpModalOpen, setIsHelpModalOpen } = useModalStore()
+
   const {
     numberOfWords,
     numberOfLetters,
@@ -197,8 +195,16 @@ export const HelpModal = ({ isOpen, handleClose }: Props) => {
     }
   }
 
+  const handleClose = () => {
+    setIsHelpModalOpen(false)
+  }
+
   return (
-    <BaseModal title="How to play" isOpen={isOpen} handleClose={handleClose}>
+    <BaseModal
+      title="How to play"
+      isOpen={isHelpModalOpen}
+      handleClose={handleClose}
+    >
       <p className="mt-2 text-sm text-secondary">
         After each guess, the color of the tiles will change to show how close
         your{' '}

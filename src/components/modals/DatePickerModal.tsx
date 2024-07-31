@@ -10,29 +10,29 @@ import {
   DATEPICKER_TODAY_TEXT,
 } from '../../constants/strings'
 import { getToday, getYesterday } from '../../lib/dateutils'
+import { setUrl } from '../../lib/urlutils'
 import { getLastGameDate, isValidGameDate, periodInDays } from '../../lib/words'
+import useGameSettings from '../../stores/useGameSettings'
+import useModalStore from '../../stores/useModalStore'
 import { Button } from '../inputs/Button'
 import { BaseModal } from './BaseModal'
 
-type Props = {
-  isOpen: boolean
-  initialDate?: Date
-  handleSelectDate: (date: Date) => void
-  handleClose: () => void
-}
+export const DatePickerModal = () => {
+  const {
+    isDatePickerModalOpen,
+    setIsDatePickerModalOpen,
+    setIsSettingsModalOpen,
+  } = useModalStore()
 
-export const DatePickerModal = ({
-  isOpen,
-  initialDate,
-  handleSelectDate,
-  handleClose,
-}: Props) => {
+  const { numberOfWords, numberOfLetters, gameDate, setGameDate } =
+    useGameSettings()
+
   const lastGameDate = getLastGameDate(getYesterday())
   const [selectedDate, setSelectedDate] = useState(() => {
-    if (initialDate == null || initialDate > lastGameDate) {
+    if (gameDate == null || gameDate > lastGameDate) {
       return lastGameDate
     }
-    return initialDate
+    return gameDate
   })
 
   const headingDateFormat = 'MMMM yyyy'
@@ -51,10 +51,22 @@ export const DatePickerModal = ({
     }
   }
 
+  const handleSelectDate = (d: Date) => {
+    setIsDatePickerModalOpen(false)
+    setGameDate(d)
+    setUrl(numberOfWords, numberOfLetters, d)
+    setIsSettingsModalOpen(false)
+  }
+
+  const handleClose = () => {
+    setIsSettingsModalOpen(true)
+    setIsDatePickerModalOpen(false)
+  }
+
   return (
     <BaseModal
       title={DATEPICKER_TITLE}
-      isOpen={isOpen}
+      isOpen={isDatePickerModalOpen}
       handleClose={handleClose}
     >
       <div className="mx-auto flex max-w-2xl items-center justify-center space-x-4 pt-2 text-left sm:w-48">

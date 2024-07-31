@@ -2,27 +2,34 @@ import { useState } from 'react'
 
 import { StoredGameState } from '../../lib/localStorage'
 import { Obj2d } from '../../lib/words'
+import useModalStore from '../../stores/useModalStore'
 import { EmigratePanel } from '../stats/EmigratePanel'
 import { ImmigratePanel } from '../stats/ImmigratePanel'
 import { BaseModal } from './BaseModal'
-
-type Props = {
-  isOpen: boolean
-  handleClose: () => void
-}
 
 export type MigrationStats = {
   statistics: Obj2d
   gameState: StoredGameState | null
 }
 
-export const MigrateStatsModal = ({ isOpen, handleClose }: Props) => {
+export const MigrateStatsModal = () => {
+  const {
+    isMigrateStatsModalOpen,
+    setIsSettingsModalOpen,
+    setIsMigrateStatsModalOpen,
+  } = useModalStore()
+
   const [isEmigrateVisible, setIsEmigrateVisible] = useState(true)
+
+  const handleClose = () => {
+    setIsSettingsModalOpen(true)
+    setIsMigrateStatsModalOpen(false)
+  }
 
   return (
     <BaseModal
       title="Transfer your statistics"
-      isOpen={isOpen}
+      isOpen={isMigrateStatsModalOpen}
       handleClose={handleClose}
     >
       <p className="mb-4 mt-4 text-sm text-gray-500 dark:text-gray-300">

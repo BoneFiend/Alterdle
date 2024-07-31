@@ -24,6 +24,7 @@ import { shareStatus } from '../../lib/share'
 import { Obj2d, checkIsGameWon, getNextGameDate } from '../../lib/words'
 import useClientSettings from '../../stores/useClientSettings'
 import useGameSettings from '../../stores/useGameSettings'
+import useModalStore from '../../stores/useModalStore'
 import { Button } from '../inputs/Button'
 import { Histogram } from '../stats/Histogram'
 import { StatBar } from '../stats/StatBar'
@@ -31,8 +32,6 @@ import { BaseModal } from './BaseModal'
 import { SettingsSlider } from './SettingsSlider'
 
 type Props = {
-  isOpen: boolean
-  handleClose: () => void
   solution: string[]
   guesses: string[]
   gameStats: Obj2d
@@ -47,8 +46,6 @@ type Props = {
 }
 
 export const StatsModal = ({
-  isOpen,
-  handleClose,
   solution,
   guesses,
   gameStats,
@@ -61,6 +58,8 @@ export const StatsModal = ({
   numberOfGuessesMade,
   maxChallenges,
 }: Props) => {
+  const { isStatsModalOpen, setIsStatsModalOpen } = useModalStore()
+
   const { isDarkMode, isHighContrastMode, isLongShare } = useClientSettings()
   const {
     numberOfWords,
@@ -70,10 +69,14 @@ export const StatsModal = ({
     gameDate,
   } = useGameSettings()
 
+  const handleClose = () => {
+    setIsStatsModalOpen(false)
+  }
+
   return (
     <BaseModal
       title={STATISTICS_TITLE}
-      isOpen={isOpen}
+      isOpen={isStatsModalOpen}
       handleClose={handleClose}
     >
       <StatBar
