@@ -1,7 +1,11 @@
 import { addDays, differenceInDays, startOfDay } from 'date-fns'
 import { default as GraphemeSplitter } from 'grapheme-splitter'
 
-import { ENABLE_ARCHIVED_GAMES, GAME_EPOCH } from '../constants/settings'
+import {
+  ENABLE_ARCHIVED_GAMES,
+  GAME_EPOCH,
+  MAX_CHALLENGES_BONUS,
+} from '../constants/settings'
 import { NOT_CONTAINED_MESSAGE, WRONG_SPOT_MESSAGE } from '../constants/strings'
 import { WORDS } from '../constants/wordlist'
 import { getToday } from './dateutils'
@@ -190,4 +194,8 @@ export const loadGuesses = (gameDate: Date, isLatestGame: boolean) => {
     return {}
   }
   return loaded.guesses
+}
+
+export const calculateMaxChallenges = (numberOfWords: number) => {
+  return numberOfWords + MAX_CHALLENGES_BONUS
 }

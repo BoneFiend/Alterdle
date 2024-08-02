@@ -12,7 +12,7 @@ import {
 import { getToday, getYesterday } from '../../lib/dateutils'
 import { setUrl } from '../../lib/urlutils'
 import { getLastGameDate, isValidGameDate, periodInDays } from '../../lib/words'
-import useGameSettings from '../../stores/useGameSettings'
+import useGameSettingsStore from '../../stores/useGameSettingsStore'
 import useModalStore from '../../stores/useModalStore'
 import { Button } from '../inputs/Button'
 import { BaseModal } from './BaseModal'
@@ -25,7 +25,7 @@ export const DatePickerModal = () => {
   } = useModalStore()
 
   const { numberOfWords, numberOfLetters, gameDate, setGameDate } =
-    useGameSettings()
+    useGameSettingsStore()
 
   const lastGameDate = getLastGameDate(getYesterday())
   const [selectedDate, setSelectedDate] = useState(() => {

@@ -1,5 +1,6 @@
 import { ClockIcon, ShareIcon } from '@heroicons/react/outline'
 import { format } from 'date-fns'
+import { useMemo } from 'react'
 import Countdown from 'react-countdown'
 
 import {
@@ -21,9 +22,14 @@ import {
 } from '../../constants/strings'
 import { getToday } from '../../lib/dateutils'
 import { shareStatus } from '../../lib/share'
-import { Obj2d, checkIsGameWon, getNextGameDate } from '../../lib/words'
+import {
+  Obj2d,
+  calculateMaxChallenges,
+  checkIsGameWon,
+  getNextGameDate,
+} from '../../lib/words'
 import useClientSettings from '../../stores/useClientSettings'
-import useGameSettings from '../../stores/useGameSettings'
+import useGameSettingsStore from '../../stores/useGameSettingsStore'
 import useModalStore from '../../stores/useModalStore'
 import { Button } from '../inputs/Button'
 import { Histogram } from '../stats/Histogram'
@@ -42,7 +48,6 @@ type Props = {
   handleShareFailure: () => void
   isHardMode: boolean
   numberOfGuessesMade: number
-  maxChallenges: number
 }
 
 export const StatsModal = ({
@@ -56,7 +61,6 @@ export const StatsModal = ({
   handleShareFailure,
   isHardMode,
   numberOfGuessesMade,
-  maxChallenges,
 }: Props) => {
   const { isStatsModalOpen, setIsStatsModalOpen } = useModalStore()
 
@@ -67,7 +71,11 @@ export const StatsModal = ({
     setNumberOfWords,
     setNumberOfLetters,
     gameDate,
-  } = useGameSettings()
+  } = useGameSettingsStore()
+
+  const maxChallenges = useMemo(() => {
+    return calculateMaxChallenges(numberOfWords)
+  }, [numberOfWords])
 
   const handleClose = () => {
     setIsStatsModalOpen(false)

@@ -6,11 +6,11 @@ import {
 } from '@heroicons/react/outline'
 
 import { GAME_TITLE } from '../../constants/strings'
-import useGameSettings from '../../stores/useGameSettings'
+import useGameSettingsStore from '../../stores/useGameSettingsStore'
 import useModalStore from '../../stores/useModalStore'
 
 export const Navbar = () => {
-  const { numberOfWords, numberOfLetters } = useGameSettings()
+  const { numberOfWords, numberOfLetters } = useGameSettingsStore()
 
   const {
     setIsHelpModalOpen,

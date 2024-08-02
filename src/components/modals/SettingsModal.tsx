@@ -18,9 +18,10 @@ import {
   HIGH_CONTRAST_MODE_DESCRIPTION,
   LENGTH_DESCRIPTION,
   LONG_SHARE_DESCRIPTION,
+  PERFORMANCE_MODE_DESCRIPTION,
 } from '../../constants/strings'
 import useClientSettings from '../../stores/useClientSettings'
-import useGameSettings from '../../stores/useGameSettings'
+import useGameSettingsStore from '../../stores/useGameSettingsStore'
 import useModalStore from '../../stores/useModalStore'
 import { Button } from '../inputs/Button'
 import { MigrationIntro } from '../stats/MigrationIntro'
@@ -48,6 +49,8 @@ export const SettingsModal = ({ isHardMode, handleHardMode }: Props) => {
     setIsHighContrastMode,
     isLongShare,
     setIsLongShare,
+    isPerfMode,
+    setIsPerfMode,
   } = useClientSettings()
 
   const {
@@ -55,7 +58,7 @@ export const SettingsModal = ({ isHardMode, handleHardMode }: Props) => {
     numberOfLetters,
     setNumberOfWords,
     setNumberOfLetters,
-  } = useGameSettings()
+  } = useGameSettingsStore()
 
   const handleChooseDateButton = () => {
     setIsDatePickerModalOpen(true)
@@ -140,6 +143,12 @@ export const SettingsModal = ({ isHardMode, handleHardMode }: Props) => {
           flag={isHighContrastMode}
           handleFlag={setIsHighContrastMode}
           description={HIGH_CONTRAST_MODE_DESCRIPTION}
+        />
+        <SettingsToggle
+          settingName="Performance Mode"
+          flag={isPerfMode}
+          handleFlag={setIsPerfMode}
+          description={PERFORMANCE_MODE_DESCRIPTION}
         />
         {ENABLE_MIGRATE_STATS && (
           <div>

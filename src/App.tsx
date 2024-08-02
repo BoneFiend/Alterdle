@@ -35,15 +35,16 @@ import {
   WORD_NOT_FOUND_MESSAGE,
 } from './constants/strings'
 import { useAlert } from './context/AlertContext'
+import { useGameSettings } from './hooks/useGameSettings'
 import { isInAppBrowser } from './lib/browser'
 import {
   loadGameStateFromLocalStorage,
   saveGameStateToLocalStorage,
 } from './lib/localStorage'
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
-import { setUrl } from './lib/urlutils'
 import {
   Obj2d,
+  calculateMaxChallenges,
   checkIsGameWon,
   countGridsWon,
   findFirstUnusedReveal,
@@ -56,12 +57,10 @@ import {
 } from './lib/words'
 import useClientSettings from './stores/useClientSettings'
 import useFocussedRows from './stores/useFocussedRows'
-import useGameSettings from './stores/useGameSettings'
 import useModalStore from './stores/useModalStore'
 
 function App() {
-  const { numberOfWords, numberOfLetters, gameDate, setGameDate } =
-    useGameSettings()
+  const { numberOfWords, numberOfLetters, gameDate } = useGameSettings()
 
   const isLatestGame = useMemo(() => getIsLatestGame(gameDate), [gameDate])
 
@@ -98,7 +97,7 @@ function App() {
   }, [gamesWon, numberOfWords, numberOfLetters])
 
   const maxChallenges = useMemo(
-    () => numberOfWords + MAX_CHALLENGES_BONUS,
+    () => calculateMaxChallenges(numberOfWords),
     [numberOfWords]
   )
 
@@ -360,7 +359,7 @@ function App() {
   }
 
   return (
-    <Div100vh>
+    <Div100vh className="bg-primary-1 transition-colors duration-500">
       {(!isDarkMode || isSettingsModalOpen) && (
         <div className="fixed h-full w-full bg-gradient-to-b from-primary-1-light-mode to-primary-2-light-mode" />
       )}
@@ -429,7 +428,6 @@ function App() {
             numberOfGuessesMade={
               (guesses[numberOfWords]?.[numberOfLetters] ?? []).length
             }
-            maxChallenges={maxChallenges}
           />
           <DatePickerModal />
           <MigrateStatsModal />

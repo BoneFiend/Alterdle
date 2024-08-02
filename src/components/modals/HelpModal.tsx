@@ -9,7 +9,7 @@ import {
   LENGTH_DESCRIPTION,
 } from '../../constants/strings'
 import { CharStatus } from '../../lib/statuses'
-import useGameSettings from '../../stores/useGameSettings'
+import useGameSettingsStore from '../../stores/useGameSettingsStore'
 import useModalStore from '../../stores/useModalStore'
 import { Cell } from '../grid/Cell'
 import { BaseModal } from './BaseModal'
@@ -135,7 +135,7 @@ export const HelpModal = () => {
     numberOfLetters,
     setNumberOfWords,
     setNumberOfLetters,
-  } = useGameSettings()
+  } = useGameSettingsStore()
 
   const first = tutorials[numberOfLetters].first
   const firstCorrect = tutorials[numberOfLetters].firstCorrect

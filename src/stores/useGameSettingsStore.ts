@@ -8,7 +8,7 @@ import {
   setWindowTitle,
 } from '../lib/urlutils'
 
-interface gameSettings {
+interface GameSettings {
   numberOfWords: number
   numberOfLetters: number
   setNumberOfWords: (numberOfWords: number) => void
@@ -18,7 +18,7 @@ interface gameSettings {
   onUpdate: () => void
 }
 
-const useGameSettings = create<gameSettings>((set, get) => {
+const useGameSettingsStore = create<GameSettings>((set, get) => {
   let gameSettingsTimer: NodeJS.Timeout | null = null
 
   return {
@@ -33,7 +33,7 @@ const useGameSettings = create<gameSettings>((set, get) => {
 
     setNumberOfLetters: (numberOfLetters: number) => {
       if (numberOfLetters === 1 && get().numberOfWords > 2) {
-        // Ensures only 2 challenges can played at once with 2 letters
+        // Ensures only 2 challenges can be played at once with 2 letters
         set({ numberOfWords: 2 })
       }
       set({ numberOfLetters })
@@ -55,4 +55,4 @@ const useGameSettings = create<gameSettings>((set, get) => {
   }
 })
 
-export default useGameSettings
+export default useGameSettingsStore

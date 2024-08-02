@@ -7,6 +7,8 @@ const darkModeKey = 'theme'
 const highContrastKey = 'highContrast'
 const longShareKey = 'longShare'
 const gameModeKey = 'gameMode'
+const perfModeKey = 'perfMode'
+
 const gameStatKey = 'alterdleGameStats'
 
 export type StoredGameState = {
@@ -78,7 +80,7 @@ export const getStoredIsDarkMode = () => {
 
 export const setStoredIsHighContrastMode = (isHighContrast: boolean) => {
   if (isHighContrast) {
-    localStorage.setItem(highContrastKey, '1')
+    localStorage.setItem(highContrastKey, 'true')
   } else {
     localStorage.removeItem(highContrastKey)
   }
@@ -86,12 +88,12 @@ export const setStoredIsHighContrastMode = (isHighContrast: boolean) => {
 
 export const getStoredIsHighContrastMode = () => {
   const highContrast = localStorage.getItem(highContrastKey)
-  return highContrast === '1'
+  return highContrast === 'true' || highContrast === '1'
 }
 
 export const setStoredIsLongShare = (isLongShare: boolean) => {
   if (isLongShare) {
-    localStorage.setItem(longShareKey, '1')
+    localStorage.setItem(longShareKey, 'true')
   } else {
     localStorage.removeItem(longShareKey)
   }
@@ -99,7 +101,7 @@ export const setStoredIsLongShare = (isLongShare: boolean) => {
 
 export const getStoredIsLongShare = () => {
   const longShare = localStorage.getItem(longShareKey)
-  return longShare === '1'
+  return longShare === 'true' || longShare === '1'
 }
 
 export const setStoredGameMode = (isHardMode: boolean) => {
@@ -109,4 +111,17 @@ export const setStoredGameMode = (isHardMode: boolean) => {
 export const getStoredGameMode = () => {
   const hardMode = localStorage.getItem(gameModeKey)
   return hardMode === 'hard'
+}
+
+export const setStoredPerfMode = (isPerfMode: boolean) => {
+  if (isPerfMode) {
+    localStorage.setItem(perfModeKey, 'true')
+  } else {
+    localStorage.removeItem(perfModeKey)
+  }
+}
+
+export const getStoredPerfMode = () => {
+  const isPerfMode = localStorage.getItem(perfModeKey)
+  return isPerfMode === 'true'
 }

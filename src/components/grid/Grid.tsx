@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 
+import { useGameSettings } from '../../hooks/useGameSettings'
 import useFocussedRows from '../../stores/useFocussedRows'
-import useGameSettings from '../../stores/useGameSettings'
 import { Row } from './Row'
 import { SolutionRow } from './SolutionRow'
 

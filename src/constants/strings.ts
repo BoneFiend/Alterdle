@@ -44,6 +44,8 @@ export const HARD_MODE_RESTRICTION_MESSAGE =
 export const HARD_MODE_DESCRIPTION =
   'Any revealed hints must be used in subsequent guesses'
 export const HIGH_CONTRAST_MODE_DESCRIPTION = 'For improved color vision'
+export const PERFORMANCE_MODE_DESCRIPTION =
+  'Reduces some animations and rendering'
 export const CHALLENGES_DESCRIPTION = 'How many words to guess'
 export const LENGTH_DESCRIPTION = 'Length of each word'
 export const WRONG_SPOT_MESSAGE = (guess: string, position: number) =>
