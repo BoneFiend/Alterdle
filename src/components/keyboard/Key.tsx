@@ -1,7 +1,7 @@
 import classnames from 'classnames'
 import { ReactNode } from 'react'
 
-import { CharStatus } from '../../lib/statuses'
+import { CharStatus } from '../../constants/types'
 
 type Props = {
   children?: ReactNode

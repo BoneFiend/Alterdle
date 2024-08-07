@@ -24,27 +24,6 @@ export const countGridsWon = (guesses: string[], solution: string[]) => {
   }, 0)
 }
 
-export type Obj2d = {
-  // 2d Object type to avoid type errors
-  [key: number]: {
-    [key: number]: any
-  }
-}
-
-export const updateObj2d = (
-  obj: Obj2d,
-  numberOfWords: number,
-  numberOfLetters: number,
-  newValue: any
-) => {
-  const newObj = { ...obj }
-  if (!newObj[numberOfWords]) {
-    newObj[numberOfWords] = {}
-  }
-  newObj[numberOfWords][numberOfLetters] = newValue
-  return newObj
-}
-
 export const isWordInWordList = (word: string) => {
   return WORDS.includes(localeAwareLowerCase(word))
 }

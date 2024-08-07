@@ -1,4 +1,4 @@
-import { Obj2d } from './words'
+import { Obj2d, StoredGameState } from '../constants/types'
 
 const gameStateKey = 'alterdleGameState'
 const archiveGameStateKey = 'alterdleArchiveGameState'
@@ -10,11 +10,6 @@ const gameModeKey = 'gameMode'
 const perfModeKey = 'perfMode'
 
 const gameStatKey = 'alterdleGameStats'
-
-export type StoredGameState = {
-  guesses: Obj2d
-  gameDate: Date
-}
 
 export const saveGameStateToLocalStorage = (
   isLatestGame: boolean,

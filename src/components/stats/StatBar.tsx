@@ -4,8 +4,8 @@ import {
   SUCCESS_RATE_TEXT,
   TOTAL_TRIES_TEXT,
 } from '../../constants/strings'
+import { Obj2d } from '../../constants/types'
 import { defaultStats } from '../../lib/stats'
-import { Obj2d } from '../../lib/words'
 
 type Props = {
   gameStats: Obj2d

@@ -1,13 +1,13 @@
 import { SaveIcon } from '@heroicons/react/outline'
 import { useState } from 'react'
 
+import { MigrationStats } from '../../constants/types'
 import { decrypt } from '../../lib/encryption'
 import {
   saveGameStateToLocalStorage,
   saveStatsToLocalStorage,
 } from '../../lib/localStorage'
 import { Button } from '../inputs/Button'
-import { MigrationStats } from '../modals/MigrateStatsModal'
 
 export const ImmigratePanel = () => {
   const [isSaveButtonEnabled, setIsSaveButtonEnabled] = useState(false)

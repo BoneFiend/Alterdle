@@ -8,7 +8,7 @@ import {
   CHALLENGES_DESCRIPTION,
   LENGTH_DESCRIPTION,
 } from '../../constants/strings'
-import { CharStatus } from '../../lib/statuses'
+import { CharStatus } from '../../constants/types'
 import useGameSettingsStore from '../../stores/useGameSettingsStore'
 import useModalStore from '../../stores/useModalStore'
 import { Cell } from '../grid/Cell'

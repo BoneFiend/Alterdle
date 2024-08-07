@@ -19,7 +19,6 @@ import {
   DATE_LOCALE,
   DISCOURAGE_INAPP_BROWSERS,
   LONG_ALERT_TIME_MS,
-  MAX_CHALLENGES_BONUS,
   REVEAL_TIME_MS,
   WELCOME_HELP_MODAL_MS,
 } from './constants/settings'
@@ -34,6 +33,7 @@ import {
   WIN_MESSAGES,
   WORD_NOT_FOUND_MESSAGE,
 } from './constants/strings'
+import { Obj2d, updateObj2d } from './constants/types'
 import { useAlert } from './context/AlertContext'
 import { useGameSettings } from './hooks/useGameSettings'
 import { isInAppBrowser } from './lib/browser'
@@ -43,7 +43,6 @@ import {
 } from './lib/localStorage'
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import {
-  Obj2d,
   calculateMaxChallenges,
   checkIsGameWon,
   countGridsWon,
@@ -53,7 +52,6 @@ import {
   isWordInWordList,
   loadGuesses,
   unicodeLength,
-  updateObj2d,
 } from './lib/words'
 import useClientSettings from './stores/useClientSettings'
 import useFocussedRows from './stores/useFocussedRows'

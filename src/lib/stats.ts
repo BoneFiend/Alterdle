@@ -1,21 +1,10 @@
 import { GAME_EPOCH } from '../constants/settings'
+import { GameStats, Obj2d } from '../constants/types'
 import { getToday } from './dateutils'
 import {
   loadStatsFromLocalStorage,
   saveStatsToLocalStorage,
 } from './localStorage'
-import { Obj2d } from './words'
-
-type GameStats = {
-  winDistribution: { [key: number]: number }
-  gridsWonDistribution: { [key: number]: number }
-  gamesFailed: number
-  currentStreak: number
-  bestStreak: number
-  totalGames: number
-  successRate: number
-  latestDate: Date
-}
 
 export const defaultStats: GameStats = {
   winDistribution: {},

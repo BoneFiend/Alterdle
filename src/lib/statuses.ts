@@ -1,6 +1,5 @@
+import { CharStatus } from '../constants/types'
 import { unicodeSplit } from './words'
-
-export type CharStatus = 'absent' | 'present' | 'correct' | 'incorrect' | 'null'
 
 export const getStatuses = (
   solution: string[],

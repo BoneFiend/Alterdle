@@ -1,6 +1,6 @@
+import { Obj2d } from '../../constants/types'
 import { getToday } from '../../lib/dateutils'
 import { defaultStats } from '../../lib/stats'
-import { Obj2d } from '../../lib/words'
 import { Progress } from './Progress'
 
 type Props = {

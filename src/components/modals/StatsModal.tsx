@@ -20,10 +20,10 @@ import {
   SHARE_TEXT,
   STATISTICS_TITLE,
 } from '../../constants/strings'
+import { Obj2d } from '../../constants/types'
 import { getToday } from '../../lib/dateutils'
 import { shareStatus } from '../../lib/share'
 import {
-  Obj2d,
   calculateMaxChallenges,
   checkIsGameWon,
   getNextGameDate,

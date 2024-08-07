@@ -1,16 +1,9 @@
 import { useState } from 'react'
 
-import { StoredGameState } from '../../lib/localStorage'
-import { Obj2d } from '../../lib/words'
 import useModalStore from '../../stores/useModalStore'
 import { EmigratePanel } from '../stats/EmigratePanel'
 import { ImmigratePanel } from '../stats/ImmigratePanel'
 import { BaseModal } from './BaseModal'
-
-export type MigrationStats = {
-  statistics: Obj2d
-  gameState: StoredGameState | null
-}
 
 export const MigrateStatsModal = () => {
   const {
