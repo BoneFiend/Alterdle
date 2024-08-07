@@ -27,7 +27,9 @@ export const Cell = ({
   numberOfLetters = 1,
   numberOfWords = 1,
 }: Props) => {
-  const { isPerfMode } = useClientSettings()
+  const {
+    clientSettings: { isPerfMode },
+  } = useClientSettings()
 
   const isFilled = value && !isCompleted
   const shouldReveal = isRevealing && isCompleted
@@ -39,7 +41,7 @@ export const Cell = ({
   const classes = classnames(
     'border-solid border-2 mx-0.5 transform-gpu font-bold rounded sm:rounded-md select-none',
     {
-      'transition-[height] duration-300 ease-in-out': !isPerfMode,
+      'transition-[height,width] duration-300 ease-in-out': !isPerfMode,
       'text-4xl w-14 h-14': !crampedGrids && !helpModal,
       'md:text-4xl text-2xl w-8 h-8 md:w-14 md:h-14':
         crampedGrids && !helpModal && isFocussed,

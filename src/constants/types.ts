@@ -1,5 +1,21 @@
 export type CharStatus = 'absent' | 'present' | 'correct' | 'incorrect' | 'null'
 
+export type ClientSettings = {
+  isDarkMode: boolean
+  isHighContrastMode: boolean
+  isLongShare: boolean
+  isHardModePreferred: boolean
+  isPerfMode: boolean
+}
+
+export const defaultClientSettings: ClientSettings = {
+  isDarkMode: false,
+  isHighContrastMode: false,
+  isLongShare: false,
+  isHardModePreferred: false,
+  isPerfMode: false,
+}
+
 export type GameStats = {
   winDistribution: { [key: number]: number }
   gridsWonDistribution: { [key: number]: number }

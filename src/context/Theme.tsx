@@ -3,7 +3,9 @@ import React, { useEffect } from 'react'
 import useClientSettings from '../stores/useClientSettings'
 
 const Theme: React.FC = () => {
-  const { isDarkMode, isHighContrastMode } = useClientSettings()
+  const {
+    clientSettings: { isDarkMode, isHighContrastMode },
+  } = useClientSettings()
 
   const darkKey = 'dark'
   const highContrastKey = 'high-contrast'

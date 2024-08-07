@@ -39,6 +39,7 @@ import { useGameSettings } from './hooks/useGameSettings'
 import { isInAppBrowser } from './lib/browser'
 import {
   loadGameStateFromLocalStorage,
+  removeLegacyKeys,
   saveGameStateToLocalStorage,
 } from './lib/localStorage'
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
@@ -74,12 +75,10 @@ function App() {
 
   const [currentRowClass, setCurrentRowClass] = useState('')
 
-  const {
-    loadAllSettings,
-    isDarkMode,
-    isHardModePreferred,
-    setIsHardModePreferred,
-  } = useClientSettings()
+  const { clientSettings, loadAllSettings, setClientSettings } =
+    useClientSettings()
+
+  const { isDarkMode, isHardModePreferred } = clientSettings
 
   const { isRowFocussed, focusRow, unfocusEarliestRow, unfocusAllRows } =
     useFocussedRows()
@@ -124,6 +123,7 @@ function App() {
     // if no game state on load,
     // show the user the how-to info modal
     loadAllSettings()
+    removeLegacyKeys()
     if (
       !loadGameStateFromLocalStorage(true) &&
       !loadGameStateFromLocalStorage(false)
@@ -180,7 +180,7 @@ function App() {
         (guesses[numberOfWords]?.[numberOfLetters] ?? []).length === 0 ||
         isHardModePreferred
       ) {
-        setIsHardModePreferred(isHard)
+        setClientSettings({ ...clientSettings, isHardModePreferred: isHard })
       } else {
         showErrorAlert(HARD_MODE_CHEATING_MESSAGE)
       }

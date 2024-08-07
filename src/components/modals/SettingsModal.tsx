@@ -42,16 +42,10 @@ export const SettingsModal = ({ isHardMode, handleHardMode }: Props) => {
     setIsMigrateStatsModalOpen,
   } = useModalStore()
 
-  const {
-    isDarkMode,
-    setIsDarkMode,
-    isHighContrastMode,
-    setIsHighContrastMode,
-    isLongShare,
-    setIsLongShare,
-    isPerfMode,
-    setIsPerfMode,
-  } = useClientSettings()
+  const { clientSettings, setClientSettings } = useClientSettings()
+
+  const { isLongShare, isDarkMode, isHighContrastMode, isPerfMode } =
+    clientSettings
 
   const {
     numberOfWords,
@@ -117,6 +111,7 @@ export const SettingsModal = ({ isHardMode, handleHardMode }: Props) => {
           </div>
         )}
         <SettingsToggle
+          // TODO fix hard mode toggling gives incorrect message
           settingName="Hard Mode"
           flag={isHardMode}
           handleFlag={handleHardMode}
@@ -130,24 +125,32 @@ export const SettingsModal = ({ isHardMode, handleHardMode }: Props) => {
         <SettingsToggle
           settingName="Long Format Share Text"
           flag={isLongShare}
-          handleFlag={setIsLongShare}
+          handleFlag={(e: boolean) =>
+            setClientSettings({ ...clientSettings, isLongShare: e })
+          }
           description={LONG_SHARE_DESCRIPTION}
         />
         <SettingsToggle
           settingName="Dark Mode"
           flag={isDarkMode}
-          handleFlag={setIsDarkMode}
+          handleFlag={(e: boolean) =>
+            setClientSettings({ ...clientSettings, isDarkMode: e })
+          }
         />
         <SettingsToggle
           settingName="High Contrast Mode"
           flag={isHighContrastMode}
-          handleFlag={setIsHighContrastMode}
+          handleFlag={(e: boolean) =>
+            setClientSettings({ ...clientSettings, isHighContrastMode: e })
+          }
           description={HIGH_CONTRAST_MODE_DESCRIPTION}
         />
         <SettingsToggle
           settingName="Performance Mode"
           flag={isPerfMode}
-          handleFlag={setIsPerfMode}
+          handleFlag={(e: boolean) =>
+            setClientSettings({ ...clientSettings, isPerfMode: e })
+          }
           description={PERFORMANCE_MODE_DESCRIPTION}
         />
         {ENABLE_MIGRATE_STATS && (

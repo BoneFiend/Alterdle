@@ -64,7 +64,9 @@ export const StatsModal = ({
 }: Props) => {
   const { isStatsModalOpen, setIsStatsModalOpen } = useModalStore()
 
-  const { isDarkMode, isHighContrastMode, isLongShare } = useClientSettings()
+  const {
+    clientSettings: { isDarkMode, isHighContrastMode, isLongShare },
+  } = useClientSettings()
   const {
     numberOfWords,
     numberOfLetters,

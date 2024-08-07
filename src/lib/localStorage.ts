@@ -1,15 +1,21 @@
-import { Obj2d, StoredGameState } from '../constants/types'
+import {
+  ClientSettings,
+  Obj2d,
+  StoredGameState,
+  defaultClientSettings,
+} from '../constants/types'
 
 const gameStateKey = 'alterdleGameState'
 const archiveGameStateKey = 'alterdleArchiveGameState'
+const gameStatKey = 'alterdleGameStats'
+
+const clientSettingsKey = 'alterdleClientSettings'
 
 const darkModeKey = 'theme'
 const highContrastKey = 'highContrast'
 const longShareKey = 'longShare'
 const gameModeKey = 'gameMode'
 const perfModeKey = 'perfMode'
-
-const gameStatKey = 'alterdleGameStats'
 
 export const saveGameStateToLocalStorage = (
   isLatestGame: boolean,
@@ -52,71 +58,31 @@ export const loadStatsFromLocalStorage = () => {
   return stats
 }
 
-export const setStoredIsDarkMode = (isDarkMode: boolean) => {
-  if (
-    window.matchMedia('(prefers-color-scheme: dark)').matches === isDarkMode
-  ) {
-    localStorage.removeItem(darkModeKey)
-  } else {
-    localStorage.setItem(darkModeKey, isDarkMode ? 'dark' : 'light')
+export const saveClientSettingsToLocalStorage = (
+  clientSettings: ClientSettings
+) => {
+  localStorage.setItem(clientSettingsKey, JSON.stringify(clientSettings))
+}
+
+export const loadClientSettingsFromLocalStorage = () => {
+  const clientSettingsString = localStorage.getItem(clientSettingsKey)
+  if (!clientSettingsString) {
+    const prefersDarkMode = window.matchMedia(
+      '(prefers-color-scheme: dark)'
+    ).matches
+    return {
+      ...defaultClientSettings,
+      isDarkMode: prefersDarkMode,
+    } as ClientSettings
   }
+  return JSON.parse(clientSettingsString) as ClientSettings
 }
 
-export const getStoredIsDarkMode = () => {
-  const darkMode = localStorage.getItem(darkModeKey)
-  const prefersDarkMode = window.matchMedia(
-    '(prefers-color-scheme: dark)'
-  ).matches
-
-  const isDarkMode =
-    darkMode === 'dark' || (darkMode === null && prefersDarkMode)
-  return isDarkMode
-}
-
-export const setStoredIsHighContrastMode = (isHighContrast: boolean) => {
-  if (isHighContrast) {
-    localStorage.setItem(highContrastKey, 'true')
-  } else {
-    localStorage.removeItem(highContrastKey)
-  }
-}
-
-export const getStoredIsHighContrastMode = () => {
-  const highContrast = localStorage.getItem(highContrastKey)
-  return highContrast === 'true' || highContrast === '1'
-}
-
-export const setStoredIsLongShare = (isLongShare: boolean) => {
-  if (isLongShare) {
-    localStorage.setItem(longShareKey, 'true')
-  } else {
-    localStorage.removeItem(longShareKey)
-  }
-}
-
-export const getStoredIsLongShare = () => {
-  const longShare = localStorage.getItem(longShareKey)
-  return longShare === 'true' || longShare === '1'
-}
-
-export const setStoredGameMode = (isHardMode: boolean) => {
-  localStorage.setItem(gameModeKey, isHardMode ? 'hard' : 'normal')
-}
-
-export const getStoredGameMode = () => {
-  const hardMode = localStorage.getItem(gameModeKey)
-  return hardMode === 'hard'
-}
-
-export const setStoredPerfMode = (isPerfMode: boolean) => {
-  if (isPerfMode) {
-    localStorage.setItem(perfModeKey, 'true')
-  } else {
-    localStorage.removeItem(perfModeKey)
-  }
-}
-
-export const getStoredPerfMode = () => {
-  const isPerfMode = localStorage.getItem(perfModeKey)
-  return isPerfMode === 'true'
+// TODO remove this later
+export const removeLegacyKeys = () => {
+  localStorage.removeItem(darkModeKey)
+  localStorage.removeItem(highContrastKey)
+  localStorage.removeItem(longShareKey)
+  localStorage.removeItem(gameModeKey)
+  localStorage.removeItem(perfModeKey)
 }

@@ -8,7 +8,9 @@ export function useGameSettings() {
   // A performance wrapper for useGameSettingsStore
   const { numberOfWords, numberOfLetters, gameDate } = useGameSettingsStore()
 
-  const { isPerfMode } = useClientSettings()
+  const {
+    clientSettings: { isPerfMode },
+  } = useClientSettings()
 
   const { isAnyModalOpen } = useModalStore()
 
