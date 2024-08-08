@@ -45,7 +45,7 @@ export const EmigratePanel = () => {
       <Button
         disabled={!isCopyButtonEnabled}
         onClick={copyEmigrationCodeToClipboard}
-        className="w-min"
+        className="mt-2 w-min"
       >
         <DuplicateIcon className="mr-2 h-6 w-6 cursor-pointer" />
         {copyButtonText}

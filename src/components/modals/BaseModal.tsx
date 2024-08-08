@@ -92,7 +92,7 @@ export const BaseModal = ({
                     >
                       {title}
                     </DialogTitle>
-                    <div className="">{children}</div>
+                    <div>{children}</div>
                   </div>
                 </div>
               </div>

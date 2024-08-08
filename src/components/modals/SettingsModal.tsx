@@ -1,4 +1,4 @@
-import { CalendarIcon } from '@heroicons/react/outline'
+import { CalendarIcon, LogoutIcon } from '@heroicons/react/outline'
 
 import {
   ENABLE_ARCHIVED_GAMES,
@@ -18,16 +18,18 @@ import {
   HIGH_CONTRAST_MODE_DESCRIPTION,
   LENGTH_DESCRIPTION,
   LONG_SHARE_DESCRIPTION,
+  MIGRATE_BUTTON_TEXT,
+  MIGRATE_DESCRIPTION_TEXT,
+  MIGRATE_HEADING_TEXT,
   PERFORMANCE_MODE_DESCRIPTION,
 } from '../../constants/strings'
 import useClientSettings from '../../stores/useClientSettings'
 import useGameSettingsStore from '../../stores/useGameSettingsStore'
 import useModalStore from '../../stores/useModalStore'
-import { Button } from '../inputs/Button'
-import { MigrationIntro } from '../stats/MigrationIntro'
+import { SettingsButton } from '../inputs/SettingsButton'
+import { SettingsSlider } from '../inputs/SettingsSlider'
+import { SettingsToggle } from '../inputs/SettingsToggle'
 import { BaseModal } from './BaseModal'
-import { SettingsSlider } from './SettingsSlider'
-import { SettingsToggle } from './SettingsToggle'
 
 type Props = {
   isHardMode: boolean
@@ -75,7 +77,7 @@ export const SettingsModal = ({ isHardMode, handleHardMode }: Props) => {
       handleClose={handleClose}
       isSettingsModal
     >
-      <div className="mt-2 flex flex-col divide-y divide-secondary-2">
+      <div className="-mb-3 mt-2 flex flex-col divide-y divide-secondary-2">
         <SettingsSlider
           settingName="Word Length"
           value={numberOfLetters}
@@ -93,23 +95,15 @@ export const SettingsModal = ({ isHardMode, handleHardMode }: Props) => {
           maxValue={numberOfLetters === 1 ? 2 : MAX_NUMBER_OF_WORDS}
         />
         {ENABLE_ARCHIVED_GAMES && (
-          <div className="mb-3 flex justify-between gap-4 pt-3">
-            <div className="text-left text-secondary transition-colors duration-500">
-              <p className="leading-none">{DATEPICKER_TITLE}</p>
-              <p className="mt-1 text-xs text-secondary transition-colors duration-500">
-                {DATEPICKER_DESCRIPTION}
-              </p>
-            </div>
-            <div>
-              <p className="text-left text-secondary transition-colors duration-500">
-                <Button onClick={handleChooseDateButton}>
-                  <CalendarIcon className="mr-2 h-6 w-6 cursor-pointer" />
-                  {DATEPICKER_BUTTON}
-                </Button>
-              </p>
-            </div>
-          </div>
+          <SettingsButton
+            settingName={DATEPICKER_TITLE}
+            description={DATEPICKER_DESCRIPTION}
+            onClick={handleChooseDateButton}
+            Icon={CalendarIcon}
+            buttonText={DATEPICKER_BUTTON}
+          />
         )}
+
         <SettingsToggle
           // TODO fix hard mode toggling gives incorrect message
           settingName="Hard Mode"
@@ -154,11 +148,13 @@ export const SettingsModal = ({ isHardMode, handleHardMode }: Props) => {
           description={PERFORMANCE_MODE_DESCRIPTION}
         />
         {ENABLE_MIGRATE_STATS && (
-          <div>
-            <MigrationIntro
-              handleMigrateStatsButton={handleMigrateStatsButton}
-            />
-          </div>
+          <SettingsButton
+            settingName={MIGRATE_HEADING_TEXT}
+            description={MIGRATE_DESCRIPTION_TEXT}
+            onClick={handleMigrateStatsButton}
+            Icon={LogoutIcon}
+            buttonText={MIGRATE_BUTTON_TEXT}
+          />
         )}
       </div>
     </BaseModal>

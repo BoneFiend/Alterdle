@@ -31,7 +31,7 @@ export const SettingsToggle = ({
   )
 
   return (
-    <div className="mb-3 flex justify-between gap-4 pt-3">
+    <div className="flex justify-between gap-4 py-3">
       <div className="text-left text-secondary transition-colors duration-500">
         <p className="leading-none">{settingName}</p>
         {description && (

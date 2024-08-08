@@ -61,6 +61,7 @@ export const NEW_WORD_TEXT = (solution: string[]) =>
 export const SHARE_TEXT = 'Share'
 export const SHARE_FAILURE_TEXT =
   'Unable to share the results. This feature is available only in secure contexts (HTTPS), in some or all supporting browsers.'
+export const MIGRATE_HEADING_TEXT = 'New Device'
 export const MIGRATE_BUTTON_TEXT = 'Transfer'
 export const MIGRATE_DESCRIPTION_TEXT =
   'Transfer your statistics to a new device'

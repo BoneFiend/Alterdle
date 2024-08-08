@@ -1,4 +1,4 @@
-import { ClockIcon, ShareIcon } from '@heroicons/react/outline'
+import { ShareIcon } from '@heroicons/react/outline'
 import { format } from 'date-fns'
 import { useMemo } from 'react'
 import Countdown from 'react-countdown'
@@ -31,11 +31,11 @@ import {
 import useClientSettings from '../../stores/useClientSettings'
 import useGameSettingsStore from '../../stores/useGameSettingsStore'
 import useModalStore from '../../stores/useModalStore'
-import { Button } from '../inputs/Button'
+import { SettingsButton } from '../inputs/SettingsButton'
+import { SettingsSlider } from '../inputs/SettingsSlider'
 import { Histogram } from '../stats/Histogram'
 import { StatBar } from '../stats/StatBar'
 import { BaseModal } from './BaseModal'
-import { SettingsSlider } from './SettingsSlider'
 
 type Props = {
   solution: string[]
@@ -108,7 +108,7 @@ export const StatsModal = ({
         numberOfLetters={numberOfLetters}
         maxChallenges={maxChallenges}
       />
-      <div className="flex flex-col divide-y divide-secondary-2">
+      <div className="-mb-3 flex flex-col divide-y divide-secondary-2">
         <SettingsSlider
           settingName="Word Length"
           value={numberOfLetters}
@@ -129,21 +129,20 @@ export const StatsModal = ({
           getToday().getTime() ||
           isGameWon ||
           isGameLost) && (
-          <div className="columns-2 items-center justify-center pt-2 text-center text-secondary">
-            <div className="inline-block w-full text-left">
-              {(!ENABLE_ARCHIVED_GAMES || isLatestGame) && (
-                <div>
-                  <h5>{NEW_WORD_TEXT(solution)}</h5>
-                  <Countdown
-                    className="text-lg font-medium text-secondary"
-                    date={getNextGameDate(getToday())}
-                    daysInHours={true}
-                  />
-                </div>
-              )}
-              {ENABLE_ARCHIVED_GAMES && !isLatestGame && (
-                <div className="mt-2 inline-flex">
-                  <ClockIcon className="mr-1 mt-1 h-5 w-5 stroke-blank" />
+          <SettingsButton
+            settingName={
+              <>
+                {(!ENABLE_ARCHIVED_GAMES || isLatestGame) && (
+                  <div className="grid gap-1">
+                    <div>{NEW_WORD_TEXT(solution)}</div>
+                    <Countdown
+                      className="text-lg font-medium text-secondary"
+                      date={getNextGameDate(getToday())}
+                      daysInHours={true}
+                    />
+                  </div>
+                )}
+                {ENABLE_ARCHIVED_GAMES && !isLatestGame && (
                   <div className="ml-1 mt-0 text-center text-sm sm:text-base">
                     <strong>{ARCHIVE_GAMEDATE_TEXT}:</strong>
                     <br />
@@ -151,34 +150,29 @@ export const StatsModal = ({
                       locale: DATE_LOCALE,
                     })}
                   </div>
-                </div>
-              )}
-            </div>
-            <div>
-              <Button
-                onClick={() => {
-                  shareStatus(
-                    solution,
-                    guesses,
-                    isGameLost,
-                    isHardMode,
-                    isDarkMode,
-                    isHighContrastMode,
-                    handleShareToClipboard,
-                    handleShareFailure,
-                    maxChallenges,
-                    numberOfWords,
-                    numberOfLetters,
-                    gameDate,
-                    isLongShare
-                  )
-                }}
-              >
-                <ShareIcon className="mr-2 h-6 w-6 cursor-pointer" />
-                {SHARE_TEXT}
-              </Button>
-            </div>
-          </div>
+                )}
+              </>
+            }
+            onClick={() => {
+              shareStatus(
+                solution,
+                guesses,
+                isGameLost,
+                isHardMode,
+                isDarkMode,
+                isHighContrastMode,
+                handleShareToClipboard,
+                handleShareFailure,
+                maxChallenges,
+                numberOfWords,
+                numberOfLetters,
+                gameDate,
+                isLongShare
+              )
+            }}
+            Icon={ShareIcon}
+            buttonText={SHARE_TEXT}
+          />
         )}
       </div>
     </BaseModal>

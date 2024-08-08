@@ -8,7 +8,7 @@ const variants = cva(
     variants: {
       variant: {
         default:
-          'mt-2 w-full rounded-xl border border-transparent px-4 py-2 text-center',
+          'w-full rounded-xl border border-transparent px-7 py-2 text-center',
         basic: 'p-1 rounded',
       },
     },

@@ -12,8 +12,8 @@ import { CharStatus } from '../../constants/types'
 import useGameSettingsStore from '../../stores/useGameSettingsStore'
 import useModalStore from '../../stores/useModalStore'
 import { Cell } from '../grid/Cell'
+import { SettingsSlider } from '../inputs/SettingsSlider'
 import { BaseModal } from './BaseModal'
-import { SettingsSlider } from './SettingsSlider'
 
 type TutorialWords = {
   first: string
@@ -236,7 +236,7 @@ export const HelpModal = () => {
         have not been guessed yet, prioritising correct letters.
       </p>
 
-      <div className="flex flex-col divide-y divide-secondary-2">
+      <div className="-mb-3 flex flex-col divide-y divide-secondary-2">
         <SettingsSlider
           settingName="Word Length"
           value={numberOfLetters}
@@ -245,16 +245,14 @@ export const HelpModal = () => {
           minValue={MIN_NUMBER_OF_LETTERS}
           maxValue={MAX_NUMBER_OF_LETTERS}
         />
-        <div className="-mb-3">
-          <SettingsSlider
-            settingName="Challenges"
-            value={numberOfWords}
-            handleValue={setNumberOfWords}
-            description={CHALLENGES_DESCRIPTION}
-            minValue={MIN_NUMBER_OF_WORDS}
-            maxValue={numberOfLetters === 1 ? 2 : MAX_NUMBER_OF_WORDS}
-          />
-        </div>
+        <SettingsSlider
+          settingName="Challenges"
+          value={numberOfWords}
+          handleValue={setNumberOfWords}
+          description={CHALLENGES_DESCRIPTION}
+          minValue={MIN_NUMBER_OF_WORDS}
+          maxValue={numberOfLetters === 1 ? 2 : MAX_NUMBER_OF_WORDS}
+        />
       </div>
     </BaseModal>
   )
