@@ -8,11 +8,12 @@ import useModalStore from '../../stores/useModalStore'
 import { BaseModal } from './BaseModal'
 
 export const InfoModal = () => {
-  const { isInfoModalOpen, setIsInfoModalOpen } = useModalStore()
+  const {
+    modals: { isInfoModalOpen },
+    updateModals,
+  } = useModalStore()
 
-  const handleClose = () => {
-    setIsInfoModalOpen(false)
-  }
+  const handleClose = () => updateModals({ isInfoModalOpen: false })
 
   return (
     <BaseModal

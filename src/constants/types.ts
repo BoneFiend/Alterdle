@@ -32,6 +32,24 @@ export type MigrationStats = {
   gameState: StoredGameState | null
 }
 
+export type Modals = {
+  isHelpModalOpen: boolean
+  isStatsModalOpen: boolean
+  isSettingsModalOpen: boolean
+  isMigrateStatsModalOpen: boolean
+  isInfoModalOpen: boolean
+  isDatePickerModalOpen: boolean
+}
+
+export const defaultModals: Modals = {
+  isHelpModalOpen: false,
+  isStatsModalOpen: false,
+  isSettingsModalOpen: false,
+  isMigrateStatsModalOpen: false,
+  isInfoModalOpen: false,
+  isDatePickerModalOpen: false,
+}
+
 export type Obj2d = {
   // 2d Object type to avoid type errors
   [key: number]: {

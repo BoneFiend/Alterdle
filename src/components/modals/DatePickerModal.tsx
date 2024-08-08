@@ -19,9 +19,8 @@ import { BaseModal } from './BaseModal'
 
 export const DatePickerModal = () => {
   const {
-    isDatePickerModalOpen,
-    setIsDatePickerModalOpen,
-    setIsSettingsModalOpen,
+    modals: { isDatePickerModalOpen },
+    updateModals,
   } = useModalStore()
 
   const { numberOfWords, numberOfLetters, gameDate, setGameDate } =
@@ -52,15 +51,19 @@ export const DatePickerModal = () => {
   }
 
   const handleSelectDate = (d: Date) => {
-    setIsDatePickerModalOpen(false)
+    updateModals({
+      isDatePickerModalOpen: false,
+      isSettingsModalOpen: false,
+    })
     setGameDate(d)
     setUrl(numberOfWords, numberOfLetters, d)
-    setIsSettingsModalOpen(false)
   }
 
   const handleClose = () => {
-    setIsSettingsModalOpen(true)
-    setIsDatePickerModalOpen(false)
+    updateModals({
+      isSettingsModalOpen: true,
+      isDatePickerModalOpen: false,
+    })
   }
 
   return (
@@ -114,7 +117,7 @@ export const DatePickerModal = () => {
       <p className="mt-1 text-sm text-secondary">
         Only your guesses from today's Alterdle will be saved.
       </p>
-      <div className="flex columns-2 items-stretch justify-center gap-2">
+      <div className="mt-2 flex columns-2 items-stretch justify-center gap-2">
         <Button
           disabled={!isValidGameDate(getToday())}
           onClick={() => handleSelectDate(getToday())}

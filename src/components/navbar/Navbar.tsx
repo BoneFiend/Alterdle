@@ -12,12 +12,7 @@ import useModalStore from '../../stores/useModalStore'
 export const Navbar = () => {
   const { numberOfWords, numberOfLetters } = useGameSettingsStore()
 
-  const {
-    setIsHelpModalOpen,
-    setIsStatsModalOpen,
-    setIsSettingsModalOpen,
-    setIsInfoModalOpen,
-  } = useModalStore()
+  const { updateModals } = useModalStore()
 
   return (
     <div className="select-none pb-5 transition-all sm:pb-2 short:pb-2">
@@ -25,11 +20,11 @@ export const Navbar = () => {
         <div className="flex">
           <InformationCircleIcon
             className="h-7 w-7 cursor-pointer stroke-secondary transition-all duration-500 sm:h-8 sm:w-8 short:h-7 short:w-7"
-            onClick={() => setIsInfoModalOpen(true)}
+            onClick={() => updateModals({ isInfoModalOpen: true })}
           />
           <QuestionMarkCircleIcon
             className="ml-3 h-7 w-7 cursor-pointer stroke-secondary transition-all duration-500 sm:h-8 sm:w-8 short:h-7 short:w-7"
-            onClick={() => setIsHelpModalOpen(true)}
+            onClick={() => updateModals({ isHelpModalOpen: true })}
           />
         </div>
         <p className="text-2xl font-bold text-secondary transition-all duration-500 sm:text-4xl short:text-xl">
@@ -38,12 +33,12 @@ export const Navbar = () => {
         <div className="flex">
           <ChartBarIcon
             className="mr-3 h-7 w-7 cursor-pointer stroke-secondary transition-all duration-500 sm:h-8 sm:w-8 short:h-7 short:w-7"
-            onClick={() => setIsStatsModalOpen(true)}
+            onClick={() => updateModals({ isStatsModalOpen: true })}
           />
 
           <CogIcon
             className="h-7 w-7 cursor-pointer stroke-secondary transition-all duration-500 sm:h-8 sm:w-8 short:h-7 short:w-7"
-            onClick={() => setIsSettingsModalOpen(true)}
+            onClick={() => updateModals({ isSettingsModalOpen: true })}
           />
         </div>
       </div>

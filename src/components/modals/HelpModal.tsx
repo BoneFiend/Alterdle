@@ -128,7 +128,10 @@ const tutorials: { [key: number]: TutorialWords } = {
 }
 
 export const HelpModal = () => {
-  const { isHelpModalOpen, setIsHelpModalOpen } = useModalStore()
+  const {
+    modals: { isHelpModalOpen },
+    updateModals,
+  } = useModalStore()
 
   const {
     numberOfWords,
@@ -195,9 +198,7 @@ export const HelpModal = () => {
     }
   }
 
-  const handleClose = () => {
-    setIsHelpModalOpen(false)
-  }
+  const handleClose = () => updateModals({ isHelpModalOpen: false })
 
   return (
     <BaseModal

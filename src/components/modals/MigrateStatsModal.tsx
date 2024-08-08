@@ -7,16 +7,17 @@ import { BaseModal } from './BaseModal'
 
 export const MigrateStatsModal = () => {
   const {
-    isMigrateStatsModalOpen,
-    setIsSettingsModalOpen,
-    setIsMigrateStatsModalOpen,
+    modals: { isMigrateStatsModalOpen },
+    updateModals,
   } = useModalStore()
 
   const [isEmigrateVisible, setIsEmigrateVisible] = useState(true)
 
   const handleClose = () => {
-    setIsSettingsModalOpen(true)
-    setIsMigrateStatsModalOpen(false)
+    updateModals({
+      isSettingsModalOpen: true,
+      isMigrateStatsModalOpen: false,
+    })
   }
 
   return (

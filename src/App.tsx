@@ -67,10 +67,9 @@ function App() {
     useAlert()
 
   const {
-    isSettingsModalOpen,
+    modals: { isSettingsModalOpen },
     isAnyModalOpen,
-    setIsHelpModalOpen,
-    setIsStatsModalOpen,
+    updateModals,
   } = useModalStore()
 
   const [currentRowClass, setCurrentRowClass] = useState('')
@@ -130,7 +129,7 @@ function App() {
       !loadGameStateFromLocalStorage(false)
     ) {
       setTimeout(() => {
-        setIsHelpModalOpen(true)
+        updateModals({ isHelpModalOpen: true })
       }, WELCOME_HELP_MODAL_MS)
     }
   }, [])
@@ -321,7 +320,7 @@ function App() {
 
         showSuccessAlert(winMessage, {
           delayMs,
-          onClose: () => setIsStatsModalOpen(true),
+          onClose: () => updateModals({ isStatsModalOpen: true }),
         })
       } else if (
         newGuesses[numberOfWords]?.[numberOfLetters].length === maxChallenges
@@ -351,7 +350,7 @@ function App() {
         const delayMs = REVEAL_TIME_MS * numberOfLetters * 2
         showErrorAlert(loseMessage, {
           delayMs,
-          onClose: () => setIsStatsModalOpen(true),
+          onClose: () => updateModals({ isStatsModalOpen: true }),
         })
       }
     }

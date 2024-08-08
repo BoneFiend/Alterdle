@@ -62,7 +62,10 @@ export const StatsModal = ({
   isHardMode,
   numberOfGuessesMade,
 }: Props) => {
-  const { isStatsModalOpen, setIsStatsModalOpen } = useModalStore()
+  const {
+    modals: { isStatsModalOpen },
+    updateModals,
+  } = useModalStore()
 
   const {
     clientSettings: { isDarkMode, isHighContrastMode, isLongShare },
@@ -79,9 +82,7 @@ export const StatsModal = ({
     return calculateMaxChallenges(numberOfWords)
   }, [numberOfWords])
 
-  const handleClose = () => {
-    setIsStatsModalOpen(false)
-  }
+  const handleClose = () => updateModals({ isStatsModalOpen: false })
 
   return (
     <BaseModal

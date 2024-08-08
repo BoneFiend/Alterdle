@@ -38,10 +38,8 @@ type Props = {
 
 export const SettingsModal = ({ isHardMode, handleHardMode }: Props) => {
   const {
-    isSettingsModalOpen,
-    setIsDatePickerModalOpen,
-    setIsSettingsModalOpen,
-    setIsMigrateStatsModalOpen,
+    modals: { isSettingsModalOpen },
+    updateModals,
   } = useModalStore()
 
   const {
@@ -57,17 +55,21 @@ export const SettingsModal = ({ isHardMode, handleHardMode }: Props) => {
   } = useGameSettingsStore()
 
   const handleChooseDateButton = () => {
-    setIsDatePickerModalOpen(true)
-    setIsSettingsModalOpen(false)
+    updateModals({
+      isDatePickerModalOpen: true,
+      isSettingsModalOpen: false,
+    })
   }
 
   const handleMigrateStatsButton = () => {
-    setIsSettingsModalOpen(false)
-    setIsMigrateStatsModalOpen(true)
+    updateModals({
+      isSettingsModalOpen: false,
+      isMigrateStatsModalOpen: true,
+    })
   }
 
   const handleClose = () => {
-    setIsSettingsModalOpen(false)
+    updateModals({ isSettingsModalOpen: false })
   }
 
   return (
