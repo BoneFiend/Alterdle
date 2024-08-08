@@ -9,19 +9,24 @@ import {
 type ClientSettingsStore = {
   clientSettings: ClientSettings
   loadAllSettings: () => void
-  setClientSettings: (clientSettings: ClientSettings) => void
+  updateClientSettings: (clientSettings: Partial<ClientSettings>) => void
 }
 
 const useClientSettings = create<ClientSettingsStore>((set, get) => ({
   clientSettings: defaultClientSettings,
 
   loadAllSettings: () => {
-    get().setClientSettings(loadClientSettingsFromLocalStorage())
+    get().updateClientSettings(loadClientSettingsFromLocalStorage())
   },
 
-  setClientSettings: (clientSettings: ClientSettings) => {
-    saveClientSettingsToLocalStorage(clientSettings)
-    set(() => ({ clientSettings }))
+  updateClientSettings: (clientSettings: Partial<ClientSettings>) => {
+    saveClientSettingsToLocalStorage({
+      ...get().clientSettings,
+      ...clientSettings,
+    })
+    set(() => ({
+      clientSettings: { ...get().clientSettings, ...clientSettings },
+    }))
   },
 }))
 

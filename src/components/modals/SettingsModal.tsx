@@ -44,10 +44,10 @@ export const SettingsModal = ({ isHardMode, handleHardMode }: Props) => {
     setIsMigrateStatsModalOpen,
   } = useModalStore()
 
-  const { clientSettings, setClientSettings } = useClientSettings()
-
-  const { isLongShare, isDarkMode, isHighContrastMode, isPerfMode } =
-    clientSettings
+  const {
+    clientSettings: { isLongShare, isDarkMode, isHighContrastMode, isPerfMode },
+    updateClientSettings,
+  } = useClientSettings()
 
   const {
     numberOfWords,
@@ -119,32 +119,26 @@ export const SettingsModal = ({ isHardMode, handleHardMode }: Props) => {
         <SettingsToggle
           settingName="Long Format Share Text"
           flag={isLongShare}
-          handleFlag={(e: boolean) =>
-            setClientSettings({ ...clientSettings, isLongShare: e })
-          }
+          handleFlag={(e: boolean) => updateClientSettings({ isLongShare: e })}
           description={LONG_SHARE_DESCRIPTION}
         />
         <SettingsToggle
           settingName="Dark Mode"
           flag={isDarkMode}
-          handleFlag={(e: boolean) =>
-            setClientSettings({ ...clientSettings, isDarkMode: e })
-          }
+          handleFlag={(e: boolean) => updateClientSettings({ isDarkMode: e })}
         />
         <SettingsToggle
           settingName="High Contrast Mode"
           flag={isHighContrastMode}
           handleFlag={(e: boolean) =>
-            setClientSettings({ ...clientSettings, isHighContrastMode: e })
+            updateClientSettings({ isHighContrastMode: e })
           }
           description={HIGH_CONTRAST_MODE_DESCRIPTION}
         />
         <SettingsToggle
           settingName="Performance Mode"
           flag={isPerfMode}
-          handleFlag={(e: boolean) =>
-            setClientSettings({ ...clientSettings, isPerfMode: e })
-          }
+          handleFlag={(e: boolean) => updateClientSettings({ isPerfMode: e })}
           description={PERFORMANCE_MODE_DESCRIPTION}
         />
         {ENABLE_MIGRATE_STATS && (

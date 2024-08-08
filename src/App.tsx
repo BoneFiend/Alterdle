@@ -75,10 +75,11 @@ function App() {
 
   const [currentRowClass, setCurrentRowClass] = useState('')
 
-  const { clientSettings, loadAllSettings, setClientSettings } =
-    useClientSettings()
-
-  const { isDarkMode, isHardModePreferred } = clientSettings
+  const {
+    clientSettings: { isDarkMode, isHardModePreferred },
+    loadAllSettings,
+    updateClientSettings,
+  } = useClientSettings()
 
   const { isRowFocussed, focusRow, unfocusEarliestRow, unfocusAllRows } =
     useFocussedRows()
@@ -180,7 +181,7 @@ function App() {
         (guesses[numberOfWords]?.[numberOfLetters] ?? []).length === 0 ||
         isHardModePreferred
       ) {
-        setClientSettings({ ...clientSettings, isHardModePreferred: isHard })
+        updateClientSettings({ isHardModePreferred: isHard })
       } else {
         showErrorAlert(HARD_MODE_CHEATING_MESSAGE)
       }
