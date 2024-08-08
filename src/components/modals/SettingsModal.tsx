@@ -1,27 +1,23 @@
-import { CalendarIcon, LogoutIcon } from '@heroicons/react/outline'
+import { CalendarIcon } from '@heroicons/react/outline'
 
 import {
   ENABLE_ARCHIVED_GAMES,
-  ENABLE_MIGRATE_STATS,
   MAX_NUMBER_OF_LETTERS,
   MAX_NUMBER_OF_WORDS,
   MIN_NUMBER_OF_LETTERS,
   MIN_NUMBER_OF_WORDS,
 } from '../../constants/settings'
 import {
+  ADVANCED_SETTINGS_BUTTON,
+  ADVANCED_SETTINGS_DESC,
+  ADVANCED_SETTINGS_TITLE,
   CHALLENGES_DESCRIPTION,
   DATEPICKER_BUTTON,
   DATEPICKER_DESCRIPTION,
   DATEPICKER_TITLE,
   HARD_MODE_DESCRIPTION,
   HARD_MODE_RESTRICTION_MESSAGE,
-  HIGH_CONTRAST_MODE_DESCRIPTION,
   LENGTH_DESCRIPTION,
-  LONG_SHARE_DESCRIPTION,
-  MIGRATE_BUTTON_TEXT,
-  MIGRATE_DESCRIPTION_TEXT,
-  MIGRATE_HEADING_TEXT,
-  PERFORMANCE_MODE_DESCRIPTION,
 } from '../../constants/strings'
 import useClientSettings from '../../stores/useClientSettings'
 import useGameSettingsStore from '../../stores/useGameSettingsStore'
@@ -61,10 +57,10 @@ export const SettingsModal = ({ isHardMode, handleHardMode }: Props) => {
     })
   }
 
-  const handleMigrateStatsButton = () => {
+  const handleAdvancedSettingsButton = () => {
     updateModals({
       isSettingsModalOpen: false,
-      isMigrateStatsModalOpen: true,
+      isAdvancedSettingsModalOpen: true,
     })
   }
 
@@ -105,7 +101,6 @@ export const SettingsModal = ({ isHardMode, handleHardMode }: Props) => {
             buttonText={DATEPICKER_BUTTON}
           />
         )}
-
         <SettingsToggle
           // TODO fix hard mode toggling gives incorrect message
           settingName="Hard Mode"
@@ -119,39 +114,16 @@ export const SettingsModal = ({ isHardMode, handleHardMode }: Props) => {
           disabled={numberOfWords > 1}
         />
         <SettingsToggle
-          settingName="Long Format Share Text"
-          flag={isLongShare}
-          handleFlag={(e: boolean) => updateClientSettings({ isLongShare: e })}
-          description={LONG_SHARE_DESCRIPTION}
-        />
-        <SettingsToggle
           settingName="Dark Mode"
           flag={isDarkMode}
           handleFlag={(e: boolean) => updateClientSettings({ isDarkMode: e })}
         />
-        <SettingsToggle
-          settingName="High Contrast Mode"
-          flag={isHighContrastMode}
-          handleFlag={(e: boolean) =>
-            updateClientSettings({ isHighContrastMode: e })
-          }
-          description={HIGH_CONTRAST_MODE_DESCRIPTION}
+        <SettingsButton
+          settingName={ADVANCED_SETTINGS_TITLE}
+          description={ADVANCED_SETTINGS_DESC}
+          onClick={handleAdvancedSettingsButton}
+          buttonText={ADVANCED_SETTINGS_BUTTON}
         />
-        <SettingsToggle
-          settingName="Performance Mode"
-          flag={isPerfMode}
-          handleFlag={(e: boolean) => updateClientSettings({ isPerfMode: e })}
-          description={PERFORMANCE_MODE_DESCRIPTION}
-        />
-        {ENABLE_MIGRATE_STATS && (
-          <SettingsButton
-            settingName={MIGRATE_HEADING_TEXT}
-            description={MIGRATE_DESCRIPTION_TEXT}
-            onClick={handleMigrateStatsButton}
-            Icon={LogoutIcon}
-            buttonText={MIGRATE_BUTTON_TEXT}
-          />
-        )}
       </div>
     </BaseModal>
   )

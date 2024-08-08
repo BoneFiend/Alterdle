@@ -79,3 +79,7 @@ export const ARCHIVE_GAMEDATE_TEXT = 'Game date'
 export const DATEPICKER_DESCRIPTION =
   'Play an Alterdle game from a past date at any setting'
 export const DATEPICKER_BUTTON = 'Choose Date'
+
+export const ADVANCED_SETTINGS_TITLE = 'Advanced Settings'
+export const ADVANCED_SETTINGS_DESC = 'Some boring, some interesting'
+export const ADVANCED_SETTINGS_BUTTON = 'More Settings'

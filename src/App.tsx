@@ -8,6 +8,7 @@ import Div100vh from 'react-div-100vh'
 import { AlertContainer } from './components/alerts/AlertContainer'
 import { Grid } from './components/grid/Grid'
 import { Keyboard } from './components/keyboard/Keyboard'
+import { AdvancedSettingsModal } from './components/modals/AdvancedSettingsModal'
 import { DatePickerModal } from './components/modals/DatePickerModal'
 import { HelpModal } from './components/modals/HelpModal'
 import { InfoModal } from './components/modals/InfoModal'
@@ -433,6 +434,7 @@ function App() {
             isHardMode={isHardMode}
             handleHardMode={handleHardMode}
           />
+          <AdvancedSettingsModal />
           <AlertContainer />
         </div>
       </div>

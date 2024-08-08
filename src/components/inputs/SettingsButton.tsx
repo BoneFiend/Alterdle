@@ -4,7 +4,7 @@ type Props = {
   settingName: string | any
   description?: string
   onClick: () => void
-  Icon: any
+  Icon?: any
   buttonText: string
 }
 
@@ -23,7 +23,7 @@ export const SettingsButton = ({
       </div>
       <div className="flex items-center">
         <Button onClick={onClick}>
-          <Icon className="mr-2 h-6 w-6 shrink-0 cursor-pointer" />
+          {Icon && <Icon className="mr-2 h-6 w-6 shrink-0 cursor-pointer" />}
           {buttonText}
         </Button>
       </div>

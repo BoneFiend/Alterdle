@@ -36,6 +36,7 @@ export type Modals = {
   isHelpModalOpen: boolean
   isStatsModalOpen: boolean
   isSettingsModalOpen: boolean
+  isAdvancedSettingsModalOpen: boolean
   isMigrateStatsModalOpen: boolean
   isInfoModalOpen: boolean
   isDatePickerModalOpen: boolean
@@ -45,6 +46,7 @@ export const defaultModals: Modals = {
   isHelpModalOpen: false,
   isStatsModalOpen: false,
   isSettingsModalOpen: false,
+  isAdvancedSettingsModalOpen: false,
   isMigrateStatsModalOpen: false,
   isInfoModalOpen: false,
   isDatePickerModalOpen: false,

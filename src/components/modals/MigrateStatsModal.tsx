@@ -15,7 +15,7 @@ export const MigrateStatsModal = () => {
 
   const handleClose = () => {
     updateModals({
-      isSettingsModalOpen: true,
+      isAdvancedSettingsModalOpen: true,
       isMigrateStatsModalOpen: false,
     })
   }
