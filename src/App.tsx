@@ -373,15 +373,15 @@ function App() {
       <div className="3xl relative flex h-full flex-col bg-transparent">
         <Navbar />
         {!isLatestGame && (
-          <div className="mb-1 flex items-center justify-center">
+          <div className="mb-1 mt-2 flex items-center justify-center">
             <CalendarIcon className="h-6 w-6 stroke-secondary" />
             <p className="ml-1 text-base text-secondary">
               {format(gameDate, 'd MMMM yyyy', { locale: DATE_LOCALE })}
             </p>
           </div>
         )}
-        <div className="mx-auto flex w-full grow flex-col pb-8 short:pb-2 short:pt-2">
-          <div className="flex h-[1vh] grow flex-wrap items-start justify-center overflow-y-scroll">
+        <div className="mx-auto flex w-full grow flex-col pb-8">
+          <div className="flex h-[1vh] grow flex-wrap items-start justify-center overflow-y-scroll [scrollbar-width:thin]">
             {solution.map((_, i: any) => (
               <Grid
                 key={i}
@@ -394,7 +394,7 @@ function App() {
               />
             ))}
           </div>
-          <div className="px-1 pt-5 sm:pt-2 short:pt-2">
+          <div className="px-1 pt-3 sm:pt-2 short:pt-2">
             <Keyboard
               onChar={onChar}
               onDelete={onDelete}
