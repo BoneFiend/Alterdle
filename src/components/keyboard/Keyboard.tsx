@@ -45,9 +45,6 @@ export const Keyboard = ({
 
   const keyDown = (e: KeyboardEvent) => {
     activateKey(localeAwareUpperCase(e.key))
-    setTimeout(() => {
-      deactivateKey(localeAwareUpperCase(e.key))
-    }, 5000)
     if (e.code === 'Backspace') {
       onDelete()
     }
