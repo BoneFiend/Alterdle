@@ -8,14 +8,14 @@ import {
 
 type ClientSettingsStore = {
   clientSettings: ClientSettings
-  loadAllSettings: () => void
+  loadClientSettings: () => void
   updateClientSettings: (clientSettings: Partial<ClientSettings>) => void
 }
 
 const useClientSettings = create<ClientSettingsStore>((set, get) => ({
   clientSettings: defaultClientSettings,
 
-  loadAllSettings: () => {
+  loadClientSettings: () => {
     get().updateClientSettings(loadClientSettingsFromLocalStorage())
   },
 
