@@ -83,7 +83,7 @@ module.exports = {
           },
           '100%': { transform: 'rotateX(180deg)' },
         },
-        'cell-reveal-incorrect': {
+        'cell-reveal-invisible': {
           '0%': {
             transform: 'rotateX(0deg)',
             backgroundColor: 'transparent',
@@ -125,7 +125,7 @@ module.exports = {
       animation: {
         'cell-fill': 'cell-fill 0.15s linear',
         'cell-reveal': 'cell-reveal linear backwards',
-        'cell-reveal-incorrect': 'cell-reveal-incorrect linear backwards',
+        'cell-reveal-invisible': 'cell-reveal-invisible linear backwards',
         'letter-flip': 'letter-flip linear backwards',
         jiggle: 'jiggle 0.25s linear',
       },

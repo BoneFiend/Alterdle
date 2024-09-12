@@ -57,7 +57,7 @@ export const Cell = ({
         status === 'incorrect',
       'animate-cell-fill': isFilled,
       'animate-cell-reveal': shouldReveal && status !== 'incorrect',
-      'animate-cell-reveal-incorrect': shouldReveal && status === 'incorrect',
+      'animate-cell-reveal-invisible': shouldReveal && status === 'incorrect',
     }
   )
 
