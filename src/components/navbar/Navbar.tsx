@@ -4,15 +4,24 @@ import {
   InformationCircleIcon,
   QuestionMarkCircleIcon,
 } from '@heroicons/react/outline'
+import classNames from 'classnames'
 
 import { GAME_TITLE } from '../../constants/strings'
+import useClientSettings from '../../stores/useClientSettings'
 import useGameSettingsStore from '../../stores/useGameSettingsStore'
 import useModalStore from '../../stores/useModalStore'
 
 export const Navbar = () => {
   const { numberOfWords, numberOfLetters } = useGameSettingsStore()
 
-  const { updateModals } = useModalStore()
+  const {
+    updateModals,
+    modals: { isSettingsModalOpen },
+  } = useModalStore()
+
+  const {
+    clientSettings: { isDarkMode },
+  } = useClientSettings()
 
   return (
     <>
@@ -42,7 +51,24 @@ export const Navbar = () => {
         </div>
       </nav>
       <hr className="opacity-0" />
-      <div className="sm:-pb-5 short:-pb-5 z-10 -mb-3 h-3 bg-gradient-to-b from-primary-1 to-transparent sm:h-5 short:h-5" />
+      <div className="sm:-pb-5 short:-pb-5 relative z-10 -mb-3 h-3 sm:h-5 short:h-5">
+        {(!isDarkMode || isSettingsModalOpen) && (
+          <div
+            className={classNames(
+              'absolute h-full w-full bg-gradient-to-b from-primary-1-light-mode to-transparent opacity-100 transition-opacity duration-500 dark:opacity-0',
+              isSettingsModalOpen && 'will-change-[opacity]'
+            )}
+          />
+        )}
+        {(isDarkMode || isSettingsModalOpen) && (
+          <div
+            className={classNames(
+              'absolute h-full w-full bg-gradient-to-b from-primary-1-dark-mode to-transparent opacity-0 transition-opacity duration-500 dark:opacity-100',
+              isSettingsModalOpen && 'will-change-[opacity]'
+            )}
+          />
+        )}
+      </div>
     </>
   )
 }
