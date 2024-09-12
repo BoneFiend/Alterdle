@@ -27,7 +27,7 @@ const useFocussedRows = create<FocussedRows>((set, get) => ({
     })),
 
   unfocusAllRows: () =>
-    set((state) => ({
+    set(() => ({
       focussedRows: [],
     })),
 

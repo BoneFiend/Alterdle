@@ -46,7 +46,7 @@ export const AdvancedSettingsModal = () => {
       handleClose={handleClose}
       isSettingsModal
     >
-      <div className="mt-2 flex flex-col divide-y divide-secondary-2">
+      <div className="-mb-2 mt-2 flex flex-col divide-y divide-secondary-2">
         <SettingsToggle
           settingName="Long Format Share Text"
           flag={isLongShare}

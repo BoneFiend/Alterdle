@@ -39,7 +39,7 @@ export const SettingsModal = ({ isHardMode, handleHardMode }: Props) => {
   } = useModalStore()
 
   const {
-    clientSettings: { isLongShare, isDarkMode, isHighContrastMode, isPerfMode },
+    clientSettings: { isDarkMode },
     updateClientSettings,
   } = useClientSettings()
 
