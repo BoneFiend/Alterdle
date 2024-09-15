@@ -370,7 +370,7 @@ function App() {
           )}
         />
       )}
-      <div className="3xl relative flex h-full flex-col bg-transparent">
+      <div className="relative flex h-full flex-col bg-transparent">
         <Navbar />
         {!isLatestGame && (
           <div className="mb-1 mt-2 flex items-center justify-center">

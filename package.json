@@ -8,7 +8,7 @@
     "serve": "vite preview",
     "fix": "prettier --write src",
     "lint": "prettier --check src",
-    "start": "vite",
+    "dev": "vite",
     "test": "vitest",
     "test:coverage": "vitest run --coverage --watch=false",
     "preinstall": "npx only-allow pnpm",
