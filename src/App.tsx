@@ -67,16 +67,12 @@ function App() {
   const { showError: showErrorAlert, showSuccess: showSuccessAlert } =
     useAlert()
 
-  const {
-    modals: { isSettingsModalOpen },
-    isAnyModalOpen,
-    updateModals,
-  } = useModalStore()
+  const { isAnyModalOpen, updateModals } = useModalStore()
 
   const [currentRowClass, setCurrentRowClass] = useState('')
 
   const {
-    clientSettings: { isDarkMode, isHardModePreferred },
+    clientSettings: { isHardModePreferred },
     loadClientSettings,
     updateClientSettings,
   } = useClientSettings()
@@ -358,18 +354,7 @@ function App() {
   }
 
   return (
-    <Div100vh className="bg-primary-1 transition-colors duration-500">
-      {(!isDarkMode || isSettingsModalOpen) && (
-        <div className="fixed h-full w-full bg-gradient-to-b from-primary-1-light-mode to-primary-2-light-mode" />
-      )}
-      {(isDarkMode || isSettingsModalOpen) && (
-        <div
-          className={classNames(
-            'fixed h-full w-full bg-gradient-to-b from-primary-1-dark-mode to-primary-2-dark-mode opacity-0 transition-opacity duration-500 dark:opacity-100',
-            isSettingsModalOpen && 'will-change-[opacity]'
-          )}
-        />
-      )}
+    <Div100vh>
       <div className="relative flex h-full flex-col bg-transparent">
         <Navbar />
         {!isLatestGame && (
