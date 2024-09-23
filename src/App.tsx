@@ -1,6 +1,3 @@
-import { CalendarIcon } from '@heroicons/react/outline'
-import classNames from 'classnames'
-import { format } from 'date-fns'
 import { default as GraphemeSplitter } from 'grapheme-splitter'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Div100vh from 'react-div-100vh'
@@ -17,7 +14,6 @@ import { SettingsModal } from './components/modals/SettingsModal'
 import { StatsModal } from './components/modals/StatsModal'
 import { Navbar } from './components/navbar/Navbar'
 import {
-  DATE_LOCALE,
   DISCOURAGE_INAPP_BROWSERS,
   LONG_ALERT_TIME_MS,
   REVEAL_TIME_MS,
@@ -357,14 +353,6 @@ function App() {
     <Div100vh>
       <div className="relative flex h-full flex-col bg-transparent">
         <Navbar />
-        {!isLatestGame && (
-          <div className="mb-1 mt-2 flex items-center justify-center">
-            <CalendarIcon className="h-6 w-6 stroke-secondary" />
-            <p className="ml-1 text-base text-secondary">
-              {format(gameDate, 'd MMMM yyyy', { locale: DATE_LOCALE })}
-            </p>
-          </div>
-        )}
         <div className="mx-auto flex w-full grow flex-col pb-8">
           <div className="flex h-[1vh] grow flex-wrap items-start justify-center overflow-y-scroll [scrollbar-width:thin]">
             {solution.map((_, i: any) => (

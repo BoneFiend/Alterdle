@@ -4,15 +4,22 @@ import {
   InformationCircleIcon,
   QuestionMarkCircleIcon,
 } from '@heroicons/react/outline'
+import { CalendarIcon } from '@heroicons/react/outline'
 import classNames from 'classnames'
+import { format } from 'date-fns'
+import { useMemo } from 'react'
 
+import { DATE_LOCALE } from '../../constants/settings'
 import { GAME_TITLE } from '../../constants/strings'
+import { getIsLatestGame } from '../../lib/words'
 import useClientSettings from '../../stores/useClientSettings'
 import useGameSettingsStore from '../../stores/useGameSettingsStore'
 import useModalStore from '../../stores/useModalStore'
 
 export const Navbar = () => {
-  const { numberOfWords, numberOfLetters } = useGameSettingsStore()
+  const { numberOfWords, numberOfLetters, gameDate } = useGameSettingsStore()
+
+  const isLatestGame = useMemo(() => getIsLatestGame(gameDate), [gameDate])
 
   const {
     updateModals,
@@ -51,6 +58,14 @@ export const Navbar = () => {
         </div>
       </nav>
       <hr className="opacity-0" />
+      {!isLatestGame && (
+        <div className="my-1 flex items-center justify-center sm:mt-2">
+          <CalendarIcon className="h-6 w-6 stroke-secondary" />
+          <p className="ml-1 text-base text-secondary">
+            {format(gameDate, 'd MMMM yyyy', { locale: DATE_LOCALE })}
+          </p>
+        </div>
+      )}
       <div className="sm:-pb-5 short:-pb-5 relative z-10 -mb-3 h-3 sm:h-5 short:h-5">
         {(!isDarkMode || isSettingsModalOpen) && (
           <div

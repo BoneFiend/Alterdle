@@ -41,19 +41,19 @@ const Theme: React.FC = () => {
   }, [isHighContrastMode])
 
   return (
-    <>
+    <div className="fixed h-full w-full">
       {(!isDarkMode || isSettingsModalOpen) && (
-        <div className="fixed h-full w-full bg-gradient-to-b from-primary-1-light-mode to-primary-2-light-mode" />
+        <div className="mt-12 h-[calc(100vh-3rem)] w-full bg-gradient-to-b from-primary-1-light-mode to-primary-2-light-mode sm:mt-16 sm:h-[calc(100vh-4rem)]" />
       )}
       {(isDarkMode || isSettingsModalOpen) && (
         <div
           className={classNames(
-            'fixed h-full w-full bg-gradient-to-b from-primary-1-dark-mode to-primary-2-dark-mode opacity-0 transition-opacity duration-500 dark:opacity-100',
+            'h-full w-full bg-gradient-to-b from-primary-1-dark-mode to-primary-2-dark-mode opacity-0 transition-opacity duration-500 dark:opacity-100',
             isSettingsModalOpen && 'will-change-[opacity]'
           )}
         />
       )}
-    </>
+    </div>
   )
 }
 
