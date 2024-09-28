@@ -1,7 +1,8 @@
 import { Fragment } from 'react'
 
-import cn from '@/lib/cn'
 import { Transition } from '@headlessui/react'
+
+import cn from '@lib/cn'
 
 type Props = {
   isOpen: boolean

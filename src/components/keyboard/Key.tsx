@@ -1,8 +1,8 @@
 import { ReactNode } from 'react'
 
-import cn from '@/lib/cn'
-
 import { CharStatus } from '@constants/types'
+
+import cn from '@lib/cn'
 
 type Props = {
   children?: ReactNode

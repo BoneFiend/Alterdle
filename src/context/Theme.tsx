@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 
-import cn from '@/lib/cn'
-
 import useClientSettings from '@stores/useClientSettings'
 import useModalStore from '@stores/useModalStore'
+
+import cn from '@lib/cn'
 
 const Theme: React.FC = () => {
   const {

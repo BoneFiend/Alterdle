@@ -1,4 +1,3 @@
-import cn from '@/lib/cn'
 import {
   Dialog,
   DialogBackdrop,
@@ -8,6 +7,8 @@ import {
 import { XCircleIcon } from '@heroicons/react/outline'
 
 import useClientSettings from '@stores/useClientSettings'
+
+import cn from '@lib/cn'
 
 type Props = {
   title: string

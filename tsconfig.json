@@ -20,14 +20,14 @@
     "types": ["vite/client", "vite-plugin-svgr/client"],
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"],
       "@modals/*": ["src/components/modals/*"],
       "@ui/*": ["src/components/*"],
       "@lib/*": ["./src/lib/*"],
       "@constants/*": ["./src/constants/*"],
       "@hooks/*": ["./src/hooks/*"],
       "@stores/*": ["./src/stores/*"],
-      "@context/*": ["./src/context/*"]
+      "@context/*": ["./src/context/*"],
+      "@/*": ["src/*"]
     }
   },
   "include": ["src/**/*"]

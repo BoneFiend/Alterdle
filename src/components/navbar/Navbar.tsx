@@ -1,6 +1,5 @@
 import { useMemo } from 'react'
 
-import cn from '@/lib/cn'
 import {
   ChartBarIcon,
   CogIcon,
@@ -17,6 +16,7 @@ import useClientSettings from '@stores/useClientSettings'
 import useGameSettingsStore from '@stores/useGameSettingsStore'
 import useModalStore from '@stores/useModalStore'
 
+import cn from '@lib/cn'
 import { getIsLatestGame } from '@lib/words'
 
 export const Navbar = () => {

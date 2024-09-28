@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 
-import cn from '@/lib/cn'
 import { type VariantProps, cva } from 'class-variance-authority'
+
+import cn from '@lib/cn'
 
 const variants = cva(
   'inline-flex items-center justify-center shadow-sm text-white dark:text-secondary bg-accent hover:bg-accent-deep active:bg-accent-deeper disabled:bg-accent-disabled',
