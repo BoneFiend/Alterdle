@@ -38,7 +38,7 @@
     "query-string": "^7.1.1",
     "react": "^18.3.1",
     "react-countdown": "^2.3.2",
-    "react-datepicker": "^4.23.0",
+    "react-datepicker": "^7.4.0",
     "react-div-100vh": "^0.7.0",
     "react-dom": "^18.3.1",
     "tailwind-merge": "^2.5.2",
@@ -65,7 +65,7 @@
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.2.0",
-    "@types/react-datepicker": "^4.19.3",
+    "@types/react-datepicker": "^7.0.0",
     "@vitest/coverage-v8": "^2.0.3",
     "autoprefixer": "^10.4.19",
     "gh-pages": "^6.1.0",
