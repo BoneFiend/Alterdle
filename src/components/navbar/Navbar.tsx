@@ -35,27 +35,29 @@ export const Navbar = () => {
 
   return (
     <>
-      <nav className="flex h-12 select-none items-center justify-between border-b-2 border-secondary-2 px-2 transition-all sm:h-16 short:h-auto">
-        <div className="flex">
+      <nav
+        className={cn(
+          'flex h-12 select-none items-center justify-between border-b-2 border-secondary-2 px-2 transition-[height,border-color] duration-500 sm:h-16 short:h-auto',
+          '[&_svg]:h-7 [&_svg]:w-7 [&_svg]:cursor-pointer [&_svg]:stroke-secondary [&_svg]:transition-[height,stroke] [&_svg]:sm:h-8 [&_svg]:sm:w-8 [&_svg]:short:h-7 [&_svg]:short:w-7',
+          '[&_*]:duration-500'
+        )}
+      >
+        <div className="flex gap-3">
           <InformationCircleIcon
-            className="h-7 w-7 cursor-pointer stroke-secondary transition-all duration-500 sm:h-8 sm:w-8 short:h-7 short:w-7"
             onClick={() => updateModals({ isInfoModalOpen: true })}
           />
           <QuestionMarkCircleIcon
-            className="ml-3 h-7 w-7 cursor-pointer stroke-secondary transition-all duration-500 sm:h-8 sm:w-8 short:h-7 short:w-7"
             onClick={() => updateModals({ isHelpModalOpen: true })}
           />
         </div>
-        <p className="text-2xl font-bold text-secondary transition-all duration-500 sm:text-4xl short:text-xl">
+        <p className="text-2xl font-bold text-secondary transition-[color,font-size] sm:text-4xl short:text-xl">
           {GAME_TITLE} {numberOfWords}x{numberOfLetters}
         </p>
-        <div className="flex">
+        <div className="flex gap-3">
           <ChartBarIcon
-            className="mr-3 h-7 w-7 cursor-pointer stroke-secondary transition-all duration-500 sm:h-8 sm:w-8 short:h-7 short:w-7"
             onClick={() => updateModals({ isStatsModalOpen: true })}
           />
           <CogIcon
-            className="h-7 w-7 cursor-pointer stroke-secondary transition-all duration-500 sm:h-8 sm:w-8 short:h-7 short:w-7"
             onClick={() => updateModals({ isSettingsModalOpen: true })}
           />
         </div>
@@ -69,22 +71,17 @@ export const Navbar = () => {
           </p>
         </div>
       )}
-      <div className="sm:-pb-5 short:-pb-5 relative z-10 -mb-3 h-3 sm:h-5 short:h-5">
+      <div
+        className={cn(
+          'sm:-pb-5 short:-pb-5 relative z-10 -mb-3 h-3 *:absolute *:h-full *:w-full *:transition-opacity *:duration-500 sm:h-5 short:h-5',
+          isSettingsModalOpen && '*:will-change-[opacity]'
+        )}
+      >
         {(!isDarkMode || isSettingsModalOpen) && (
-          <div
-            className={cn(
-              'absolute h-full w-full bg-gradient-to-b from-primary-1-light-mode to-transparent opacity-100 transition-opacity duration-500 dark:opacity-0',
-              isSettingsModalOpen && 'will-change-[opacity]'
-            )}
-          />
+          <div className="bg-gradient-to-b from-primary-1-light-mode to-transparent opacity-100 dark:opacity-0" />
         )}
         {(isDarkMode || isSettingsModalOpen) && (
-          <div
-            className={cn(
-              'absolute h-full w-full bg-gradient-to-b from-primary-1-dark-mode to-transparent opacity-0 transition-opacity duration-500 dark:opacity-100',
-              isSettingsModalOpen && 'will-change-[opacity]'
-            )}
-          />
+          <div className="bg-gradient-to-b from-primary-1-dark-mode to-transparent opacity-0 dark:opacity-100" />
         )}
       </div>
     </>
