@@ -6,7 +6,7 @@ import {
   loadNumberOfWords,
   setUrl,
   setWindowTitle,
-} from '../lib/urlutils'
+} from '@lib/urlutils'
 
 interface GameSettings {
   numberOfWords: number

@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react'
-import React from 'react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
+import { GAME_TITLE } from '@constants/strings'
+
 import App from './App'
-import { GAME_TITLE } from './constants/strings'
 
 beforeEach(() => {
   Object.defineProperty(window, 'matchMedia', {

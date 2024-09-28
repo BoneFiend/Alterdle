@@ -1,10 +1,11 @@
 import { create } from 'zustand'
 
-import { ClientSettings, defaultClientSettings } from '../constants/types'
+import { ClientSettings, defaultClientSettings } from '@constants/types'
+
 import {
   loadClientSettingsFromLocalStorage,
   saveClientSettingsToLocalStorage,
-} from '../lib/localStorage'
+} from '@lib/localStorage'
 
 type ClientSettingsStore = {
   clientSettings: ClientSettings

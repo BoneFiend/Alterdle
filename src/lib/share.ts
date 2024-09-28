@@ -1,7 +1,8 @@
 import { UAParser } from 'ua-parser-js'
 
-import { MAX_SHARE_WIDTH } from '../constants/settings'
-import { GAME_TITLE } from '../constants/strings'
+import { MAX_SHARE_WIDTH } from '@constants/settings'
+import { GAME_TITLE } from '@constants/strings'
+
 import { getGuessStatuses } from './statuses'
 import { getShareUrl } from './urlutils'
 import { getIndex, unicodeSplit } from './words'
@@ -16,7 +17,6 @@ export const shareStatus = (
   guesses: string[],
   lost: boolean,
   isHardMode: boolean,
-  isDarkMode: boolean,
   isHighContrastMode: boolean,
   handleShareToClipboard: () => void,
   handleShareFailure: () => void,
@@ -51,7 +51,7 @@ export const shareStatus = (
     var row = generateEmojiGrid(
       solution[i],
       guesses,
-      getEmojiTiles(isDarkMode, isHighContrastMode)
+      getEmojiTiles(isHighContrastMode)
     )
     for (let j = i + 1; j < i + gridsPerRow && j < numberOfWords; j += 1) {
       // Subsequent emoji grids in the big grid
@@ -65,7 +65,7 @@ export const shareStatus = (
         generateEmojiGrid(
           solution[j],
           guesses,
-          getEmojiTiles(isDarkMode, isHighContrastMode)
+          getEmojiTiles(isHighContrastMode)
         )
       )
     }
@@ -141,7 +141,7 @@ export const generateEmojiGrid = (
       const splitGuess = unicodeSplit(guess)
 
       return splitGuess
-        .map((_, i) => {
+        .map(() => {
           return tiles[3]
         })
         .join('')
@@ -162,7 +162,7 @@ const attemptShare = (shareData: object) => {
   )
 }
 
-const getEmojiTiles = (isDarkMode: boolean, isHighContrastMode: boolean) => {
+const getEmojiTiles = (isHighContrastMode: boolean) => {
   let tiles: string[] = []
   tiles.push(isHighContrastMode ? '🟧' : '🟩')
   tiles.push(isHighContrastMode ? '🟦' : '🟨')

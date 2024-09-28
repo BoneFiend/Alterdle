@@ -1,7 +1,8 @@
-import classnames from 'classnames'
 import { ReactNode } from 'react'
 
-import { CharStatus } from '../../constants/types'
+import classnames from 'classnames'
+
+import { CharStatus } from '@constants/types'
 
 type Props = {
   children?: ReactNode

@@ -1,4 +1,5 @@
 import react from '@vitejs/plugin-react-swc'
+import { resolve } from 'path'
 import env from 'vite-plugin-env-compatible'
 import { defineConfig } from 'vitest/config'
 
@@ -24,6 +25,18 @@ export default defineConfig({
         process.env.VITE_GOOGLE_MEASUREMENT_ID
       ),
       VITE_PLAUSIBLE_DOMAIN: JSON.stringify(process.env.VITE_PLAUSIBLE_DOMAIN),
+    },
+  },
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, 'src'),
+      '@modals': resolve(__dirname, 'src/components/modals'),
+      '@ui': resolve(__dirname, 'src/components'),
+      '@lib': resolve(__dirname, 'src/lib'),
+      '@constants': resolve(__dirname, 'src/constants'),
+      '@hooks': resolve(__dirname, 'src/hooks'),
+      '@stores': resolve(__dirname, 'src/stores'),
+      '@context': resolve(__dirname, 'src/context'),
     },
   },
 })

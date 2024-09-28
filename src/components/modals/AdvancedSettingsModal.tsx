@@ -1,6 +1,11 @@
 import { LogoutIcon } from '@heroicons/react/outline'
 
-import { ENABLE_MIGRATE_STATS } from '../../constants/settings'
+import { SettingsButton } from '@ui/inputs/SettingsButton'
+import { SettingsToggle } from '@ui/inputs/SettingsToggle'
+
+import { BaseModal } from '@modals/BaseModal'
+
+import { ENABLE_MIGRATE_STATS } from '@constants/settings'
 import {
   HIGH_CONTRAST_MODE_DESCRIPTION,
   LONG_SHARE_DESCRIPTION,
@@ -8,12 +13,10 @@ import {
   MIGRATE_DESCRIPTION_TEXT,
   MIGRATE_HEADING_TEXT,
   PERFORMANCE_MODE_DESCRIPTION,
-} from '../../constants/strings'
-import useClientSettings from '../../stores/useClientSettings'
-import useModalStore from '../../stores/useModalStore'
-import { SettingsButton } from '../inputs/SettingsButton'
-import { SettingsToggle } from '../inputs/SettingsToggle'
-import { BaseModal } from './BaseModal'
+} from '@constants/strings'
+
+import useClientSettings from '@stores/useClientSettings'
+import useModalStore from '@stores/useModalStore'
 
 export const AdvancedSettingsModal = () => {
   const {

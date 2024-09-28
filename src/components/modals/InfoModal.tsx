@@ -3,8 +3,10 @@ import {
   MAX_NUMBER_OF_WORDS,
   MIN_NUMBER_OF_LETTERS,
   MIN_NUMBER_OF_WORDS,
-} from '../../constants/settings'
-import useModalStore from '../../stores/useModalStore'
+} from '@constants/settings'
+
+import useModalStore from '@stores/useModalStore'
+
 import { BaseModal } from './BaseModal'
 
 export const InfoModal = () => {

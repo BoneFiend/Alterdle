@@ -1,8 +1,10 @@
 import { useState } from 'react'
 
-import useModalStore from '../../stores/useModalStore'
-import { EmigratePanel } from '../stats/EmigratePanel'
-import { ImmigratePanel } from '../stats/ImmigratePanel'
+import { EmigratePanel } from '@ui/stats/EmigratePanel'
+import { ImmigratePanel } from '@ui/stats/ImmigratePanel'
+
+import useModalStore from '@stores/useModalStore'
+
 import { BaseModal } from './BaseModal'
 
 export const MigrateStatsModal = () => {

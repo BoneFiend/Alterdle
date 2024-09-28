@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+
 import {
   ChartBarIcon,
   CogIcon,
@@ -7,14 +9,15 @@ import {
 import { CalendarIcon } from '@heroicons/react/outline'
 import classNames from 'classnames'
 import { format } from 'date-fns'
-import { useMemo } from 'react'
 
-import { DATE_LOCALE } from '../../constants/settings'
-import { GAME_TITLE } from '../../constants/strings'
-import { getIsLatestGame } from '../../lib/words'
-import useClientSettings from '../../stores/useClientSettings'
-import useGameSettingsStore from '../../stores/useGameSettingsStore'
-import useModalStore from '../../stores/useModalStore'
+import { DATE_LOCALE } from '@constants/settings'
+import { GAME_TITLE } from '@constants/strings'
+
+import useClientSettings from '@stores/useClientSettings'
+import useGameSettingsStore from '@stores/useGameSettingsStore'
+import useModalStore from '@stores/useModalStore'
+
+import { getIsLatestGame } from '@lib/words'
 
 export const Navbar = () => {
   const { numberOfWords, numberOfLetters, gameDate } = useGameSettingsStore()

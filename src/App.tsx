@@ -1,24 +1,29 @@
-import { default as GraphemeSplitter } from 'grapheme-splitter'
 import { useEffect, useMemo, useRef, useState } from 'react'
+
+import { default as GraphemeSplitter } from 'grapheme-splitter'
 import Div100vh from 'react-div-100vh'
 
-import { AlertContainer } from './components/alerts/AlertContainer'
-import { Grid } from './components/grid/Grid'
-import { Keyboard } from './components/keyboard/Keyboard'
-import { AdvancedSettingsModal } from './components/modals/AdvancedSettingsModal'
-import { DatePickerModal } from './components/modals/DatePickerModal'
-import { HelpModal } from './components/modals/HelpModal'
-import { InfoModal } from './components/modals/InfoModal'
-import { MigrateStatsModal } from './components/modals/MigrateStatsModal'
-import { SettingsModal } from './components/modals/SettingsModal'
-import { StatsModal } from './components/modals/StatsModal'
-import { Navbar } from './components/navbar/Navbar'
+import { AlertContainer } from '@ui/alerts/AlertContainer'
+import { Grid } from '@ui/grid/Grid'
+import { Keyboard } from '@ui/keyboard/Keyboard'
+import { Navbar } from '@ui/navbar/Navbar'
+
+import { AdvancedSettingsModal } from '@modals/AdvancedSettingsModal'
+import { DatePickerModal } from '@modals/DatePickerModal'
+import { HelpModal } from '@modals/HelpModal'
+import { InfoModal } from '@modals/InfoModal'
+import { MigrateStatsModal } from '@modals/MigrateStatsModal'
+import { SettingsModal } from '@modals/SettingsModal'
+import { StatsModal } from '@modals/StatsModal'
+
+import { useAlert } from '@context/AlertContext'
+
 import {
   DISCOURAGE_INAPP_BROWSERS,
   LONG_ALERT_TIME_MS,
   REVEAL_TIME_MS,
   WELCOME_HELP_MODAL_MS,
-} from './constants/settings'
+} from '@constants/settings'
 import {
   DISCOURAGE_INAPP_BROWSER_TEXT,
   GAME_COPIED_MESSAGE,
@@ -29,17 +34,22 @@ import {
   SHARE_FAILURE_TEXT,
   WIN_MESSAGES,
   WORD_NOT_FOUND_MESSAGE,
-} from './constants/strings'
-import { Obj2d, updateObj2d } from './constants/types'
-import { useAlert } from './context/AlertContext'
-import { useGameSettings } from './hooks/useGameSettings'
-import { isInAppBrowser } from './lib/browser'
+} from '@constants/strings'
+import { Obj2d, updateObj2d } from '@constants/types'
+
+import useClientSettings from '@stores/useClientSettings'
+import useFocussedRows from '@stores/useFocussedRows'
+import useModalStore from '@stores/useModalStore'
+
+import { useGameSettings } from '@hooks/useGameSettings'
+
+import { isInAppBrowser } from '@lib/browser'
 import {
   loadGameStateFromLocalStorage,
   removeLegacyKeys,
   saveGameStateToLocalStorage,
-} from './lib/localStorage'
-import { addStatsForCompletedGame, loadStats } from './lib/stats'
+} from '@lib/localStorage'
+import { addStatsForCompletedGame, loadStats } from '@lib/stats'
 import {
   calculateMaxChallenges,
   checkIsGameWon,
@@ -50,10 +60,7 @@ import {
   isWordInWordList,
   loadGuesses,
   unicodeLength,
-} from './lib/words'
-import useClientSettings from './stores/useClientSettings'
-import useFocussedRows from './stores/useFocussedRows'
-import useModalStore from './stores/useModalStore'
+} from '@lib/words'
 
 function App() {
   const { numberOfWords, numberOfLetters, gameDate } = useGameSettings()

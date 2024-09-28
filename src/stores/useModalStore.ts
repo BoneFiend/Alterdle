@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-import { Modals, defaultModals } from '../constants/types'
+import { Modals, defaultModals } from '@constants/types'
 
 type ModalStore = {
   modals: Modals

@@ -1,8 +1,8 @@
 import { useMemo, useRef } from 'react'
 
-import useClientSettings from '../stores/useClientSettings'
-import useGameSettingsStore from '../stores/useGameSettingsStore'
-import useModalStore from '../stores/useModalStore'
+import useClientSettings from '@stores/useClientSettings'
+import useGameSettingsStore from '@stores/useGameSettingsStore'
+import useModalStore from '@stores/useModalStore'
 
 export function useGameSettings() {
   // A performance wrapper for useGameSettingsStore

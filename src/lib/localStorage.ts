@@ -3,7 +3,7 @@ import {
   Obj2d,
   StoredGameState,
   defaultClientSettings,
-} from '../constants/types'
+} from '@constants/types'
 
 const gameStateKey = 'alterdleGameState'
 const archiveGameStateKey = 'alterdleArchiveGameState'

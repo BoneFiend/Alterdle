@@ -1,18 +1,18 @@
+import { Cell } from '@ui/grid/Cell'
+import { SettingsSlider } from '@ui/inputs/SettingsSlider'
+
 import {
   MAX_NUMBER_OF_LETTERS,
   MAX_NUMBER_OF_WORDS,
   MIN_NUMBER_OF_LETTERS,
   MIN_NUMBER_OF_WORDS,
-} from '../../constants/settings'
-import {
-  CHALLENGES_DESCRIPTION,
-  LENGTH_DESCRIPTION,
-} from '../../constants/strings'
-import { CharStatus } from '../../constants/types'
-import useGameSettingsStore from '../../stores/useGameSettingsStore'
-import useModalStore from '../../stores/useModalStore'
-import { Cell } from '../grid/Cell'
-import { SettingsSlider } from '../inputs/SettingsSlider'
+} from '@constants/settings'
+import { CHALLENGES_DESCRIPTION, LENGTH_DESCRIPTION } from '@constants/strings'
+import { CharStatus } from '@constants/types'
+
+import useGameSettingsStore from '@stores/useGameSettingsStore'
+import useModalStore from '@stores/useModalStore'
+
 import { BaseModal } from './BaseModal'
 
 type TutorialWords = {

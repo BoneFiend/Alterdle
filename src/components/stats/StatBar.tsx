@@ -3,9 +3,10 @@ import {
   CURRENT_STREAK_TEXT,
   SUCCESS_RATE_TEXT,
   TOTAL_TRIES_TEXT,
-} from '../../constants/strings'
-import { Obj2d } from '../../constants/types'
-import { defaultStats } from '../../lib/stats'
+} from '@constants/strings'
+import { Obj2d } from '@constants/types'
+
+import { defaultStats } from '@lib/stats'
 
 type Props = {
   gameStats: Obj2d

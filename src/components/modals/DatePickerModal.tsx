@@ -1,20 +1,25 @@
+import { useState } from 'react'
+
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline'
 import { addDays, format, startOfDay } from 'date-fns'
-import { useState } from 'react'
 import DatePicker, { registerLocale } from 'react-datepicker'
 
-import { DATE_LOCALE, GAME_EPOCH } from '../../constants/settings'
+import { Button } from '@ui/inputs/Button'
+
+import { DATE_LOCALE, GAME_EPOCH } from '@constants/settings'
 import {
   DATEPICKER_CHOOSE_TEXT,
   DATEPICKER_TITLE,
   DATEPICKER_TODAY_TEXT,
-} from '../../constants/strings'
-import { getToday, getYesterday } from '../../lib/dateutils'
-import { setUrl } from '../../lib/urlutils'
-import { getLastGameDate, isValidGameDate, periodInDays } from '../../lib/words'
-import useGameSettingsStore from '../../stores/useGameSettingsStore'
-import useModalStore from '../../stores/useModalStore'
-import { Button } from '../inputs/Button'
+} from '@constants/strings'
+
+import useGameSettingsStore from '@stores/useGameSettingsStore'
+import useModalStore from '@stores/useModalStore'
+
+import { getToday, getYesterday } from '@lib/dateutils'
+import { setUrl } from '@lib/urlutils'
+import { getLastGameDate, isValidGameDate, periodInDays } from '@lib/words'
+
 import { BaseModal } from './BaseModal'
 
 export const DatePickerModal = () => {

@@ -1,12 +1,13 @@
-import './index.css'
-
-import { NextUIProvider } from '@nextui-org/react'
 import React from 'react'
+
+import App from '@/App'
+import { NextUIProvider } from '@nextui-org/react'
 import { createRoot } from 'react-dom/client'
 
-import App from './App'
-import { AlertProvider } from './context/AlertContext'
-import Theme from './context/Theme'
+import { AlertProvider } from '@context/AlertContext'
+import Theme from '@context/Theme'
+
+import './index.css'
 import reportWebVitals from './reportWebVitals'
 
 const container = document.getElementById('root')!

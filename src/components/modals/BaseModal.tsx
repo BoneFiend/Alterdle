@@ -7,7 +7,7 @@ import {
 import { XCircleIcon } from '@heroicons/react/outline'
 import classnames from 'classnames'
 
-import useClientSettings from '../../stores/useClientSettings'
+import useClientSettings from '@stores/useClientSettings'
 
 type Props = {
   title: string

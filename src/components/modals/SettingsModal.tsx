@@ -1,12 +1,16 @@
 import { CalendarIcon } from '@heroicons/react/outline'
 
+import { SettingsButton } from '@ui/inputs/SettingsButton'
+import { SettingsSlider } from '@ui/inputs/SettingsSlider'
+import { SettingsToggle } from '@ui/inputs/SettingsToggle'
+
 import {
   ENABLE_ARCHIVED_GAMES,
   MAX_NUMBER_OF_LETTERS,
   MAX_NUMBER_OF_WORDS,
   MIN_NUMBER_OF_LETTERS,
   MIN_NUMBER_OF_WORDS,
-} from '../../constants/settings'
+} from '@constants/settings'
 import {
   ADVANCED_SETTINGS_BUTTON,
   ADVANCED_SETTINGS_DESC,
@@ -18,13 +22,12 @@ import {
   HARD_MODE_DESCRIPTION,
   HARD_MODE_RESTRICTION_MESSAGE,
   LENGTH_DESCRIPTION,
-} from '../../constants/strings'
-import useClientSettings from '../../stores/useClientSettings'
-import useGameSettingsStore from '../../stores/useGameSettingsStore'
-import useModalStore from '../../stores/useModalStore'
-import { SettingsButton } from '../inputs/SettingsButton'
-import { SettingsSlider } from '../inputs/SettingsSlider'
-import { SettingsToggle } from '../inputs/SettingsToggle'
+} from '@constants/strings'
+
+import useClientSettings from '@stores/useClientSettings'
+import useGameSettingsStore from '@stores/useGameSettingsStore'
+import useModalStore from '@stores/useModalStore'
+
 import { BaseModal } from './BaseModal'
 
 type Props = {

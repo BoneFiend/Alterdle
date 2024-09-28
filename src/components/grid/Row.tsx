@@ -1,7 +1,8 @@
 import { useMemo } from 'react'
 
-import { getGuessStatuses } from '../../lib/statuses'
-import { isWordInWordList, unicodeSplit } from '../../lib/words'
+import { getGuessStatuses } from '@lib/statuses'
+import { isWordInWordList, unicodeSplit } from '@lib/words'
+
 import { Cell } from './Cell'
 
 type Props = {

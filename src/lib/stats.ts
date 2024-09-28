@@ -1,5 +1,6 @@
-import { GAME_EPOCH } from '../constants/settings'
-import { GameStats, Obj2d } from '../constants/types'
+import { GAME_EPOCH } from '@constants/settings'
+import { GameStats, Obj2d } from '@constants/types'
+
 import { getToday } from './dateutils'
 import {
   loadStatsFromLocalStorage,

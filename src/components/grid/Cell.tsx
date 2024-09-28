@@ -1,8 +1,9 @@
 import classnames from 'classnames'
 
-import { REVEAL_TIME_MS } from '../../constants/settings'
-import { CharStatus } from '../../constants/types'
-import useClientSettings from '../../stores/useClientSettings'
+import { REVEAL_TIME_MS } from '@constants/settings'
+import { CharStatus } from '@constants/types'
+
+import useClientSettings from '@stores/useClientSettings'
 
 type Props = {
   value?: string

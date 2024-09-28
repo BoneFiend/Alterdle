@@ -1,4 +1,5 @@
-import { CharStatus } from '../constants/types'
+import { CharStatus } from '@constants/types'
+
 import { unicodeSplit } from './words'
 
 export const getStatuses = (

@@ -11,8 +11,9 @@ import {
   MAX_NUMBER_OF_WORDS,
   MIN_NUMBER_OF_LETTERS,
   MIN_NUMBER_OF_WORDS,
-} from '../constants/settings'
-import { GAME_TITLE } from '../constants/strings'
+} from '@constants/settings'
+import { GAME_TITLE } from '@constants/strings'
+
 import { getToday } from './dateutils'
 import { getIsLatestGame } from './words'
 

@@ -1,7 +1,13 @@
+import { useMemo } from 'react'
+
 import { ShareIcon } from '@heroicons/react/outline'
 import { format } from 'date-fns'
-import { useMemo } from 'react'
 import Countdown from 'react-countdown'
+
+import { SettingsButton } from '@ui/inputs/SettingsButton'
+import { SettingsSlider } from '@ui/inputs/SettingsSlider'
+import { Histogram } from '@ui/stats/Histogram'
+import { StatBar } from '@ui/stats/StatBar'
 
 import {
   DATE_LOCALE,
@@ -10,7 +16,7 @@ import {
   MAX_NUMBER_OF_WORDS,
   MIN_NUMBER_OF_LETTERS,
   MIN_NUMBER_OF_WORDS,
-} from '../../constants/settings'
+} from '@constants/settings'
 import {
   ARCHIVE_GAMEDATE_TEXT,
   CHALLENGES_DESCRIPTION,
@@ -19,22 +25,21 @@ import {
   NEW_WORD_TEXT,
   SHARE_TEXT,
   STATISTICS_TITLE,
-} from '../../constants/strings'
-import { Obj2d } from '../../constants/types'
-import { getToday } from '../../lib/dateutils'
-import { shareStatus } from '../../lib/share'
+} from '@constants/strings'
+import { Obj2d } from '@constants/types'
+
+import useClientSettings from '@stores/useClientSettings'
+import useGameSettingsStore from '@stores/useGameSettingsStore'
+import useModalStore from '@stores/useModalStore'
+
+import { getToday } from '@lib/dateutils'
+import { shareStatus } from '@lib/share'
 import {
   calculateMaxChallenges,
   checkIsGameWon,
   getNextGameDate,
-} from '../../lib/words'
-import useClientSettings from '../../stores/useClientSettings'
-import useGameSettingsStore from '../../stores/useGameSettingsStore'
-import useModalStore from '../../stores/useModalStore'
-import { SettingsButton } from '../inputs/SettingsButton'
-import { SettingsSlider } from '../inputs/SettingsSlider'
-import { Histogram } from '../stats/Histogram'
-import { StatBar } from '../stats/StatBar'
+} from '@lib/words'
+
 import { BaseModal } from './BaseModal'
 
 type Props = {
@@ -68,7 +73,7 @@ export const StatsModal = ({
   } = useModalStore()
 
   const {
-    clientSettings: { isDarkMode, isHighContrastMode, isLongShare },
+    clientSettings: { isHighContrastMode, isLongShare },
   } = useClientSettings()
   const {
     numberOfWords,
@@ -160,7 +165,6 @@ export const StatsModal = ({
                 guesses,
                 isGameLost,
                 isHardMode,
-                isDarkMode,
                 isHighContrastMode,
                 handleShareToClipboard,
                 handleShareFailure,

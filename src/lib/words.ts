@@ -5,9 +5,10 @@ import {
   ENABLE_ARCHIVED_GAMES,
   GAME_EPOCH,
   MAX_CHALLENGES_BONUS,
-} from '../constants/settings'
-import { NOT_CONTAINED_MESSAGE, WRONG_SPOT_MESSAGE } from '../constants/strings'
-import { WORDS } from '../constants/wordlist'
+} from '@constants/settings'
+import { NOT_CONTAINED_MESSAGE, WRONG_SPOT_MESSAGE } from '@constants/strings'
+import { WORDS } from '@constants/wordlist'
+
 import { getToday } from './dateutils'
 import { loadGameStateFromLocalStorage } from './localStorage'
 import { getGuessStatuses } from './statuses'

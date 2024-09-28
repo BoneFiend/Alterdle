@@ -1,8 +1,9 @@
-import classNames from 'classnames'
 import React, { useEffect } from 'react'
 
-import useClientSettings from '../stores/useClientSettings'
-import useModalStore from '../stores/useModalStore'
+import classNames from 'classnames'
+
+import useClientSettings from '@stores/useClientSettings'
+import useModalStore from '@stores/useModalStore'
 
 const Theme: React.FC = () => {
   const {
