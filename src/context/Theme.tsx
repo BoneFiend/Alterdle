@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import classNames from 'classnames'
+import cn from '@/lib/cn'
 
 import useClientSettings from '@stores/useClientSettings'
 import useModalStore from '@stores/useModalStore'
@@ -48,7 +48,7 @@ const Theme: React.FC = () => {
     <div className="fixed h-full w-full bg-primary-1 transition-colors duration-500">
       {(!isDarkMode || isSettingsModalOpen) && (
         <div
-          className={classNames(
+          className={cn(
             'h-full bg-gradient-to-b from-primary-1-light-mode to-primary-2-light-mode',
             classes
           )}
@@ -56,7 +56,7 @@ const Theme: React.FC = () => {
       )}
       {(isDarkMode || isSettingsModalOpen) && (
         <div
-          className={classNames(
+          className={cn(
             'bg-gradient-to-b from-primary-1-dark-mode to-primary-2-dark-mode opacity-0 transition-opacity duration-500 dark:opacity-100',
             classes,
             isSettingsModalOpen && 'will-change-[opacity]'

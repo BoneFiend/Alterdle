@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import classnames from 'classnames'
+import cn from '@/lib/cn'
 
 import { CharStatus } from '@constants/types'
 
@@ -23,7 +23,7 @@ export const Key = ({
   isRevealing,
   isActive,
 }: Props) => {
-  const classes = classnames(
+  const classes = cn(
     'xshort:h-10 short:h-12 h-14 sm:h-16',
     'flex items-center justify-center rounded-lg sm:rounded-xl mx-0.5 font-bold cursor-pointer select-none transition-all',
     {

@@ -1,4 +1,4 @@
-import classnames from 'classnames'
+import cn from '@/lib/cn'
 
 import { REVEAL_TIME_MS } from '@constants/settings'
 import { CharStatus } from '@constants/types'
@@ -39,7 +39,7 @@ export const Cell = ({
 
   const crampedGrids = numberOfLetters > 7 || numberOfWords > 2
 
-  const classes = classnames(
+  const classes = cn(
     'border-solid border-2 mx-0.5 transform-gpu font-bold rounded sm:rounded-md select-none',
     {
       'transition-[height,width] duration-300 ease-in-out': !isPerfMode,
@@ -65,7 +65,7 @@ export const Cell = ({
   return (
     <div className={classes} style={{ animationDelay, animationDuration }}>
       <div
-        className={classnames(
+        className={cn(
           'flex h-full transform-gpu items-center justify-center pb-0.5',
           shouldReveal && 'animate-letter-flip'
         )}

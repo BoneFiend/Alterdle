@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 
+import cn from '@/lib/cn'
 import {
   ChartBarIcon,
   CogIcon,
@@ -7,7 +8,6 @@ import {
   QuestionMarkCircleIcon,
 } from '@heroicons/react/outline'
 import { CalendarIcon } from '@heroicons/react/outline'
-import classNames from 'classnames'
 import { format } from 'date-fns'
 
 import { DATE_LOCALE } from '@constants/settings'
@@ -72,7 +72,7 @@ export const Navbar = () => {
       <div className="sm:-pb-5 short:-pb-5 relative z-10 -mb-3 h-3 sm:h-5 short:h-5">
         {(!isDarkMode || isSettingsModalOpen) && (
           <div
-            className={classNames(
+            className={cn(
               'absolute h-full w-full bg-gradient-to-b from-primary-1-light-mode to-transparent opacity-100 transition-opacity duration-500 dark:opacity-0',
               isSettingsModalOpen && 'will-change-[opacity]'
             )}
@@ -80,7 +80,7 @@ export const Navbar = () => {
         )}
         {(isDarkMode || isSettingsModalOpen) && (
           <div
-            className={classNames(
+            className={cn(
               'absolute h-full w-full bg-gradient-to-b from-primary-1-dark-mode to-transparent opacity-0 transition-opacity duration-500 dark:opacity-100',
               isSettingsModalOpen && 'will-change-[opacity]'
             )}

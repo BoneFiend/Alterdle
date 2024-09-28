@@ -1,4 +1,4 @@
-import classNames from 'classnames'
+import cn from '@/lib/cn'
 
 type Props = {
   index: number
@@ -13,7 +13,7 @@ export const Progress = ({
   label,
   isCurrentDayStatRow,
 }: Props) => {
-  const currentRowClass = classNames(
+  const currentRowClass = cn(
     'text-xs font-medium text-white text-center p-0.5',
     {
       'bg-accent': isCurrentDayStatRow,

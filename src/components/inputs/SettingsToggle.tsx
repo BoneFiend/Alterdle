@@ -1,4 +1,4 @@
-import classnames from 'classnames'
+import cn from '@/lib/cn'
 
 type Props = {
   settingName: string
@@ -15,14 +15,14 @@ export const SettingsToggle = ({
   description,
   disabled,
 }: Props) => {
-  const toggleHolder = classnames(
+  const toggleHolder = cn(
     'w-14 h-8 flex shrink-0 items-center dark:shadow-lg rounded-full p-1 duration-300 ease-in-out',
     {
       'bg-accent': flag && !disabled,
       'bg-accent-disabled': !flag || disabled,
     }
   )
-  const toggleButton = classnames(
+  const toggleButton = cn(
     'bg-white dark:text-secondary w-6 h-6 rounded-full shadow-lg transition-all duration-300 ease-in-out',
     {
       'translate-x-6': flag,

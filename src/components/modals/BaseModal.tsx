@@ -1,3 +1,4 @@
+import cn from '@/lib/cn'
 import {
   Dialog,
   DialogBackdrop,
@@ -5,7 +6,6 @@ import {
   DialogTitle,
 } from '@headlessui/react'
 import { XCircleIcon } from '@heroicons/react/outline'
-import classnames from 'classnames'
 
 import useClientSettings from '@stores/useClientSettings'
 
@@ -37,7 +37,7 @@ export const BaseModal = ({
     >
       <DialogBackdrop
         transition
-        className={classnames(
+        className={cn(
           'fixed inset-0 bg-black/40',
           'transition-opacity duration-200 ease-out',
           'data-[closed]:opacity-0 data-[closed]:ease-in'
@@ -45,7 +45,7 @@ export const BaseModal = ({
       />
       <DialogPanel
         transition
-        className={classnames(
+        className={cn(
           'h-full w-full',
           'transition-all duration-200 ease-out',
           'data-[closed]:translate-y-48 data-[closed]:opacity-0 data-[closed]:ease-in data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-[0.9]'
@@ -53,13 +53,13 @@ export const BaseModal = ({
       >
         <div className="flex min-h-full items-center justify-center px-4 py-10 text-center sm:p-0">
           <div
-            className={classnames(
+            className={cn(
               'inline-block transform overflow-hidden rounded-lg text-left align-bottom drop-shadow-2xl transition-colors sm:w-full sm:max-w-sm sm:align-middle'
             )}
           >
             {(!isDarkMode || isSettingsModal) && (
               <div
-                className={classnames(
+                className={cn(
                   'fixed h-full w-full',
                   'bg-gradient-to-tl from-primary-1-light-mode to-primary-2-light-mode'
                 )}
@@ -67,7 +67,7 @@ export const BaseModal = ({
             )}
             {(isDarkMode || isSettingsModal) && (
               <div
-                className={classnames(
+                className={cn(
                   'fixed h-full w-full transition-colors duration-500 ease-in-out',
                   'bg-gradient-to-tl from-primary-1-dark-mode to-primary-2-dark-mode',
                   'opacity-0 transition-opacity duration-500 dark:opacity-100'
