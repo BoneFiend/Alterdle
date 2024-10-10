@@ -4,6 +4,7 @@ interface ActiveKeys {
   activeKeys: string[]
   activateKey: (key: string) => void
   deactivateKey: (key: string) => void
+  deactivateAllKeys: () => void
   isKeyActive: (key: string) => boolean
 }
 
@@ -41,6 +42,10 @@ const useActiveKeys = create<ActiveKeys>((set, get) => ({
   isKeyActive: (key: string) => {
     const { activeKeys } = get()
     return activeKeys.includes(key)
+  },
+
+  deactivateAllKeys: () => {
+    set({ activeKeys: [] })
   },
 }))
 

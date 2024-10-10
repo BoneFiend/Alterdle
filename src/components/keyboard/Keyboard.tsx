@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { DELETE_TEXT, ENTER_TEXT } from '@constants/strings'
 
 import useActiveKeys from '@stores/useActiveKeys'
+import useModalStore from '@stores/useModalStore'
 
 import { getStatuses } from '@lib/statuses'
 import { localeAwareUpperCase } from '@lib/words'
@@ -34,7 +35,10 @@ export const Keyboard = ({
     if (!isRevealing) setCharStatuses(getStatuses(solution, guesses))
   }, [isRevealing, solution, guesses])
 
-  const { activateKey, deactivateKey, isKeyActive } = useActiveKeys()
+  const { activateKey, deactivateKey, isKeyActive, deactivateAllKeys } =
+    useActiveKeys()
+
+  const { isAnyModalOpen } = useModalStore()
 
   const onClick = (value: string) => {
     if (value === 'ENTER') {
@@ -66,13 +70,16 @@ export const Keyboard = ({
   }
 
   useEffect(() => {
+    if (isAnyModalOpen) {
+      return deactivateAllKeys()
+    }
     window.addEventListener('keyup', keyUp)
     window.addEventListener('keydown', keyDown)
     return () => {
       window.removeEventListener('keyup', keyUp)
       window.removeEventListener('keydown', keyDown)
     }
-  }, [onEnter, onDelete, onChar])
+  }, [onEnter, onDelete, onChar, isAnyModalOpen])
 
   return (
     <div className="flex flex-col gap-1 *:flex *:justify-center">
