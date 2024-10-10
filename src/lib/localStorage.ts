@@ -20,7 +20,7 @@ const perfModeKey = 'perfMode'
 
 export const saveGameStateToLocalStorage = (
   isLatestGame: boolean,
-  gameState: StoredGameState
+  gameState: StoredGameState,
 ) => {
   const key = isLatestGame ? gameStateKey : archiveGameStateKey
   localStorage.setItem(key, JSON.stringify(gameState))
@@ -52,7 +52,7 @@ export const loadStatsFromLocalStorage = () => {
   for (const words in stats) {
     for (const letters in stats[words]) {
       stats[words][letters].latestDate = new Date(
-        stats[words][letters].latestDate
+        stats[words][letters].latestDate,
       )
     }
   }
@@ -60,7 +60,7 @@ export const loadStatsFromLocalStorage = () => {
 }
 
 export const saveClientSettingsToLocalStorage = (
-  clientSettings: ClientSettings
+  clientSettings: ClientSettings,
 ) => {
   localStorage.setItem(clientSettingsKey, JSON.stringify(clientSettings))
 }
@@ -69,7 +69,7 @@ export const loadClientSettingsFromLocalStorage = () => {
   const clientSettingsString = localStorage.getItem(clientSettingsKey)
   if (!clientSettingsString) {
     const prefersDarkMode = window.matchMedia(
-      '(prefers-color-scheme: dark)'
+      '(prefers-color-scheme: dark)',
     ).matches
     return {
       ...defaultClientSettings,

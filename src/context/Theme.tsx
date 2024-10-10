@@ -50,7 +50,7 @@ const Theme: React.FC = () => {
         <div
           className={cn(
             'h-full bg-gradient-to-b from-primary-1-light-mode to-primary-2-light-mode',
-            classes
+            classes,
           )}
         />
       )}
@@ -59,7 +59,7 @@ const Theme: React.FC = () => {
           className={cn(
             'bg-gradient-to-b from-primary-1-dark-mode to-primary-2-dark-mode opacity-0 transition-opacity duration-500 dark:opacity-100',
             classes,
-            isSettingsModalOpen && 'will-change-[opacity]'
+            isSettingsModalOpen && 'will-change-[opacity]',
           )}
         />
       )}

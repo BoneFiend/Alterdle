@@ -63,7 +63,7 @@ export const updateObj2d = <T>(
   obj: Obj2d<T>,
   numberOfWords: number,
   numberOfLetters: number,
-  newValue: T
+  newValue: T,
 ) => {
   const newObj = { ...obj }
   if (!newObj[numberOfWords]) {

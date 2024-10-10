@@ -35,7 +35,7 @@ export const isWordInWordList = (word: string) => {
 export const findFirstUnusedReveal = (
   word: string,
   guesses: string[],
-  solution: string
+  solution: string,
 ) => {
   if (guesses.length === 0) {
     return false
@@ -129,7 +129,7 @@ export const seededRandom = (seed: number) => {
 export const getSolution = (
   gameDate: Date,
   numberOfWords: number,
-  numberOfLetters: number
+  numberOfLetters: number,
 ) => {
   const nextGameDate = getNextGameDate(gameDate)
   const index = getIndex(gameDate)

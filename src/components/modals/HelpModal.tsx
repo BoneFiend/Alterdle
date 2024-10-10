@@ -151,7 +151,7 @@ export const HelpModal = () => {
     word: string,
     indices: number[],
     middleText: string,
-    cellStatus: CharStatus
+    cellStatus: CharStatus,
   ) => {
     const wordCells = (
       <div className="mb-1 mt-2 flex justify-center">
@@ -217,19 +217,19 @@ export const HelpModal = () => {
         first,
         firstCorrect,
         'in the word and in the correct',
-        'correct'
+        'correct',
       )}
       {createTutorialSection(
         second,
         secondPresent,
         'in the word but in the wrong',
-        'present'
+        'present',
       )}
       {createTutorialSection(
         third,
         thirdAbsent,
         'not in the word in any',
-        'absent'
+        'absent',
       )}
       <br />
       <p className="text-sm text-secondary">

@@ -39,7 +39,7 @@ export const Navbar = () => {
         className={cn(
           'flex h-12 select-none items-center justify-between border-b-2 border-secondary-2 px-2 transition-[height,border-color] duration-500 sm:h-16 short:h-auto',
           '[&_svg]:h-7 [&_svg]:w-7 [&_svg]:cursor-pointer [&_svg]:stroke-secondary [&_svg]:transition-[height,stroke] [&_svg]:sm:h-8 [&_svg]:sm:w-8 [&_svg]:short:h-7 [&_svg]:short:w-7',
-          '[&_*]:duration-500'
+          '[&_*]:duration-500',
         )}
       >
         <div className="flex gap-3">
@@ -74,7 +74,7 @@ export const Navbar = () => {
       <div
         className={cn(
           'sm:-pb-5 short:-pb-5 relative z-10 -mb-3 h-3 *:absolute *:h-full *:w-full *:transition-opacity *:duration-500 sm:h-5 short:h-5',
-          isSettingsModalOpen && '*:will-change-[opacity]'
+          isSettingsModalOpen && '*:will-change-[opacity]',
         )}
       >
         {(!isDarkMode || isSettingsModalOpen) && (

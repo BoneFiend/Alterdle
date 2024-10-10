@@ -20,14 +20,14 @@ export const SettingsToggle = ({
     {
       'bg-accent': flag && !disabled,
       'bg-accent-disabled': !flag || disabled,
-    }
+    },
   )
   const toggleButton = cn(
     'bg-white dark:text-secondary w-6 h-6 rounded-full shadow-lg transition-all duration-300 ease-in-out',
     {
       'translate-x-6': flag,
       'opacity-10': disabled,
-    }
+    },
   )
 
   return (

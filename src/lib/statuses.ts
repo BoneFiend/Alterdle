@@ -4,7 +4,7 @@ import { unicodeSplit } from './words'
 
 export const getStatuses = (
   solution: string[],
-  guesses: string[]
+  guesses: string[],
 ): { [key: string]: CharStatus } => {
   const charObj: { [key: string]: CharStatus } = {}
 
@@ -47,7 +47,7 @@ export const getStatuses = (
 
 export const getGuessStatuses = (
   solution: string,
-  guess: string
+  guess: string,
 ): CharStatus[] => {
   const splitSolution = unicodeSplit(solution)
   const splitGuess = unicodeSplit(guess)
@@ -76,7 +76,7 @@ export const getGuessStatuses = (
 
     // now we are left with "present"s
     const indexOfPresentChar = splitSolution.findIndex(
-      (x, index) => x === letter && !solutionCharsTaken[index]
+      (x, index) => x === letter && !solutionCharsTaken[index],
     )
 
     if (indexOfPresentChar > -1) {

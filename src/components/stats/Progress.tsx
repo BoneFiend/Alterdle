@@ -18,7 +18,7 @@ export const Progress = ({
     {
       'bg-accent': isCurrentDayStatRow,
       'bg-accent-disabled': !isCurrentDayStatRow,
-    }
+    },
   )
   return (
     <div className="justify-left m-1 flex">

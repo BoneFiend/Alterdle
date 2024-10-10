@@ -33,20 +33,20 @@ const getUrl = (numberOfWords: number, numberOfLetters: number, date: Date) => {
 export const setUrl = (
   numberOfWords: number,
   numberOfLetters: number,
-  date: Date
+  date: Date,
 ) => {
   const newUrl = getUrl(numberOfWords, numberOfLetters, date)
 
   window.history.replaceState(
     { path: newUrl.toString() },
     '',
-    newUrl.toString()
+    newUrl.toString(),
   )
 }
 
 export const setWindowTitle = (
   numberOfWords: number,
-  numberOfLetters: number
+  numberOfLetters: number,
 ) => {
   document.title = `${GAME_TITLE} - ${numberOfWords}x${numberOfLetters}`
 }
@@ -54,7 +54,7 @@ export const setWindowTitle = (
 export const getShareUrl = (
   numberOfWords: number,
   numberOfLetters: number,
-  d: Date
+  d: Date,
 ) => {
   return BASE_URL + '/' + getUrl(numberOfWords, numberOfLetters, d).search
 }

@@ -54,16 +54,16 @@ export const ImmigratePanel = () => {
 
   const handleSaveButton = () => {
     const textarea = document.getElementById(
-      'immigration-code'
+      'immigration-code',
     ) as HTMLInputElement
     if (
       textarea &&
       window.confirm(
-        'Are you sure you want to override the statistics on this device? This action is not reversable.'
+        'Are you sure you want to override the statistics on this device? This action is not reversable.',
       )
     ) {
       var migrationStats = JSON.parse(
-        decrypt(textarea.value) ?? ''
+        decrypt(textarea.value) ?? '',
       ) as MigrationStats
       if (!migrationStats) return
 

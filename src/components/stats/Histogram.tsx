@@ -32,7 +32,7 @@ export const Histogram = ({
     {
       length: maxChallenges - numberOfWords + 1,
     },
-    (_, i) => numberOfWords + i
+    (_, i) => numberOfWords + i,
   )
 
   return (

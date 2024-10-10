@@ -16,7 +16,7 @@ export const Alert = ({ isOpen, message, variant = 'error' }: Props) => {
     {
       'bg-incorrect text-white': variant === 'error',
       'bg-blue-500 text-white': variant === 'success',
-    }
+    },
   )
 
   return (

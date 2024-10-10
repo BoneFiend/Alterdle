@@ -24,15 +24,15 @@ export const shareStatus = (
   numberOfWords: number,
   numberOfLetters: number,
   gameDate: Date,
-  isLongShare: boolean
+  isLongShare: boolean,
 ) => {
   const gridsPerRow = Math.max(
     Math.floor(MAX_SHARE_WIDTH / (numberOfLetters + 1)),
-    1
+    1,
   )
 
   const header = `${GAME_TITLE} #${getIndex(
-    gameDate
+    gameDate,
   )} ${numberOfWords}x${numberOfLetters} ${
     lost ? 'X' : guesses.length
   }/${maxChallenges}${isHardMode ? '*' : ''}\n`
@@ -45,19 +45,19 @@ export const shareStatus = (
     // Each row of the big grid
     numbers = numbers.concat(
       '\n',
-      getEmojiNumber(guesses.indexOf(solution[i]) + 1, maxChallenges)
+      getEmojiNumber(guesses.indexOf(solution[i]) + 1, maxChallenges),
     )
 
     var row = generateEmojiGrid(
       solution[i],
       guesses,
-      getEmojiTiles(isHighContrastMode)
+      getEmojiTiles(isHighContrastMode),
     )
     for (let j = i + 1; j < i + gridsPerRow && j < numberOfWords; j += 1) {
       // Subsequent emoji grids in the big grid
       numbers = numbers.concat(
         ' ',
-        getEmojiNumber(guesses.indexOf(solution[j]) + 1, maxChallenges)
+        getEmojiNumber(guesses.indexOf(solution[j]) + 1, maxChallenges),
       )
 
       row = joinEmojiGrids(
@@ -65,8 +65,8 @@ export const shareStatus = (
         generateEmojiGrid(
           solution[j],
           guesses,
-          getEmojiTiles(isHighContrastMode)
-        )
+          getEmojiTiles(isHighContrastMode),
+        ),
       )
     }
     grids = grids.concat('\n', row)
@@ -106,7 +106,7 @@ export const shareStatus = (
 export const generateEmojiGrid = (
   solution: string,
   guesses: string[],
-  tiles: string[]
+  tiles: string[],
 ) => {
   const wonIndex = guesses.includes(solution)
     ? guesses.indexOf(solution)

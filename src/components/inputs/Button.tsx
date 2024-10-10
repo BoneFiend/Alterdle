@@ -17,7 +17,7 @@ const variants = cva(
     defaultVariants: {
       variant: 'default',
     },
-  }
+  },
 )
 
 interface Props
@@ -34,7 +34,7 @@ export const Button = React.forwardRef<HTMLButtonElement, Props>(
         className={cn(
           variants({ variant, className }),
           isHovered && 'transition-none',
-          !isHovered && 'transition-colors duration-500'
+          !isHovered && 'transition-colors duration-500',
         )}
         type={type}
         onMouseEnter={() => setIsHovered(true)}
@@ -44,5 +44,5 @@ export const Button = React.forwardRef<HTMLButtonElement, Props>(
         {children}
       </button>
     )
-  }
+  },
 )

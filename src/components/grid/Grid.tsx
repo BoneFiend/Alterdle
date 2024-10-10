@@ -30,7 +30,7 @@ export const Grid = ({
   const wonIndex = useMemo(
     () =>
       guesses.includes(solution) ? guesses.indexOf(solution) : guesses.length,
-    [guesses, solution]
+    [guesses, solution],
   )
 
   return (

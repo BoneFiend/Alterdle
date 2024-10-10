@@ -172,7 +172,7 @@ export const StatsModal = ({
                 numberOfWords,
                 numberOfLetters,
                 gameDate,
-                isLongShare
+                isLongShare,
               )
             }}
             Icon={ShareIcon}

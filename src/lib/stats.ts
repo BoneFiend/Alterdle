@@ -24,7 +24,7 @@ export const addStatsForCompletedGame = (
   numberOfWords: number,
   numberOfLetters: number,
   won: boolean,
-  gridsWon: number
+  gridsWon: number,
 ) => {
   // Count is number of incorrect guesses before end.
   const stats = { ...gameStats }
@@ -42,7 +42,7 @@ export const addStatsForCompletedGame = (
 
     const gridsWonDistribution = [
       ...Object.values(
-        stats[numberOfWords][numberOfLetters].gridsWonDistribution
+        stats[numberOfWords][numberOfLetters].gridsWonDistribution,
       ).map(Number),
     ]
     gridsWonDistribution[gridsWon] = (gridsWonDistribution[gridsWon] || 0) + 1
@@ -57,7 +57,7 @@ export const addStatsForCompletedGame = (
       // Win situation
       const winDistribution = [
         ...Object.values(
-          stats[numberOfWords][numberOfLetters].winDistribution
+          stats[numberOfWords][numberOfLetters].winDistribution,
         ).map(Number),
       ]
       winDistribution[count] = (winDistribution[count] || 0) + 1
@@ -76,7 +76,7 @@ export const addStatsForCompletedGame = (
     stats[numberOfWords][numberOfLetters].successRate = getSuccessRate(
       stats,
       numberOfWords,
-      numberOfLetters
+      numberOfLetters,
     )
   }
   saveStatsToLocalStorage(stats)
@@ -90,11 +90,11 @@ export const loadStats = () => {
 const getSuccessRate = (
   gameStats: Obj2d<GameStats>,
   numberOfWords: number,
-  numberOfLetters: number
+  numberOfLetters: number,
 ) => {
   const { totalGames, gamesFailed } = gameStats[numberOfWords][numberOfLetters]
 
   return Math.round(
-    (100 * (totalGames - gamesFailed)) / Math.max(totalGames, 1)
+    (100 * (totalGames - gamesFailed)) / Math.max(totalGames, 1),
   )
 }

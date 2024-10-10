@@ -27,7 +27,7 @@ export const Keyboard = ({
   isRevealing,
 }: Props) => {
   const [charStatuses, setCharStatuses] = useState(
-    getStatuses(solution, guesses)
+    getStatuses(solution, guesses),
   )
 
   useEffect(() => {

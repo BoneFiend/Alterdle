@@ -59,7 +59,7 @@ export const Cell = ({
       'animate-cell-fill': isFilled,
       'animate-cell-reveal': shouldReveal && status !== 'incorrect',
       'animate-cell-reveal-invisible': shouldReveal && status === 'incorrect',
-    }
+    },
   )
 
   return (
@@ -67,7 +67,7 @@ export const Cell = ({
       <div
         className={cn(
           'flex h-full transform-gpu items-center justify-center pb-0.5',
-          shouldReveal && 'animate-letter-flip'
+          shouldReveal && 'animate-letter-flip',
         )}
         style={{ animationDelay, animationDuration }}
       >

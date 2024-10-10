@@ -95,12 +95,12 @@ function App() {
 
   const maxChallenges = useMemo(
     () => calculateMaxChallenges(numberOfWords),
-    [numberOfWords]
+    [numberOfWords],
   )
 
   const solution = useMemo(
     () => getSolution(gameDate, numberOfWords, numberOfLetters).newSolution,
-    [numberOfWords, numberOfLetters, gameDate]
+    [numberOfWords, numberOfLetters, gameDate],
   )
   const [guesses, setGuesses] = useState<Obj2d<string[]>>(() => {
     return loadGuesses(gameDate, isLatestGame)
@@ -109,13 +109,13 @@ function App() {
   const [currentGuesses, setCurrentGuesses] = useState<Obj2d<string>>({})
   const currentGuess = useMemo(
     () => currentGuesses[numberOfWords]?.[numberOfLetters] ?? '',
-    [currentGuesses, numberOfWords, numberOfLetters]
+    [currentGuesses, numberOfWords, numberOfLetters],
   )
   const [stats, setStats] = useState(() => loadStats())
 
   const isHardMode = useMemo(
     () => isHardModePreferred && numberOfWords === 1,
-    [isHardModePreferred, numberOfWords]
+    [isHardModePreferred, numberOfWords],
   )
   // TODO hard mode can be enabled after the start of the game if the user changes settings.
 
@@ -221,7 +221,7 @@ function App() {
           prev,
           numberOfWords,
           numberOfLetters,
-          `${currentGuess}${value}`
+          `${currentGuess}${value}`,
         )
       })
     }
@@ -237,8 +237,8 @@ function App() {
         new GraphemeSplitter()
           .splitGraphemes(currentGuess)
           .slice(0, -1)
-          .join('')
-      )
+          .join(''),
+      ),
     )
   }
 
@@ -266,7 +266,7 @@ function App() {
       const firstMissingReveal = findFirstUnusedReveal(
         currentGuess,
         guesses[numberOfWords]?.[numberOfLetters] ?? [],
-        solution[0]
+        solution[0],
       )
       if (firstMissingReveal) {
         setCurrentRowClass('animate-jiggle')
@@ -291,7 +291,7 @@ function App() {
       ])
       setGuesses(newGuesses)
       setCurrentGuesses(
-        updateObj2d(currentGuesses, numberOfWords, numberOfLetters, '')
+        updateObj2d(currentGuesses, numberOfWords, numberOfLetters, ''),
       )
 
       if (
@@ -308,9 +308,9 @@ function App() {
               true,
               countGridsWon(
                 newGuesses[numberOfWords]?.[numberOfLetters],
-                solution
-              )
-            )
+                solution,
+              ),
+            ),
           )
         }
         setGamesWon(updateObj2d(gamesWon, numberOfWords, numberOfLetters, true))
@@ -336,13 +336,13 @@ function App() {
               false,
               countGridsWon(
                 newGuesses[numberOfWords]?.[numberOfLetters],
-                solution
-              )
-            )
+                solution,
+              ),
+            ),
           )
         }
         setGamesWon(
-          updateObj2d(gamesWon, numberOfWords, numberOfLetters, false)
+          updateObj2d(gamesWon, numberOfWords, numberOfLetters, false),
         )
 
         const loseMessage =
@@ -383,7 +383,7 @@ function App() {
               guesses={guesses[numberOfWords]?.[numberOfLetters] ?? []}
               isRevealing={
                 !isRowFocussed(
-                  (guesses[numberOfWords]?.[numberOfLetters] ?? []).length
+                  (guesses[numberOfWords]?.[numberOfLetters] ?? []).length,
                 )
               }
             />

@@ -50,7 +50,7 @@ export const Key = ({
           'bg-key-deeper transition-none': isActive && !status,
           'bg-correct-deeper transition-none': isActive && status === 'correct',
           'bg-present-deeper transition-none': isActive && status === 'present',
-        }
+        },
       )}
       onClick={handleClick}
     >
