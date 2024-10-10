@@ -7,6 +7,7 @@ import {
 import { XCircleIcon } from '@heroicons/react/outline'
 
 import useClientSettings from '@stores/useClientSettings'
+import useModalStore from '@stores/useModalStore'
 
 import cn from '@lib/cn'
 
@@ -29,10 +30,12 @@ export const BaseModal = ({
     clientSettings: { isDarkMode },
   } = useClientSettings()
 
+  const { isAnyModalOpen } = useModalStore()
+
   return (
     <Dialog
       as="div"
-      className="fixed inset-0 z-10 overflow-y-auto"
+      className="fixed inset-0 z-10 overflow-y-auto outline-none"
       open={isOpen}
       onClose={handleClose}
     >
@@ -41,7 +44,8 @@ export const BaseModal = ({
         className={cn(
           'fixed inset-0 bg-black/40',
           'transition-opacity duration-200 ease-out',
-          'data-[closed]:opacity-0 data-[closed]:ease-in'
+          'data-[closed]:opacity-0 data-[closed]:ease-in',
+          isAnyModalOpen && 'transition-none'
         )}
       />
       <DialogPanel
