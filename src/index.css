@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  scrollbar-width: thin;
+}
+
 :root {
   --primary-1-light-mode: rgba(246, 141, 196); /* pink-400 */
   --primary-2-light-mode: rgba(251, 219, 237); /* pink-100 */

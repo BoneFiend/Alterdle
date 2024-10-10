@@ -361,7 +361,7 @@ function App() {
       <div className="relative flex h-full flex-col bg-transparent">
         <Navbar />
         <div className="mx-auto flex w-full grow flex-col pb-8">
-          <div className="flex h-[1vh] grow flex-wrap items-start justify-center overflow-y-scroll [scrollbar-width:thin]">
+          <div className="flex h-[1vh] grow flex-wrap items-start justify-center overflow-y-scroll">
             {solution.map((_, i: number) => (
               <Grid
                 key={i}
