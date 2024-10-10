@@ -12,7 +12,8 @@
     "test": "vitest",
     "test:coverage": "vitest run --coverage --watch=false",
     "preinstall": "npx only-allow pnpm",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "analyse": "pnpx vite-bundle-visualizer --sourcemap"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.2",
