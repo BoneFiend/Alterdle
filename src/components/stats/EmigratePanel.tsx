@@ -31,10 +31,10 @@ export const EmigratePanel = () => {
   }
 
   return (
-    <div className="text-sm text-secondary">
+    <div className="text-sm">
       <label
         htmlFor="message"
-        className="mb-2 block text-left text-sm font-medium text-stone-900 dark:text-gray-400"
+        className="mb-2 block text-left text-sm font-medium text-blank"
       >
         Copy your migration code:
       </label>
@@ -42,7 +42,7 @@ export const EmigratePanel = () => {
         id="emigration-code"
         readOnly={true}
         rows={8}
-        className="block w-full rounded-lg border border-accent-disabled bg-primary-light p-2.5 text-sm text-blank focus:border-accent-disabled focus:ring-accent-disabled"
+        className="block w-full rounded-lg border border-secondary-2 bg-primary-light p-2.5 text-sm text-blank focus:border-secondary-2 focus:ring-secondary-2"
         value={emigrationCode}
       />
       <Button

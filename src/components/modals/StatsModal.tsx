@@ -100,7 +100,7 @@ export const StatsModal = ({
         numberOfWords={numberOfWords}
         numberOfLetters={numberOfLetters}
       />
-      <h4 className="text-lg font-medium leading-6 text-stone-900 dark:text-gray-100">
+      <h4 className="text-lg font-medium leading-6 text-blank">
         {GUESS_DISTRIBUTION_TEXT}
       </h4>
       <Histogram

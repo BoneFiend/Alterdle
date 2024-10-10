@@ -82,10 +82,10 @@ export const ImmigratePanel = () => {
   }
 
   return (
-    <div className="text-sm text-gray-500 dark:text-gray-300">
+    <div className="text-sm">
       <label
         htmlFor="message"
-        className="mb-2 block text-left text-sm font-medium text-gray-900 dark:text-gray-400"
+        className="mb-2 block text-left text-sm font-medium text-blank"
       >
         Paste your migration code:
       </label>
@@ -93,7 +93,7 @@ export const ImmigratePanel = () => {
         onChange={(e) => handleImmigrationCodeChange(e)}
         id="immigration-code"
         rows={8}
-        className="block w-full rounded-lg border border-accent-disabled bg-primary-light p-2.5 text-sm text-blank focus:border-accent-disabled focus:ring-accent-disabled"
+        className="block w-full rounded-lg border border-secondary-2 bg-primary-light p-2.5 text-sm text-blank focus:border-secondary-2 focus:ring-secondary-2"
       ></textarea>
       <Button
         disabled={!isSaveButtonEnabled}
