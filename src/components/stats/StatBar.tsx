@@ -4,12 +4,12 @@ import {
   SUCCESS_RATE_TEXT,
   TOTAL_TRIES_TEXT,
 } from '@constants/strings'
-import { Obj2d } from '@constants/types'
+import { GameStats, Obj2d } from '@constants/types'
 
 import { defaultStats } from '@lib/stats'
 
 type Props = {
-  gameStats: Obj2d
+  gameStats: Obj2d<GameStats>
   numberOfWords: number
   numberOfLetters: number
 }

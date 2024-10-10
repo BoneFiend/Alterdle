@@ -1,4 +1,4 @@
-import { Obj2d } from '@constants/types'
+import { GameStats, Obj2d } from '@constants/types'
 
 import { getToday } from '@lib/dateutils'
 import { defaultStats } from '@lib/stats'
@@ -6,7 +6,7 @@ import { defaultStats } from '@lib/stats'
 import { Progress } from './Progress'
 
 type Props = {
-  gameStats: Obj2d
+  gameStats: Obj2d<GameStats>
   isLatestGame: boolean
   isGameWon: boolean
   numberOfGuessesMade: number

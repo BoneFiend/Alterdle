@@ -1,10 +1,14 @@
+import { ReactNode } from 'react'
+
+import { ShareIcon } from '@heroicons/react/outline'
+
 import { Button } from './Button'
 
 type Props = {
-  settingName: string | any
+  settingName: ReactNode
   description?: string
   onClick: () => void
-  Icon?: any
+  Icon?: typeof ShareIcon
   buttonText: string
 }
 

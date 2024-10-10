@@ -1,5 +1,6 @@
 import {
   ClientSettings,
+  GameStats,
   Obj2d,
   StoredGameState,
   defaultClientSettings,
@@ -37,7 +38,7 @@ export const loadGameStateFromLocalStorage = (isLatestGame: boolean) => {
   }
 }
 
-export const saveStatsToLocalStorage = (gameStats: Obj2d) => {
+export const saveStatsToLocalStorage = (gameStats: Obj2d<GameStats>) => {
   localStorage.setItem(gameStatKey, JSON.stringify(gameStats))
 }
 
@@ -46,7 +47,7 @@ export const loadStatsFromLocalStorage = () => {
   if (!statsString) {
     return null
   }
-  const stats = JSON.parse(statsString) as Obj2d
+  const stats = JSON.parse(statsString) as Obj2d<GameStats>
   // Resaves strings as Date type
   for (const words in stats) {
     for (const letters in stats[words]) {

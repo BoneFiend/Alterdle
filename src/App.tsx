@@ -85,7 +85,7 @@ function App() {
   const [shouldRefocus, setShouldRefocus] = useState(false)
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const [gamesWon, setGamesWon] = useState<Obj2d>({})
+  const [gamesWon, setGamesWon] = useState<Obj2d<boolean>>({})
   const { isGameWon, isGameLost } = useMemo(() => {
     return {
       isGameWon: gamesWon[numberOfWords]?.[numberOfLetters] ?? false,
@@ -102,11 +102,11 @@ function App() {
     () => getSolution(gameDate, numberOfWords, numberOfLetters).newSolution,
     [numberOfWords, numberOfLetters, gameDate]
   )
-  const [guesses, setGuesses] = useState<Obj2d>(() => {
+  const [guesses, setGuesses] = useState<Obj2d<string[]>>(() => {
     return loadGuesses(gameDate, isLatestGame)
   })
 
-  const [currentGuesses, setCurrentGuesses] = useState<Obj2d>({})
+  const [currentGuesses, setCurrentGuesses] = useState<Obj2d<string>>({})
   const currentGuess = useMemo(
     () => currentGuesses[numberOfWords]?.[numberOfLetters] ?? '',
     [currentGuesses, numberOfWords, numberOfLetters]
@@ -362,7 +362,7 @@ function App() {
         <Navbar />
         <div className="mx-auto flex w-full grow flex-col pb-8">
           <div className="flex h-[1vh] grow flex-wrap items-start justify-center overflow-y-scroll [scrollbar-width:thin]">
-            {solution.map((_, i: any) => (
+            {solution.map((_, i: number) => (
               <Grid
                 key={i}
                 solution={solution[i]}

@@ -26,7 +26,7 @@ import {
   SHARE_TEXT,
   STATISTICS_TITLE,
 } from '@constants/strings'
-import { Obj2d } from '@constants/types'
+import { GameStats, Obj2d } from '@constants/types'
 
 import useClientSettings from '@stores/useClientSettings'
 import useGameSettingsStore from '@stores/useGameSettingsStore'
@@ -45,7 +45,7 @@ import { BaseModal } from './BaseModal'
 type Props = {
   solution: string[]
   guesses: string[]
-  gameStats: Obj2d
+  gameStats: Obj2d<GameStats>
   isLatestGame: boolean
   isGameLost: boolean
   isGameWon: boolean

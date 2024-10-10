@@ -28,7 +28,7 @@ export type GameStats = {
 }
 
 export type MigrationStats = {
-  statistics: Obj2d
+  statistics: Obj2d<GameStats>
   gameState: StoredGameState | null
 }
 
@@ -52,18 +52,18 @@ export const defaultModals: Modals = {
   isDatePickerModalOpen: false,
 }
 
-export type Obj2d = {
+export type Obj2d<T> = {
   // 2d Object type to avoid type errors
   [key: number]: {
-    [key: number]: any
+    [key: number]: T
   }
 }
 
-export const updateObj2d = (
-  obj: Obj2d,
+export const updateObj2d = <T>(
+  obj: Obj2d<T>,
   numberOfWords: number,
   numberOfLetters: number,
-  newValue: any
+  newValue: T
 ) => {
   const newObj = { ...obj }
   if (!newObj[numberOfWords]) {
@@ -74,6 +74,6 @@ export const updateObj2d = (
 }
 
 export type StoredGameState = {
-  guesses: Obj2d
+  guesses: Obj2d<string[]>
   gameDate: Date
 }

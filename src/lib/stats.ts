@@ -19,7 +19,7 @@ export const defaultStats: GameStats = {
 }
 
 export const addStatsForCompletedGame = (
-  gameStats: Obj2d,
+  gameStats: Obj2d<GameStats>,
   count: number,
   numberOfWords: number,
   numberOfLetters: number,
@@ -84,11 +84,11 @@ export const addStatsForCompletedGame = (
 }
 
 export const loadStats = () => {
-  return loadStatsFromLocalStorage() || ({} as Obj2d)
+  return loadStatsFromLocalStorage() || ({} as Obj2d<GameStats>)
 }
 
 const getSuccessRate = (
-  gameStats: Obj2d,
+  gameStats: Obj2d<GameStats>,
   numberOfWords: number,
   numberOfLetters: number
 ) => {
