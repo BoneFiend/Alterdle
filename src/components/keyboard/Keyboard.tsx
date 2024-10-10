@@ -75,8 +75,8 @@ export const Keyboard = ({
   }, [onEnter, onDelete, onChar])
 
   return (
-    <div>
-      <div className="mb-1 flex justify-center">
+    <div className="flex flex-col gap-1 *:flex *:justify-center">
+      <div>
         {['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'].map((key) => (
           <Key
             value={key}
@@ -88,7 +88,7 @@ export const Keyboard = ({
           />
         ))}
       </div>
-      <div className="mb-1 flex justify-center">
+      <div>
         {['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'].map((key) => (
           <Key
             value={key}
@@ -100,7 +100,7 @@ export const Keyboard = ({
           />
         ))}
       </div>
-      <div className="flex justify-center">
+      <div>
         <Key
           longWidth={true}
           value="ENTER"

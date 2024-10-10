@@ -23,28 +23,6 @@ export const Key = ({
   isRevealing,
   isActive,
 }: Props) => {
-  const classes = cn(
-    'xshort:h-10 short:h-12 h-14 sm:h-16',
-    'flex items-center justify-center rounded-lg sm:rounded-xl mx-0.5 font-bold cursor-pointer select-none transition-all',
-    {
-      'w-[40px] sm:w-[64px] short:w-[40px] text-lg sm:text-3xl short:text-lg':
-        !longWidth,
-      'w-[65.4px] sm:w-[96px] short:w-[65.4px] text-base sm:text-2xl short:text-base':
-        longWidth,
-      'transition ease-in-out': isRevealing,
-      'bg-key text-white dark:text-white hover:bg-key-deep active:bg-key-deeper':
-        !status,
-      'bg-absent text-white': status === 'absent',
-      'bg-correct shadowed text-white hover:bg-correct-deep active:bg-correct-deeper':
-        status === 'correct',
-      'bg-present shadowed text-white hover:bg-present-deep active:bg-present-deeper':
-        status === 'present',
-      'bg-key-deeper transition-none': isActive && !status,
-      'bg-correct-deeper transition-none': isActive && status === 'correct',
-      'bg-present-deeper transition-none': isActive && status === 'present',
-    }
-  )
-
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
     onClick(value)
     event.currentTarget.blur()
@@ -53,7 +31,27 @@ export const Key = ({
   return (
     <button
       aria-label={`${value}${status ? ' ' + status : ''}`}
-      className={classes}
+      className={cn(
+        'h-14 sm:h-16 short:h-12 xshort:h-10',
+        'mx-0.5 flex cursor-pointer select-none items-center justify-center rounded-lg font-bold transition-all sm:rounded-xl',
+        {
+          'w-[40px] text-lg sm:w-[64px] sm:text-3xl short:w-[40px] short:text-lg':
+            !longWidth,
+          'w-[65.4px] text-base sm:w-[96px] sm:text-2xl short:w-[65.4px] short:text-base':
+            longWidth,
+          'transition ease-in-out': isRevealing,
+          'bg-key text-white hover:bg-key-deep active:bg-key-deeper dark:text-white':
+            !status,
+          'bg-absent text-white': status === 'absent',
+          'shadowed bg-correct text-white hover:bg-correct-deep active:bg-correct-deeper':
+            status === 'correct',
+          'shadowed bg-present text-white hover:bg-present-deep active:bg-present-deeper':
+            status === 'present',
+          'bg-key-deeper transition-none': isActive && !status,
+          'bg-correct-deeper transition-none': isActive && status === 'correct',
+          'bg-present-deeper transition-none': isActive && status === 'present',
+        }
+      )}
       onClick={handleClick}
     >
       {children || value}
