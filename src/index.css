@@ -17,6 +17,7 @@
   --secondary-2: rgba(13, 22, 11, 0.5);
 
   --accent: hsl(var(--nextui-warning));
+  --accent-light: rgba(111, 6, 116, 0.4);
   --accent-deep: rgba(92, 5, 97);
   --accent-deeper: rgba(74, 4, 78);
   --accent-disabled: rgba(55, 3, 58, 0.4);
@@ -50,6 +51,7 @@
   --secondary-1: rgba(254, 255, 234);
   --secondary-2: rgba(253, 255, 214, 0.5);
 
+  --accent-light: rgba(255, 93, 115, 0.6);
   --accent-deep: rgba(255, 51, 78);
   --accent-deeper: rgba(255, 31, 61);
   --accent-disabled: rgba(37, 31, 24, 0.7);
@@ -144,7 +146,7 @@
 }
 
 .react-datepicker__day {
-  @apply mb-1 flex h-8 w-8 cursor-pointer items-center justify-center rounded py-1 text-sm leading-loose text-gray-700 transition dark:text-gray-200;
+  @apply mb-1 flex h-8 w-8 cursor-pointer items-center justify-center rounded py-1 text-sm leading-loose text-gray-700 transition hover:bg-accent-light dark:text-gray-200;
 }
 
 .react-datepicker__day--disabled {
@@ -164,26 +166,21 @@
 }
 
 .react-datepicker__day--selecting-range-start {
-  border-color: var(--accent);
-  @apply border-2 bg-white;
+  @apply border-2 border-accent bg-white hover:border-accent;
 }
 
 .react-datepicker__day--selecting-range-end {
-  border-color: var(--accent);
-  @apply border-2 bg-white;
+  @apply border-2 border-accent bg-white hover:border-accent;
 }
 
 .react-datepicker__day--selected {
-  background-color: var(--accent);
-  @apply text-white dark:text-white;
+  @apply bg-accent text-white hover:bg-accent dark:text-white;
 }
 
 .react-datepicker__day--range-start {
-  background-color: var(--accent);
-  @apply text-white hover:bg-white hover:text-gray-700;
+  @apply bg-accent text-white hover:bg-accent hover:bg-white hover:text-gray-700;
 }
 
 .react-datepicker__day--range-end {
-  background-color: var(--accent);
-  @apply text-white hover:bg-white hover:text-gray-700;
+  @apply bg-accent text-white hover:bg-white hover:text-gray-700;
 }

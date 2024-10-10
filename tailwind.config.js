@@ -29,6 +29,7 @@ module.exports = {
         },
         accent: {
           DEFAULT: 'var(--accent)',
+          light: 'var(--accent-light)',
           deep: 'var(--accent-deep)',
           deeper: 'var(--accent-deeper)',
           disabled: 'var(--accent-disabled)',
