@@ -41,7 +41,11 @@ import useClientSettings, {
   loadClientSettings,
   updateClientSettings,
 } from '@stores/useClientSettings'
-import useFocussedRows from '@stores/useFocussedRows'
+import useFocussedRows, {
+  focusRow,
+  unfocusAllRows,
+  unfocusEarliestRow,
+} from '@stores/useFocussedRows'
 import useModalStore, { updateModals } from '@stores/useModalStore'
 
 import { useGameSettings } from '@hooks/useGameSettings'
@@ -79,8 +83,7 @@ function App() {
 
   const isHardModePreferred = useClientSettings((s) => s.isHardModePreferred)
 
-  const { isRowFocussed, focusRow, unfocusEarliestRow, unfocusAllRows } =
-    useFocussedRows()
+  const { isRowFocussed } = useFocussedRows()
   const [shouldRefocus, setShouldRefocus] = useState(false)
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -144,15 +147,7 @@ function App() {
         focusRow(guessesCount)
       }
     }
-  }, [
-    numberOfWords,
-    numberOfLetters,
-    guesses,
-    focusRow,
-    shouldRefocus,
-    unfocusAllRows,
-    maxChallenges,
-  ])
+  }, [numberOfWords, numberOfLetters, guesses, shouldRefocus, maxChallenges])
 
   useEffect(() => {
     if (timerRef.current) clearTimeout(timerRef.current)
