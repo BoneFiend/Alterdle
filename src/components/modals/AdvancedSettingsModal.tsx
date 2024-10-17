@@ -18,13 +18,12 @@ import {
 import useClientSettings, {
   updateClientSettings,
 } from '@stores/useClientSettings'
-import useModalStore from '@stores/useModalStore'
+import useModalStore, { updateModals } from '@stores/useModalStore'
 
 export const AdvancedSettingsModal = () => {
-  const {
-    modals: { isAdvancedSettingsModalOpen },
-    updateModals,
-  } = useModalStore()
+  const isAdvancedSettingsModalOpen = useModalStore(
+    (s) => s.modals.isAdvancedSettingsModalOpen,
+  )
 
   const { isLongShare, isHighContrastMode, isPerfMode } = useClientSettings(
     (s) => ({

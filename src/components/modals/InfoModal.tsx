@@ -5,15 +5,12 @@ import {
   MIN_NUMBER_OF_WORDS,
 } from '@constants/settings'
 
-import useModalStore from '@stores/useModalStore'
+import useModalStore, { updateModals } from '@stores/useModalStore'
 
 import { BaseModal } from './BaseModal'
 
 export const InfoModal = () => {
-  const {
-    modals: { isInfoModalOpen },
-    updateModals,
-  } = useModalStore()
+  const isInfoModalOpen = useModalStore((s) => s.modals.isInfoModalOpen)
 
   const handleClose = () => updateModals({ isInfoModalOpen: false })
 

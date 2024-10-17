@@ -10,7 +10,7 @@ export function useGameSettings() {
 
   const isPerfMode = useClientSettings((s) => s.isPerfMode)
 
-  const { isAnyModalOpen } = useModalStore()
+  const isAnyModalOpen = useModalStore((s) => s.isAnyModalOpen)
 
   const numberOfWordsRef = useRef<number>(numberOfWords)
   const displayNumberOfWords = useMemo(() => {

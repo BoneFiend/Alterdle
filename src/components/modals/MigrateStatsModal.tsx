@@ -3,15 +3,14 @@ import { useState } from 'react'
 import { EmigratePanel } from '@ui/stats/EmigratePanel'
 import { ImmigratePanel } from '@ui/stats/ImmigratePanel'
 
-import useModalStore from '@stores/useModalStore'
+import useModalStore, { updateModals } from '@stores/useModalStore'
 
 import { BaseModal } from './BaseModal'
 
 export const MigrateStatsModal = () => {
-  const {
-    modals: { isMigrateStatsModalOpen },
-    updateModals,
-  } = useModalStore()
+  const isMigrateStatsModalOpen = useModalStore(
+    (s) => s.modals.isMigrateStatsModalOpen,
+  )
 
   const [isEmigrateVisible, setIsEmigrateVisible] = useState(true)
 

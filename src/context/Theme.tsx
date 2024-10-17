@@ -11,9 +11,7 @@ const Theme: React.FC = () => {
     isHighContrastMode: s.isHighContrastMode,
   }))
 
-  const {
-    modals: { isSettingsModalOpen },
-  } = useModalStore()
+  const isSettingsModalOpen = useModalStore((s) => s.modals.isSettingsModalOpen)
 
   const darkKey = 'dark'
   const highContrastKey = 'high-contrast'

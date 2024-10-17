@@ -30,7 +30,7 @@ import { GameStats, Obj2d } from '@constants/types'
 
 import useClientSettings from '@stores/useClientSettings'
 import useGameSettingsStore from '@stores/useGameSettingsStore'
-import useModalStore from '@stores/useModalStore'
+import useModalStore, { updateModals } from '@stores/useModalStore'
 
 import { getToday } from '@lib/dateutils'
 import { shareStatus } from '@lib/share'
@@ -67,10 +67,7 @@ export const StatsModal = ({
   isHardMode,
   numberOfGuessesMade,
 }: Props) => {
-  const {
-    modals: { isStatsModalOpen },
-    updateModals,
-  } = useModalStore()
+  const isStatsModalOpen = useModalStore((s) => s.modals.isStatsModalOpen)
 
   const { isHighContrastMode, isLongShare } = useClientSettings((s) => ({
     isHighContrastMode: s.isHighContrastMode,

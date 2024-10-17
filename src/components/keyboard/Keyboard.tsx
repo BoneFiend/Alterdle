@@ -38,7 +38,7 @@ export const Keyboard = ({
   const { activateKey, deactivateKey, isKeyActive, deactivateAllKeys } =
     useActiveKeys()
 
-  const { isAnyModalOpen } = useModalStore()
+  const isAnyModalOpen = useModalStore((s) => s.isAnyModalOpen)
 
   const onClick = (value: string) => {
     if (value === 'ENTER') {

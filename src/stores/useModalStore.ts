@@ -5,27 +5,25 @@ import { Modals, defaultModals } from '@constants/types'
 type ModalStore = {
   modals: Modals
   isAnyModalOpen: boolean
-  updateModals: (modals: Partial<Modals>) => void
 }
 
-const useModalStore = create<ModalStore>((set) => {
-  const calculateIsAnyModalOpen = (modals: Modals) =>
-    Object.values(modals).some((value) => value)
+const useModalStore = create<ModalStore>(() => ({
+  modals: defaultModals,
+  isAnyModalOpen: calculateIsAnyModalOpen(defaultModals),
+}))
 
-  return {
-    modals: defaultModals,
-    isAnyModalOpen: calculateIsAnyModalOpen(defaultModals),
+function calculateIsAnyModalOpen(modals: Modals) {
+  return Object.values(modals).some((value) => value)
+}
 
-    updateModals: (newModals: Partial<Modals>) => {
-      set((state) => ({
-        modals: { ...state.modals, ...newModals },
-        isAnyModalOpen: calculateIsAnyModalOpen({
-          ...state.modals,
-          ...newModals,
-        }),
-      }))
-    },
-  }
-})
+export function updateModals(modals: Partial<Modals>) {
+  useModalStore.setState((state) => {
+    const newModals = { ...state.modals, ...modals }
+    return {
+      modals: newModals,
+      isAnyModalOpen: calculateIsAnyModalOpen(newModals),
+    }
+  })
+}
 
 export default useModalStore

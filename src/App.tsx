@@ -42,7 +42,7 @@ import useClientSettings, {
   updateClientSettings,
 } from '@stores/useClientSettings'
 import useFocussedRows from '@stores/useFocussedRows'
-import useModalStore from '@stores/useModalStore'
+import useModalStore, { updateModals } from '@stores/useModalStore'
 
 import { useGameSettings } from '@hooks/useGameSettings'
 
@@ -73,7 +73,7 @@ function App() {
   const { showError: showErrorAlert, showSuccess: showSuccessAlert } =
     useAlert()
 
-  const { isAnyModalOpen, updateModals } = useModalStore()
+  const isAnyModalOpen = useModalStore((s) => s.isAnyModalOpen)
 
   const [currentRowClass, setCurrentRowClass] = useState('')
 

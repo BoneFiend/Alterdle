@@ -28,7 +28,7 @@ import useClientSettings, {
   updateClientSettings,
 } from '@stores/useClientSettings'
 import useGameSettingsStore from '@stores/useGameSettingsStore'
-import useModalStore from '@stores/useModalStore'
+import useModalStore, { updateModals } from '@stores/useModalStore'
 
 import { BaseModal } from './BaseModal'
 
@@ -38,10 +38,7 @@ type Props = {
 }
 
 export const SettingsModal = ({ isHardMode, handleHardMode }: Props) => {
-  const {
-    modals: { isSettingsModalOpen },
-    updateModals,
-  } = useModalStore()
+  const isSettingsModalOpen = useModalStore((s) => s.modals.isSettingsModalOpen)
 
   const isDarkMode = useClientSettings((s) => s.isDarkMode)
 

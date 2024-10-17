@@ -14,7 +14,7 @@ import {
 } from '@constants/strings'
 
 import useGameSettingsStore from '@stores/useGameSettingsStore'
-import useModalStore from '@stores/useModalStore'
+import useModalStore, { updateModals } from '@stores/useModalStore'
 
 import { getToday, getYesterday } from '@lib/dateutils'
 import { setUrl } from '@lib/urlutils'
@@ -23,10 +23,9 @@ import { getLastGameDate, isValidGameDate, periodInDays } from '@lib/words'
 import { BaseModal } from './BaseModal'
 
 export const DatePickerModal = () => {
-  const {
-    modals: { isDatePickerModalOpen },
-    updateModals,
-  } = useModalStore()
+  const isDatePickerModalOpen = useModalStore(
+    (s) => s.modals.isDatePickerModalOpen,
+  )
 
   const { numberOfWords, numberOfLetters, gameDate, setGameDate } =
     useGameSettingsStore()

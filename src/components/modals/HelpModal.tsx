@@ -11,7 +11,7 @@ import { CHALLENGES_DESCRIPTION, LENGTH_DESCRIPTION } from '@constants/strings'
 import { CharStatus } from '@constants/types'
 
 import useGameSettingsStore from '@stores/useGameSettingsStore'
-import useModalStore from '@stores/useModalStore'
+import useModalStore, { updateModals } from '@stores/useModalStore'
 
 import { BaseModal } from './BaseModal'
 
@@ -128,10 +128,7 @@ const tutorials: { [key: number]: TutorialWords } = {
 }
 
 export const HelpModal = () => {
-  const {
-    modals: { isHelpModalOpen },
-    updateModals,
-  } = useModalStore()
+  const isHelpModalOpen = useModalStore((s) => s.modals.isHelpModalOpen)
 
   const {
     numberOfWords,

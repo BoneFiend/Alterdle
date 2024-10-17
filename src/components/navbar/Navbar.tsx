@@ -14,7 +14,7 @@ import { GAME_TITLE } from '@constants/strings'
 
 import useClientSettings from '@stores/useClientSettings'
 import useGameSettingsStore from '@stores/useGameSettingsStore'
-import useModalStore from '@stores/useModalStore'
+import useModalStore, { updateModals } from '@stores/useModalStore'
 
 import cn from '@lib/cn'
 import { getIsLatestGame } from '@lib/words'
@@ -24,10 +24,7 @@ export const Navbar = () => {
 
   const isLatestGame = useMemo(() => getIsLatestGame(gameDate), [gameDate])
 
-  const {
-    updateModals,
-    modals: { isSettingsModalOpen },
-  } = useModalStore()
+  const isSettingsModalOpen = useModalStore((s) => s.modals.isSettingsModalOpen)
 
   const isDarkMode = useClientSettings((s) => s.isDarkMode)
 
