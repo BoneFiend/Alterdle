@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react'
 
 import { DELETE_TEXT, ENTER_TEXT } from '@constants/strings'
 
-import useActiveKeys from '@stores/useActiveKeys'
+import useActiveKeys, {
+  activateKey,
+  deactivateAllKeys,
+  deactivateKey,
+} from '@stores/useActiveKeys'
 import useModalStore from '@stores/useModalStore'
 
 import { getStatuses } from '@lib/statuses'
@@ -35,8 +39,7 @@ export const Keyboard = ({
     if (!isRevealing) setCharStatuses(getStatuses(solution, guesses))
   }, [isRevealing, solution, guesses])
 
-  const { activateKey, deactivateKey, isKeyActive, deactivateAllKeys } =
-    useActiveKeys()
+  const { isKeyActive } = useActiveKeys()
 
   const isAnyModalOpen = useModalStore((s) => s.isAnyModalOpen)
 
