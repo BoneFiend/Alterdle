@@ -72,9 +72,11 @@ export const StatsModal = ({
     updateModals,
   } = useModalStore()
 
-  const {
-    clientSettings: { isHighContrastMode, isLongShare },
-  } = useClientSettings()
+  const { isHighContrastMode, isLongShare } = useClientSettings((s) => ({
+    isHighContrastMode: s.isHighContrastMode,
+    isLongShare: s.isLongShare,
+  }))
+
   const {
     numberOfWords,
     numberOfLetters,

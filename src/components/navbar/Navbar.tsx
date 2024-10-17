@@ -29,9 +29,7 @@ export const Navbar = () => {
     modals: { isSettingsModalOpen },
   } = useModalStore()
 
-  const {
-    clientSettings: { isDarkMode },
-  } = useClientSettings()
+  const isDarkMode = useClientSettings((s) => s.isDarkMode)
 
   return (
     <>

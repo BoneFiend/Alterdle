@@ -26,9 +26,7 @@ export const BaseModal = ({
   handleClose,
   isSettingsModal,
 }: Props) => {
-  const {
-    clientSettings: { isDarkMode },
-  } = useClientSettings()
+  const isDarkMode = useClientSettings((s) => s.isDarkMode)
 
   const { isAnyModalOpen } = useModalStore()
 

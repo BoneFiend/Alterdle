@@ -24,7 +24,9 @@ import {
   LENGTH_DESCRIPTION,
 } from '@constants/strings'
 
-import useClientSettings from '@stores/useClientSettings'
+import useClientSettings, {
+  updateClientSettings,
+} from '@stores/useClientSettings'
 import useGameSettingsStore from '@stores/useGameSettingsStore'
 import useModalStore from '@stores/useModalStore'
 
@@ -41,10 +43,7 @@ export const SettingsModal = ({ isHardMode, handleHardMode }: Props) => {
     updateModals,
   } = useModalStore()
 
-  const {
-    clientSettings: { isDarkMode },
-    updateClientSettings,
-  } = useClientSettings()
+  const isDarkMode = useClientSettings((s) => s.isDarkMode)
 
   const {
     numberOfWords,

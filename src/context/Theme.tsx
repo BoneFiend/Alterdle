@@ -6,9 +6,10 @@ import useModalStore from '@stores/useModalStore'
 import cn from '@lib/cn'
 
 const Theme: React.FC = () => {
-  const {
-    clientSettings: { isDarkMode, isHighContrastMode },
-  } = useClientSettings()
+  const { isDarkMode, isHighContrastMode } = useClientSettings((s) => ({
+    isDarkMode: s.isDarkMode,
+    isHighContrastMode: s.isHighContrastMode,
+  }))
 
   const {
     modals: { isSettingsModalOpen },

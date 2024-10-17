@@ -1,34 +1,32 @@
 import { create } from 'zustand'
 
-import { ClientSettings, defaultClientSettings } from '@constants/types'
+import { defaultClientSettings } from '@constants/types'
+import { ClientSettings } from '@constants/types'
 
 import {
   loadClientSettingsFromLocalStorage,
   saveClientSettingsToLocalStorage,
 } from '@lib/localStorage'
 
-type ClientSettingsStore = {
-  clientSettings: ClientSettings
-  loadClientSettings: () => void
-  updateClientSettings: (clientSettings: Partial<ClientSettings>) => void
+const useClientSettings = create<ClientSettings>(() => defaultClientSettings)
+
+export function updateClientSettings(clientSettings: Partial<ClientSettings>) {
+  useClientSettings.setState((state) => {
+    const newSettings = {
+      ...state,
+      ...clientSettings,
+    }
+
+    saveClientSettingsToLocalStorage(newSettings)
+
+    return newSettings
+  })
 }
 
-const useClientSettings = create<ClientSettingsStore>((set, get) => ({
-  clientSettings: defaultClientSettings,
-
-  loadClientSettings: () => {
-    get().updateClientSettings(loadClientSettingsFromLocalStorage())
-  },
-
-  updateClientSettings: (clientSettings: Partial<ClientSettings>) => {
-    saveClientSettingsToLocalStorage({
-      ...get().clientSettings,
-      ...clientSettings,
-    })
-    set(() => ({
-      clientSettings: { ...get().clientSettings, ...clientSettings },
-    }))
-  },
-}))
+export function loadClientSettings(): ClientSettings {
+  const settings = loadClientSettingsFromLocalStorage()
+  updateClientSettings(settings)
+  return settings
+}
 
 export default useClientSettings

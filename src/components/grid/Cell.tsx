@@ -28,9 +28,7 @@ export const Cell = ({
   numberOfLetters = 1,
   numberOfWords = 1,
 }: Props) => {
-  const {
-    clientSettings: { isPerfMode },
-  } = useClientSettings()
+  const isPerfMode = useClientSettings((s) => s.isPerfMode)
 
   const isFilled = value && !isCompleted
   const shouldReveal = isRevealing && isCompleted

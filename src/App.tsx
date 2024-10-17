@@ -37,7 +37,10 @@ import {
 } from '@constants/strings'
 import { Obj2d, updateObj2d } from '@constants/types'
 
-import useClientSettings from '@stores/useClientSettings'
+import useClientSettings, {
+  loadClientSettings,
+  updateClientSettings,
+} from '@stores/useClientSettings'
 import useFocussedRows from '@stores/useFocussedRows'
 import useModalStore from '@stores/useModalStore'
 
@@ -74,11 +77,7 @@ function App() {
 
   const [currentRowClass, setCurrentRowClass] = useState('')
 
-  const {
-    clientSettings: { isHardModePreferred },
-    loadClientSettings,
-    updateClientSettings,
-  } = useClientSettings()
+  const isHardModePreferred = useClientSettings((s) => s.isHardModePreferred)
 
   const { isRowFocussed, focusRow, unfocusEarliestRow, unfocusAllRows } =
     useFocussedRows()

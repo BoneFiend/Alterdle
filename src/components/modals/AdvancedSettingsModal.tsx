@@ -15,7 +15,9 @@ import {
   PERFORMANCE_MODE_DESCRIPTION,
 } from '@constants/strings'
 
-import useClientSettings from '@stores/useClientSettings'
+import useClientSettings, {
+  updateClientSettings,
+} from '@stores/useClientSettings'
 import useModalStore from '@stores/useModalStore'
 
 export const AdvancedSettingsModal = () => {
@@ -24,10 +26,13 @@ export const AdvancedSettingsModal = () => {
     updateModals,
   } = useModalStore()
 
-  const {
-    clientSettings: { isLongShare, isHighContrastMode, isPerfMode },
-    updateClientSettings,
-  } = useClientSettings()
+  const { isLongShare, isHighContrastMode, isPerfMode } = useClientSettings(
+    (s) => ({
+      isLongShare: s.isLongShare,
+      isHighContrastMode: s.isHighContrastMode,
+      isPerfMode: s.isPerfMode,
+    }),
+  )
 
   const handleMigrateStatsButton = () => {
     updateModals({
