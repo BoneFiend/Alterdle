@@ -11,48 +11,45 @@ import {
 interface GameSettings {
   numberOfWords: number
   numberOfLetters: number
-  setNumberOfWords: (numberOfWords: number) => void
-  setNumberOfLetters: (numberOfLetters: number) => void
   gameDate: Date
-  setGameDate: (gameDate: Date) => void
-  onUpdate: () => void
 }
 
-const useGameSettingsStore = create<GameSettings>((set, get) => {
-  let gameSettingsTimer: NodeJS.Timeout | null = null
+const useGameSettingsStore = create<GameSettings>(() => ({
+  numberOfWords: loadNumberOfWords(),
+  numberOfLetters: loadNumberOfLetters(),
+  gameDate: loadGameDate(),
+}))
 
-  return {
-    numberOfWords: loadNumberOfWords(),
-    numberOfLetters: loadNumberOfLetters(),
-    gameDate: loadGameDate(),
+export function setNumberOfWords(numberOfWords: number) {
+  useGameSettingsStore.setState(() => ({ numberOfWords }))
+  onUpdate()
+}
 
-    setNumberOfWords: (numberOfWords: number) => {
-      set({ numberOfWords })
-      get().onUpdate()
-    },
+export function setNumberOfLetters(numberOfLetters: number) {
+  useGameSettingsStore.setState((state) => {
+    if (numberOfLetters === 1 && state.numberOfWords > 2) {
+      // Ensures only 2 challenges can be played at once with 2 letters
+      return { numberOfLetters, numberOfWords: 2 }
+    }
+    return { numberOfLetters }
+  })
+  onUpdate()
+}
 
-    setNumberOfLetters: (numberOfLetters: number) => {
-      if (numberOfLetters === 1 && get().numberOfWords > 2) {
-        // Ensures only 2 challenges can be played at once with 2 letters
-        set({ numberOfWords: 2 })
-      }
-      set({ numberOfLetters })
-      get().onUpdate()
-    },
+export function setGameDate(gameDate: Date) {
+  useGameSettingsStore.setState(() => ({ gameDate }))
+  onUpdate()
+}
 
-    setGameDate: (gameDate: Date) => {
-      set({ gameDate })
-      get().onUpdate()
-    },
-
-    onUpdate: () => {
-      if (gameSettingsTimer) clearTimeout(gameSettingsTimer)
-      gameSettingsTimer = setTimeout(() => {
-        setUrl(get().numberOfWords, get().numberOfLetters, get().gameDate)
-        setWindowTitle(get().numberOfWords, get().numberOfLetters)
-      }, 1000)
-    },
-  }
-})
+let gameSettingsTimer: NodeJS.Timeout | null = null
+function onUpdate() {
+  if (gameSettingsTimer) clearTimeout(gameSettingsTimer)
+  gameSettingsTimer = setTimeout(() => {
+    const { numberOfWords, numberOfLetters, gameDate } =
+      useGameSettingsStore.getState()
+    setUrl(numberOfWords, numberOfLetters, gameDate)
+    setWindowTitle(numberOfWords, numberOfLetters)
+  }, 1000)
+}
 
 export default useGameSettingsStore

@@ -13,7 +13,7 @@ import {
   DATEPICKER_TODAY_TEXT,
 } from '@constants/strings'
 
-import useGameSettingsStore from '@stores/useGameSettingsStore'
+import useGameSettingsStore, { setGameDate } from '@stores/useGameSettingsStore'
 import useModalStore, { updateModals } from '@stores/useModalStore'
 
 import { getToday, getYesterday } from '@lib/dateutils'
@@ -27,8 +27,13 @@ export const DatePickerModal = () => {
     (s) => s.modals.isDatePickerModalOpen,
   )
 
-  const { numberOfWords, numberOfLetters, gameDate, setGameDate } =
-    useGameSettingsStore()
+  const { numberOfWords, numberOfLetters, gameDate } = useGameSettingsStore(
+    (s) => ({
+      numberOfWords: s.numberOfWords,
+      numberOfLetters: s.numberOfLetters,
+      gameDate: s.gameDate,
+    }),
+  )
 
   const lastGameDate = getLastGameDate(getYesterday())
   const [selectedDate, setSelectedDate] = useState(() => {

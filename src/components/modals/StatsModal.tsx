@@ -29,7 +29,10 @@ import {
 import { GameStats, Obj2d } from '@constants/types'
 
 import useClientSettings from '@stores/useClientSettings'
-import useGameSettingsStore from '@stores/useGameSettingsStore'
+import useGameSettingsStore, {
+  setNumberOfLetters,
+  setNumberOfWords,
+} from '@stores/useGameSettingsStore'
 import useModalStore, { updateModals } from '@stores/useModalStore'
 
 import { getToday } from '@lib/dateutils'
@@ -74,13 +77,13 @@ export const StatsModal = ({
     isLongShare: s.isLongShare,
   }))
 
-  const {
-    numberOfWords,
-    numberOfLetters,
-    setNumberOfWords,
-    setNumberOfLetters,
-    gameDate,
-  } = useGameSettingsStore()
+  const { numberOfWords, numberOfLetters, gameDate } = useGameSettingsStore(
+    (s) => ({
+      numberOfWords: s.numberOfWords,
+      numberOfLetters: s.numberOfLetters,
+      gameDate: s.gameDate,
+    }),
+  )
 
   const maxChallenges = useMemo(() => {
     return calculateMaxChallenges(numberOfWords)

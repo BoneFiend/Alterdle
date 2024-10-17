@@ -27,7 +27,10 @@ import {
 import useClientSettings, {
   updateClientSettings,
 } from '@stores/useClientSettings'
-import useGameSettingsStore from '@stores/useGameSettingsStore'
+import useGameSettingsStore, {
+  setNumberOfLetters,
+  setNumberOfWords,
+} from '@stores/useGameSettingsStore'
 import useModalStore, { updateModals } from '@stores/useModalStore'
 
 import { BaseModal } from './BaseModal'
@@ -42,12 +45,10 @@ export const SettingsModal = ({ isHardMode, handleHardMode }: Props) => {
 
   const isDarkMode = useClientSettings((s) => s.isDarkMode)
 
-  const {
-    numberOfWords,
-    numberOfLetters,
-    setNumberOfWords,
-    setNumberOfLetters,
-  } = useGameSettingsStore()
+  const { numberOfWords, numberOfLetters } = useGameSettingsStore((s) => ({
+    numberOfWords: s.numberOfWords,
+    numberOfLetters: s.numberOfLetters,
+  }))
 
   const handleChooseDateButton = () => {
     updateModals({

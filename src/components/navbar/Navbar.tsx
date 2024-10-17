@@ -20,7 +20,13 @@ import cn from '@lib/cn'
 import { getIsLatestGame } from '@lib/words'
 
 export const Navbar = () => {
-  const { numberOfWords, numberOfLetters, gameDate } = useGameSettingsStore()
+  const { numberOfWords, numberOfLetters, gameDate } = useGameSettingsStore(
+    (s) => ({
+      numberOfWords: s.numberOfWords,
+      numberOfLetters: s.numberOfLetters,
+      gameDate: s.gameDate,
+    }),
+  )
 
   const isLatestGame = useMemo(() => getIsLatestGame(gameDate), [gameDate])
 

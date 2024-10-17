@@ -6,7 +6,13 @@ import useModalStore from '@stores/useModalStore'
 
 export function useGameSettings() {
   // A performance wrapper for useGameSettingsStore
-  const { numberOfWords, numberOfLetters, gameDate } = useGameSettingsStore()
+  const { numberOfWords, numberOfLetters, gameDate } = useGameSettingsStore(
+    (s) => ({
+      numberOfWords: s.numberOfWords,
+      numberOfLetters: s.numberOfLetters,
+      gameDate: s.gameDate,
+    }),
+  )
 
   const isPerfMode = useClientSettings((s) => s.isPerfMode)
 
