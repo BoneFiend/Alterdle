@@ -14,7 +14,7 @@ export const Progress = ({
   isCurrentDayStatRow,
 }: Props) => {
   const currentRowClass = cn(
-    'text-xs font-medium text-white text-center p-0.5',
+    'p-0.5 text-center text-xs font-medium text-white',
     {
       'bg-accent': isCurrentDayStatRow,
       'bg-accent-disabled': !isCurrentDayStatRow,

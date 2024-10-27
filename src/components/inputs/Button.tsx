@@ -5,13 +5,13 @@ import { type VariantProps, cva } from 'class-variance-authority'
 import cn from '@lib/cn'
 
 const variants = cva(
-  'inline-flex items-center justify-center shadow-sm text-white dark:text-secondary bg-accent hover:bg-accent-deep active:bg-accent-deeper disabled:bg-accent-disabled',
+  'inline-flex items-center justify-center bg-accent text-white shadow-sm hover:bg-accent-deep active:bg-accent-deeper disabled:bg-accent-disabled dark:text-secondary',
   {
     variants: {
       variant: {
         default:
           'w-full rounded-xl border border-transparent px-7 py-2 text-center',
-        basic: 'p-1 rounded',
+        basic: 'rounded p-1',
       },
     },
     defaultVariants: {
