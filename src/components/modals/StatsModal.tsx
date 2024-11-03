@@ -116,7 +116,7 @@ export const StatsModal = ({
         numberOfLetters={numberOfLetters}
         maxChallenges={maxChallenges}
       />
-      <div className="divide-/50 -mb-3 flex flex-col divide-y">
+      <div className="-mb-3 flex flex-col divide-y divide-ui-main/50">
         <SettingsSlider
           settingName="Word Length"
           value={numberOfLetters}
