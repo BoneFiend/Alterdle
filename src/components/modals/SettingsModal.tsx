@@ -75,7 +75,7 @@ export const SettingsModal = ({ isHardMode, handleHardMode }: Props) => {
       handleClose={handleClose}
       isSettingsModal
     >
-      <div className="-mb-3 mt-2 flex flex-col divide-y divide-secondary-2">
+      <div className="-mb-3 mt-2 flex flex-col divide-y divide-ui-main/50">
         <SettingsSlider
           settingName="Word Length"
           value={numberOfLetters}
@@ -123,6 +123,7 @@ export const SettingsModal = ({ isHardMode, handleHardMode }: Props) => {
           description={ADVANCED_SETTINGS_DESC}
           onClick={handleAdvancedSettingsButton}
           buttonText={ADVANCED_SETTINGS_BUTTON}
+          priority="secondary"
         />
       </div>
     </BaseModal>

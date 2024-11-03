@@ -99,10 +99,9 @@ export const DatePickerModal = () => {
             nextMonthButtonDisabled,
           }) => (
             <div className="flex items-center justify-between px-2 py-2">
-              <span className="text-lg text-gray-700 dark:text-gray-100">
+              <span className="text-lg text-ui-main">
                 {format(date, headingDateFormat, formatOptions)}
               </span>
-
               <div className="space-x-2">
                 <Button
                   variant="basic"
@@ -123,13 +122,14 @@ export const DatePickerModal = () => {
           )}
         />
       </div>
-      <p className="mt-1 text-sm text-secondary">
+      <p className="mt-1 text-sm text-ui-main">
         Only your guesses from today's Alterdle will be saved.
       </p>
       <div className="mt-2 flex columns-2 items-stretch justify-center gap-2">
         <Button
           disabled={!isValidGameDate(getToday())}
           onClick={() => handleSelectDate(getToday())}
+          priority="secondary"
         >
           {DATEPICKER_CHOOSE_TEXT} {DATEPICKER_TODAY_TEXT}
         </Button>

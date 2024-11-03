@@ -19,16 +19,16 @@ export const SettingsSlider = ({
 }: Props) => {
   return (
     <div className="flex justify-between gap-4 py-3">
-      <div className="text-left text-secondary transition-colors duration-500">
+      <div className="text-left text-ui-main transition-colors duration-500">
         <p className="leading-none">{settingName}</p>
         {description && (
-          <p className="mt-1 text-xs text-secondary transition-colors duration-500">
+          <p className="mt-1 text-xs text-ui-main transition-colors duration-500">
             {description}
           </p>
         )}
       </div>
       <div className="flex gap-3">
-        <p className="text-secondary transition-colors duration-500">{value}</p>
+        <p className="text-ui-main transition-colors duration-500">{value}</p>
         <Slider
           aria-label={settingName}
           minValue={minValue}
@@ -42,8 +42,8 @@ export const SettingsSlider = ({
           classNames={{
             filler: 'transition-colors duration-500',
             thumb:
-              'hover:bg-accent-deep data-[dragging=true]:bg-accent-deeper hover:duration-0 active:bg-accent-deeper transition-colors duration-500 after:bg-white dark:after:bg-secondary',
-            track: 'bg-accent-disabled transition-colors duration-500',
+              'hover:bg-ui-primary-deep data-[dragging=true]:bg-ui-primary-deeper hover:duration-0 active:bg-ui-primary-deeper transition-colors duration-500 after:bg-white dark:after:bg-ui-main',
+            track: 'bg-ui-primary-disabled transition-colors duration-500',
             step: 'transition-colors duration-500',
           }}
         />

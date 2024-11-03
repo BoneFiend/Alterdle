@@ -44,11 +44,11 @@ const Theme: React.FC = () => {
     'fixed mt-12 h-[calc(100vh-3rem)] w-full sm:mt-16 sm:h-[calc(100vh-4rem)]'
 
   return (
-    <div className="fixed h-full w-full bg-primary-1 transition-colors duration-500">
+    <div className="bg-ui-foundation-1 fixed h-full w-full transition-colors duration-500">
       {(!isDarkMode || isSettingsModalOpen) && (
         <div
           className={cn(
-            'h-full bg-gradient-to-b from-primary-1-light-mode to-primary-2-light-mode',
+            'h-full bg-gradient-to-b from-ui-foundation-1-light-mode to-ui-foundation-2-light-mode',
             classes,
           )}
         />
@@ -56,7 +56,7 @@ const Theme: React.FC = () => {
       {(isDarkMode || isSettingsModalOpen) && (
         <div
           className={cn(
-            'bg-gradient-to-b from-primary-1-dark-mode to-primary-2-dark-mode opacity-0 transition-opacity duration-500 dark:opacity-100',
+            'bg-gradient-to-b from-ui-foundation-1-dark-mode to-ui-foundation-2-dark-mode opacity-0 transition-opacity duration-500 dark:opacity-100',
             classes,
             isSettingsModalOpen && 'will-change-[opacity]',
           )}

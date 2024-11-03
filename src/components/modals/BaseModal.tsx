@@ -64,7 +64,7 @@ export const BaseModal = ({
               <div
                 className={cn(
                   'fixed h-full w-full',
-                  'bg-gradient-to-tl from-primary-1-light-mode to-primary-2-light-mode',
+                  'bg-gradient-to-tl from-ui-foundation-1-light-mode to-ui-foundation-2-light-mode',
                 )}
               />
             )}
@@ -72,7 +72,7 @@ export const BaseModal = ({
               <div
                 className={cn(
                   'fixed h-full w-full transition-colors duration-500 ease-in-out',
-                  'bg-gradient-to-tl from-primary-1-dark-mode to-primary-2-dark-mode',
+                  'bg-gradient-to-tl from-ui-foundation-1-dark-mode to-ui-foundation-2-dark-mode',
                   'opacity-0 transition-opacity duration-500 dark:opacity-100',
                 )}
               />
@@ -84,14 +84,14 @@ export const BaseModal = ({
                 aria-pressed="false"
                 className="absolute right-4 top-4 z-50"
               >
-                <XCircleIcon className="h-6 w-6 cursor-pointer stroke-blank transition-colors duration-500" />
+                <XCircleIcon className="h-6 w-6 cursor-pointer stroke-ui-main transition-colors duration-500" />
               </button>
               <div className="relative">
                 <div>
                   <div className="text-center">
                     <DialogTitle
                       as="h3"
-                      className="text-xl font-semibold leading-6 text-blank transition-colors duration-500"
+                      className="text-xl font-semibold leading-6 text-ui-main transition-colors duration-500"
                     >
                       {title}
                     </DialogTitle>

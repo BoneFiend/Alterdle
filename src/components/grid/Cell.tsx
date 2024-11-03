@@ -47,8 +47,8 @@ export const Cell = ({
       'h-6 w-8 text-2xl md:h-10 md:w-14 md:text-4xl':
         crampedGrids && !helpModal && !isFocussed,
       'h-10 w-10 text-3xl sm:h-14 sm:text-4xl': helpModal,
-      'border-cell-deep': !status || (!value && status === 'null'), // empty cell
-      'border-cell-border-value text-blank': value && status === 'null',
+      'border-cell-border/50': !status || (!value && status === 'null'), // empty cell
+      'border-cell-border text-ui-main': value && status === 'null',
       'shadowed border-absent bg-absent text-white': status === 'absent',
       'shadowed border-correct bg-correct text-white': status === 'correct',
       'shadowed border-present bg-present text-white': status === 'present',

@@ -18,12 +18,12 @@ export const SettingsToggle = ({
   const toggleHolder = cn(
     'flex h-8 w-14 shrink-0 items-center rounded-full p-1 duration-300 ease-in-out dark:shadow-lg',
     {
-      'bg-accent': flag && !disabled,
-      'bg-accent-disabled': !flag || disabled,
+      'bg-ui-primary': flag && !disabled,
+      'bg-ui-primary-disabled': !flag || disabled,
     },
   )
   const toggleButton = cn(
-    'h-6 w-6 rounded-full bg-white shadow-lg transition-all duration-300 ease-in-out dark:text-secondary',
+    'h-6 w-6 rounded-full bg-white shadow-lg transition-all duration-300 ease-in-out dark:text-ui-main',
     {
       'translate-x-6': flag,
       'opacity-10': disabled,
@@ -32,10 +32,10 @@ export const SettingsToggle = ({
 
   return (
     <div className="flex justify-between gap-4 py-3">
-      <div className="text-left text-secondary transition-colors duration-500">
+      <div className="text-left text-ui-main transition-colors duration-500">
         <p className="leading-none">{settingName}</p>
         {description && (
-          <p className="mt-1 text-xs text-secondary transition-colors duration-500">
+          <p className="mt-1 text-xs text-ui-main transition-colors duration-500">
             {description}
           </p>
         )}

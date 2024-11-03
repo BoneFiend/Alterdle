@@ -13,10 +13,8 @@ type Props = {
 export const Alert = ({ isOpen, message, variant = 'error' }: Props) => {
   const classes = cn(
     'pointer-events-auto fixed left-1/2 top-14 z-20 max-w-sm -translate-x-1/2 transform overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5',
-    {
-      'bg-incorrect text-white': variant === 'error',
-      'bg-blue-500 text-white': variant === 'success',
-    },
+    variant === 'error' && 'bg-incorrect text-white',
+    variant === 'success' && 'bg-blue text-white',
   )
 
   return (

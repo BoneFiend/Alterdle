@@ -27,14 +27,14 @@ export const MigrateStatsModal = () => {
       isOpen={isMigrateStatsModalOpen}
       handleClose={handleClose}
     >
-      <p className="mb-4 mt-4 text-sm text-secondary">
+      <p className="mb-4 mt-4 text-sm text-ui-main">
         Copy the migration code on your old device and paste into the input on
         the new device.
       </p>
 
       <div className="mb-3 w-full columns-3 gap-0">
         <div className="mb-4 flex items-center">
-          <p className="mb-0 flex text-sm font-medium text-secondary">
+          <p className="mb-0 flex text-sm font-medium text-ui-main">
             This is my:
           </p>
         </div>
@@ -47,11 +47,11 @@ export const MigrateStatsModal = () => {
             type="radio"
             value=""
             name="emigrate-radio-button"
-            className="h-4 w-4 text-accent focus:ring-2 focus:ring-accent focus:ring-offset-primary-2"
+            className="h-4 w-4 text-accent focus:ring-2 focus:ring-accent focus:ring-offset-ui-foundation-2"
           />
           <label
             htmlFor="emigrate-radio-button"
-            className="ml-2 text-sm font-medium text-blank"
+            className="ml-2 text-sm font-medium text-ui-main"
           >
             old device
           </label>
@@ -65,11 +65,11 @@ export const MigrateStatsModal = () => {
             type="radio"
             value=""
             name="immigrate-radio-button"
-            className="h-4 w-4 text-accent focus:ring-2 focus:ring-accent focus:ring-offset-primary-2"
+            className="h-4 w-4 text-accent focus:ring-2 focus:ring-accent focus:ring-offset-ui-foundation-2"
           />
           <label
             htmlFor="immigrate-radio-button"
-            className="ml-2 text-sm font-medium text-blank"
+            className="ml-2 text-sm font-medium text-ui-main"
           >
             new device
           </label>

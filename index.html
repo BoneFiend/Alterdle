@@ -45,20 +45,23 @@
     </script>
     <style>
       body {
-        background: #f68dc4;
+        background: rgb(250, 107, 226);
         margin: 0;
       }
       :root {
-        --abs: #584442;
-        --cor: #03b54d;
-        --pre: #f2c618;
+        --abs: rgb(61, 41, 50);
+        --cor: rgb(3, 181, 77);
+        --pre: rgb(242, 198, 24);
       }
       .dark body {
-        --abs: #251f18e6;
-        background: #4a044e;
+        --abs: rgb(29, 22, 23);
+        background: rgb(76 2 86);
       }
       .a {
-        background-image: linear-gradient(#f68dc4, #fbdbed);
+        background-image: linear-gradient(
+          rgb(250, 107, 226),
+          rgb(252, 181, 240)
+        );
         height: 100dvh;
         width: 100dvw;
         display: flex;
@@ -66,7 +69,7 @@
         align-items: center;
       }
       .dark .a {
-        background-image: linear-gradient(#4a044e, #5e455c);
+        background-image: linear-gradient(rgb(76 2 86), rgb(95 63 100));
       }
       .c {
         height: 44px;

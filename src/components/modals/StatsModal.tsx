@@ -102,7 +102,7 @@ export const StatsModal = ({
         numberOfWords={numberOfWords}
         numberOfLetters={numberOfLetters}
       />
-      <h4 className="text-lg font-medium leading-6 text-blank">
+      <h4 className="text-lg font-medium leading-6 text-ui-main">
         {GUESS_DISTRIBUTION_TEXT}
       </h4>
       <Histogram
@@ -116,7 +116,7 @@ export const StatsModal = ({
         numberOfLetters={numberOfLetters}
         maxChallenges={maxChallenges}
       />
-      <div className="-mb-3 flex flex-col divide-y divide-secondary-2">
+      <div className="divide-/50 -mb-3 flex flex-col divide-y">
         <SettingsSlider
           settingName="Word Length"
           value={numberOfLetters}
@@ -144,7 +144,7 @@ export const StatsModal = ({
                   <div className="grid gap-1">
                     <div>{NEW_WORD_TEXT(solution)}</div>
                     <Countdown
-                      className="text-lg font-medium text-secondary"
+                      className="text-lg font-medium text-ui-main"
                       date={getNextGameDate(getToday())}
                       daysInHours={true}
                     />

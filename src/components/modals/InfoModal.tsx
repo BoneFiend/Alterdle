@@ -20,7 +20,7 @@ export const InfoModal = () => {
       isOpen={isInfoModalOpen}
       handleClose={handleClose}
     >
-      <p className="mt-2 text-sm text-secondary">
+      <p className="mt-2 text-sm text-ui-main">
         Alterdle is a fully customisable word guessing game.
         <br />
         <br />
@@ -35,7 +35,7 @@ export const InfoModal = () => {
         unique daily puzzles!!
       </p>
       <br />
-      <p className="text-sm text-secondary">
+      <p className="text-sm text-ui-main">
         This game chooses words at random, so it will occasionally choose
         obscure or inappropriate ones. If you find a particularly offensive word
         please consider contributing to the project, or contact me on{' '}
@@ -49,7 +49,7 @@ export const InfoModal = () => {
         </a>
         .{' '}
       </p>
-      <p className="mt-6 text-sm italic text-secondary">
+      <p className="mt-6 text-sm italic text-ui-main">
         Check out the code for Alterdle{' '}
         <a
           href="https://github.com/BoneFiend/alterdle"

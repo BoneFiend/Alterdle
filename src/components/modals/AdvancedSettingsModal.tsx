@@ -53,7 +53,7 @@ export const AdvancedSettingsModal = () => {
       handleClose={handleClose}
       isSettingsModal
     >
-      <div className="-mb-2 mt-2 flex flex-col divide-y divide-secondary-2">
+      <div className="-mb-2 mt-2 flex flex-col divide-y divide-ui-main/50">
         <SettingsToggle
           settingName="Long Format Share Text"
           flag={isLongShare}
@@ -81,6 +81,7 @@ export const AdvancedSettingsModal = () => {
             onClick={handleMigrateStatsButton}
             Icon={LogoutIcon}
             buttonText={MIGRATE_BUTTON_TEXT}
+            priority="secondary"
           />
         )}
       </div>

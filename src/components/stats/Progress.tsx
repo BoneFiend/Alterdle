@@ -14,12 +14,10 @@ export const Progress = ({
   isCurrentDayStatRow,
 }: Props) => {
   const currentRowClass = cn(
-    'p-0.5 text-center text-xs font-medium text-white',
-    {
-      'bg-accent': isCurrentDayStatRow,
-      'bg-accent-disabled': !isCurrentDayStatRow,
-    },
+    'bg-ui-primary-disabled p-0.5 text-center text-xs font-medium text-white',
+    isCurrentDayStatRow && 'bg-accent font-bold dark:text-ui-foundation',
   )
+
   return (
     <div className="justify-left m-1 flex">
       <div className="w-2 items-center justify-center">{index}</div>

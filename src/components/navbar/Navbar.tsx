@@ -38,8 +38,8 @@ export const Navbar = () => {
     <>
       <nav
         className={cn(
-          'flex h-12 select-none items-center justify-between border-b-2 border-secondary-2 px-2 transition-[height,border-color] duration-500 sm:h-16 short:h-auto',
-          '[&_svg]:h-7 [&_svg]:w-7 [&_svg]:cursor-pointer [&_svg]:stroke-secondary [&_svg]:transition-[height,stroke] [&_svg]:sm:h-8 [&_svg]:sm:w-8 [&_svg]:short:h-7 [&_svg]:short:w-7',
+          'flex h-12 select-none items-center justify-between border-b-2 border-ui-main/50 bg-ui-foundation px-2 transition-[height,border-color,background-color] duration-500 sm:h-16 short:h-auto',
+          '[&_svg]:h-7 [&_svg]:w-7 [&_svg]:cursor-pointer [&_svg]:stroke-ui-main [&_svg]:transition-[height,stroke] [&_svg]:sm:h-8 [&_svg]:sm:w-8 [&_svg]:short:h-7 [&_svg]:short:w-7',
           '[&_*]:duration-500',
         )}
       >
@@ -51,9 +51,9 @@ export const Navbar = () => {
             onClick={() => updateModals({ isHelpModalOpen: true })}
           />
         </div>
-        <p className="text-2xl font-bold text-secondary transition-[color,font-size] sm:text-4xl short:text-xl">
+        <h2 className="text-2xl font-bold text-ui-main transition-[color,font-size] sm:text-4xl short:text-xl">
           {GAME_TITLE} {numberOfWords}x{numberOfLetters}
-        </p>
+        </h2>
         <div className="flex gap-3">
           <ChartBarIcon
             onClick={() => updateModals({ isStatsModalOpen: true })}
@@ -66,8 +66,8 @@ export const Navbar = () => {
       <hr className="opacity-0" />
       {!isLatestGame && (
         <div className="my-1 flex items-center justify-center sm:mt-2">
-          <CalendarIcon className="h-6 w-6 stroke-secondary" />
-          <p className="ml-1 text-base text-secondary">
+          <CalendarIcon className="h-6 w-6 stroke-ui-main" />
+          <p className="ml-1 text-base text-ui-main">
             {format(gameDate, 'd MMMM yyyy', { locale: DATE_LOCALE })}
           </p>
         </div>
@@ -79,10 +79,10 @@ export const Navbar = () => {
         )}
       >
         {(!isDarkMode || isSettingsModalOpen) && (
-          <div className="bg-gradient-to-b from-primary-1-light-mode to-transparent opacity-100 dark:opacity-0" />
+          <div className="bg-gradient-to-b from-ui-foundation-1-light-mode to-transparent opacity-100 dark:opacity-0" />
         )}
         {(isDarkMode || isSettingsModalOpen) && (
-          <div className="bg-gradient-to-b from-primary-1-dark-mode to-transparent opacity-0 dark:opacity-100" />
+          <div className="bg-gradient-to-b from-ui-foundation-1-dark-mode to-transparent opacity-0 dark:opacity-100" />
         )}
       </div>
     </>

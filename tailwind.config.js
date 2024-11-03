@@ -7,55 +7,59 @@ module.exports = {
   ],
   darkMode: 'class',
   theme: {
+    colors: {
+      'ui-foundation': {
+        DEFAULT: 'rgb(var(--foundation))',
+        2: 'rgb(var(--foundation-2))',
+        '1-light-mode': 'rgb(var(--foundation-light-mode))',
+        '2-light-mode': 'rgb(var(--foundation-2-light-mode))',
+        '1-dark-mode': 'rgb(var(--foundation-dark-mode))',
+        '2-dark-mode': 'rgb(var(--foundation-2-dark-mode))',
+        light: 'rgb(var(--foundation-light))',
+      },
+      'ui-primary': {
+        DEFAULT: 'rgb(var(--primary))',
+        deep: 'rgb(var(--primary-deep))',
+        deeper: 'rgb(var(--primary-deeper))',
+        disabled: 'rgb(var(--primary-disabled))',
+      },
+      'ui-secondary': {
+        DEFAULT: 'rgb(var(--secondary))',
+        light: 'rgb(var(--secondary-light))',
+        deep: 'rgb(var(--secondary-deep))',
+        deeper: 'rgb(var(--secondary-deeper))',
+      },
+      'ui-main': 'rgb(var(--main))',
+      accent: 'rgb(var(--accent))',
+      'cell-border': 'rgb(var(--cell-border))',
+      absent: 'rgb(var(--absent))',
+      correct: {
+        DEFAULT: 'rgb(var(--correct))',
+        deep: 'rgb(var(--correct-deep))',
+        deeper: 'rgb(var(--correct-deeper))',
+      },
+      present: {
+        DEFAULT: 'rgb(var(--present))',
+        deep: 'rgb(var(--present-deep))',
+        deeper: 'rgb(var(--present-deeper))',
+      },
+      incorrect: 'rgb(var(--incorrect))',
+      key: {
+        DEFAULT: 'rgb(var(--key))',
+        deep: 'rgb(var(--key-deep))',
+        deeper: 'rgb(var(--key-deeper))',
+      },
+      transparent: 'transparent',
+      black: '#000000',
+      white: '#ffffff',
+      red: 'rgb(255, 0, 0)',
+      blue: '#3b82f6',
+    },
     extend: {
       screens: {
         short: { raw: '(max-height: 650px)' },
         xshort: { raw: '(max-height: 560px)' },
         xxshort: { raw: '(max-height: 490px)' },
-      },
-      colors: {
-        primary: {
-          1: 'var(--primary-1)',
-          2: 'var(--primary-2)',
-          '1-light-mode': 'var(--primary-1-light-mode)',
-          '2-light-mode': 'var(--primary-2-light-mode)',
-          '1-dark-mode': 'var(--primary-1-dark-mode)',
-          '2-dark-mode': 'var(--primary-2-dark-mode)',
-          light: 'var(--primary-light)',
-        },
-        secondary: {
-          DEFAULT: 'var(--secondary-1)',
-          2: 'var(--secondary-2)',
-        },
-        accent: {
-          DEFAULT: 'var(--accent)',
-          light: 'var(--accent-light)',
-          deep: 'var(--accent-deep)',
-          deeper: 'var(--accent-deeper)',
-          disabled: 'var(--accent-disabled)',
-        },
-        cell: {
-          deep: 'var(--cell-border)',
-          'border-value': 'var(--cell-border-value)',
-        },
-        blank: 'var(--blank)',
-        absent: 'var(--absent)',
-        correct: {
-          DEFAULT: 'var(--correct)',
-          deep: 'var(--correct-deep)',
-          deeper: 'var(--correct-deeper)',
-        },
-        present: {
-          DEFAULT: 'var(--present)',
-          deep: 'var(--present-deep)',
-          deeper: 'var(--present-deeper)',
-        },
-        incorrect: 'var(--incorrect)',
-        key: {
-          DEFAULT: 'var(--key)',
-          deep: 'var(--key-deep)',
-          deeper: 'var(--key-deeper)',
-        },
       },
       keyframes: {
         'cell-fill': {
@@ -67,14 +71,14 @@ module.exports = {
           '0%': {
             transform: 'rotateX(0deg)',
             backgroundColor: 'transparent',
-            borderColor: 'var(--cell-border-value)',
-            color: 'var(--blank)',
+            borderColor: 'rgb(var(--cell-border))',
+            color: 'rgb(var(--ui-main))',
             'text-shadow': '0px 0px 0px #000000',
           },
           '50%': {
             backgroundColor: 'transparent',
-            borderColor: 'var(--cell-border-value)',
-            color: 'var(--blank)',
+            borderColor: 'rgb(var(--cell-border))',
+            color: 'rgb(var(--ui-main))',
             'text-shadow': '0px 0px 0px #000000',
           },
           '50.1%': {
@@ -88,8 +92,8 @@ module.exports = {
           '0%': {
             transform: 'rotateX(0deg)',
             backgroundColor: 'transparent',
-            borderColor: 'var(--cell-border-value)',
-            color: 'var(--blank)',
+            borderColor: 'rgb(var(--cell-border))',
+            color: 'rgb(var(--ui-main))',
             opacity: 0,
             maxHeight: '0rem',
             paddingTop: 0,
@@ -98,8 +102,8 @@ module.exports = {
           },
           '50%': {
             backgroundColor: 'transparent',
-            borderColor: 'var(--cell-border-value)',
-            color: 'var(--blank)',
+            borderColor: 'rgb(var(--cell-border))',
+            color: 'rgb(var(--ui-main))',
             opacity: 0,
             maxHeight: '3.5rem',
           },
@@ -139,12 +143,12 @@ module.exports = {
       themes: {
         light: {
           colors: {
-            warning: 'rgba(111, 6, 116)', // This is actually the accent colour
+            warning: 'rgba(121, 1, 142)', // This is actually the primary colour
           },
         },
         dark: {
           colors: {
-            warning: 'rgba(255, 93, 115)',
+            warning: 'rgba(234, 115, 254)',
           },
         },
       },

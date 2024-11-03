@@ -22,7 +22,7 @@ const StatItem = ({
   value: string | number
 }) => {
   return (
-    <div className="m-1 w-1/4 items-center justify-center text-blank">
+    <div className="m-1 w-1/4 items-center justify-center text-ui-main">
       <div className="text-3xl font-bold">{value}</div>
       <div className="text-xs">{label}</div>
     </div>
