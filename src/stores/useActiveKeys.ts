@@ -1,31 +1,29 @@
 import { create } from 'zustand'
 
-interface ActiveKeys {
-  activeKeys: string[]
-  isKeyActive: (key: string) => boolean
+interface ActiveKeysState {
+  activeKeys: Record<string, boolean>
 }
 
 const keyTimeouts: { [key: string]: NodeJS.Timeout | null } = {}
 
-const useActiveKeys = create<ActiveKeys>((_, get) => ({
-  activeKeys: [],
-
-  isKeyActive: (key: string) => {
-    const { activeKeys } = get()
-    return activeKeys.includes(key)
-  },
+const useActiveKeys = create<ActiveKeysState>(() => ({
+  activeKeys: {},
 }))
+
+export function useIsKeyActive(key: string) {
+  return useActiveKeys((state) => state.activeKeys[key] || false)
+}
 
 export function activateKey(key: string) {
   useActiveKeys.setState((state) => {
-    if (!state.activeKeys.includes(key)) {
+    if (!state.activeKeys[key]) {
       // deactivate the key after 5 seconds assuming it's stuck down
       keyTimeouts[key] = setTimeout(() => {
         deactivateKey(key)
       }, 5000)
 
       return {
-        activeKeys: [...state.activeKeys, key],
+        activeKeys: { ...state.activeKeys, [key]: true },
       }
     }
     return state
@@ -34,16 +32,26 @@ export function activateKey(key: string) {
 
 export function deactivateKey(key: string) {
   if (keyTimeouts[key]) {
-    clearTimeout(keyTimeouts[key])
+    clearTimeout(keyTimeouts[key]!)
     keyTimeouts[key] = null
   }
-  useActiveKeys.setState((state) => ({
-    activeKeys: state.activeKeys.filter((i) => i !== key),
-  }))
+
+  useActiveKeys.setState((state) => {
+    if (!state.activeKeys[key]) return state
+
+    const { [key]: _, ...newActiveKeys } = state.activeKeys
+    return { activeKeys: newActiveKeys }
+  })
 }
 
 export function deactivateAllKeys() {
-  useActiveKeys.setState({ activeKeys: [] })
-}
+  Object.values(keyTimeouts).forEach((timeout) => {
+    if (timeout) clearTimeout(timeout)
+  })
 
-export default useActiveKeys
+  Object.keys(keyTimeouts).forEach((key) => {
+    keyTimeouts[key] = null
+  })
+
+  useActiveKeys.setState({ activeKeys: {} })
+}

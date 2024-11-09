@@ -2,6 +2,8 @@ import { ReactNode } from 'react'
 
 import { CharStatus } from '@constants/types'
 
+import { useIsKeyActive } from '@stores/useActiveKeys'
+
 import cn from '@lib/cn'
 
 type Props = {
@@ -11,7 +13,6 @@ type Props = {
   status?: CharStatus
   onClick: (value: string) => void
   isRevealing?: boolean
-  isActive: boolean
 }
 
 export const Key = ({
@@ -21,8 +22,9 @@ export const Key = ({
   value,
   onClick,
   isRevealing,
-  isActive,
 }: Props) => {
+  const isActive = useIsKeyActive(value)
+
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
     onClick(value)
     event.currentTarget.blur()

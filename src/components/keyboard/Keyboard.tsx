@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { DELETE_TEXT, ENTER_TEXT } from '@constants/strings'
 
-import useActiveKeys, {
+import {
   activateKey,
   deactivateAllKeys,
   deactivateKey,
@@ -38,8 +38,6 @@ export const Keyboard = ({
   useEffect(() => {
     if (!isRevealing) setCharStatuses(getStatuses(solution, guesses))
   }, [isRevealing, solution, guesses])
-
-  const { isKeyActive } = useActiveKeys()
 
   const isAnyModalOpen = useModalStore((s) => s.isAnyModalOpen)
 
@@ -94,7 +92,6 @@ export const Keyboard = ({
             onClick={onClick}
             status={charStatuses[key]}
             isRevealing={isRevealing}
-            isActive={isKeyActive(key)}
           />
         ))}
       </div>
@@ -106,17 +103,11 @@ export const Keyboard = ({
             onClick={onClick}
             status={charStatuses[key]}
             isRevealing={isRevealing}
-            isActive={isKeyActive(key)}
           />
         ))}
       </div>
       <div>
-        <Key
-          longWidth={true}
-          value="ENTER"
-          onClick={onClick}
-          isActive={isKeyActive('ENTER')}
-        >
+        <Key longWidth={true} value="ENTER" onClick={onClick}>
           {ENTER_TEXT}
         </Key>
         {['Z', 'X', 'C', 'V', 'B', 'N', 'M'].map((key) => (
@@ -126,15 +117,9 @@ export const Keyboard = ({
             onClick={onClick}
             status={charStatuses[key]}
             isRevealing={isRevealing}
-            isActive={isKeyActive(key)}
           />
         ))}
-        <Key
-          longWidth={true}
-          value="DELETE"
-          onClick={onClick}
-          isActive={isKeyActive('BACKSPACE')}
-        >
+        <Key longWidth={true} value="BACKSPACE" onClick={onClick}>
           {DELETE_TEXT}
         </Key>
       </div>
