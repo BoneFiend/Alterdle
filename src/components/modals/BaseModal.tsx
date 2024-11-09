@@ -33,7 +33,7 @@ export const BaseModal = ({
   return (
     <Dialog
       as="div"
-      className="fixed inset-0 z-10 overflow-y-auto outline-none"
+      className="fixed inset-0 z-10 overflow-y-auto outline-none [scrollbar-width:none]"
       open={isOpen}
       onClose={handleClose}
     >
