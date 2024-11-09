@@ -44,7 +44,7 @@ const Theme: React.FC = () => {
     'fixed mt-12 h-[calc(100vh-3rem)] w-full sm:mt-16 sm:h-[calc(100vh-4rem)]'
 
   return (
-    <div className="bg-ui-foundation-1 fixed h-full w-full transition-colors duration-500">
+    <div className="fixed h-full w-full bg-ui-foundation transition-colors duration-500">
       {(!isDarkMode || isSettingsModalOpen) && (
         <div
           className={cn(
