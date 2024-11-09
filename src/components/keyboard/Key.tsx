@@ -33,7 +33,7 @@ export const Key = ({
       aria-label={`${value}${status ? ' ' + status : ''}`}
       className={cn(
         'h-14 sm:h-16 short:h-12 xshort:h-10',
-        'mx-0.5 flex cursor-pointer select-none items-center justify-center rounded-lg font-bold transition-[colors,width,height] sm:rounded-xl',
+        'mx-0.5 flex cursor-pointer select-none items-center justify-center rounded-lg font-bold transition-[background-color,border-color,width,height] active:duration-0 sm:rounded-xl',
         {
           'w-[40px] text-lg sm:w-[64px] sm:text-3xl short:w-[40px] short:text-lg':
             !longWidth,
@@ -47,9 +47,11 @@ export const Key = ({
             status === 'correct',
           'shadowed bg-present text-white hover:bg-present-deep focus-visible:bg-present-deeper active:bg-present-deeper':
             status === 'present',
-          'bg-key-deeper transition-none': isActive && !status,
-          'bg-correct-deeper transition-none': isActive && status === 'correct',
-          'bg-present-deeper transition-none': isActive && status === 'present',
+          'bg-key-deeper transition-[width,height]': isActive && !status,
+          'bg-correct-deeper transition-[width,height]':
+            isActive && status === 'correct',
+          'bg-present-deeper transition-[width,height]':
+            isActive && status === 'present',
         },
       )}
       onClick={handleClick}
