@@ -4,6 +4,11 @@
 
 * {
   scrollbar-width: thin;
+  scrollbar-color: rgb(var(--primary)) transparent;
+}
+
+body {
+  overflow: hidden;
 }
 
 :root {
