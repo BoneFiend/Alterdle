@@ -17,7 +17,7 @@ export const buttonVariants = cva(
         primary:
           'bg-ui-primary text-ui-secondary-light hover:bg-ui-primary-deep focus-visible:bg-ui-primary-deep active:bg-ui-primary-deeper disabled:bg-ui-primary-disabled dark:text-ui-secondary-deeper disabled:dark:text-ui-main/30',
         secondary:
-          'disabled:bg-ui-secondary-disabled border-3 border-ui-secondary-deep bg-ui-secondary text-ui-primary-deep hover:bg-ui-secondary-deep active:border-ui-secondary-deeper active:bg-ui-secondary-deeper dark:text-ui-primary',
+          'disabled:bg-ui-secondary-disabled border-3 border-ui-secondary-deep bg-ui-secondary text-ui-primary-deep hover:bg-ui-secondary-deep focus-visible:bg-ui-secondary-deep active:border-ui-secondary-deeper active:bg-ui-secondary-deeper dark:text-ui-primary',
       },
     },
     defaultVariants: {
