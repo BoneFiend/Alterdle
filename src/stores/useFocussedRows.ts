@@ -2,17 +2,16 @@ import { create } from 'zustand'
 
 interface FocussedRows {
   focussedRows: number[]
-  isRowFocussed: (index: number) => boolean
 }
 
-const useFocussedRows = create<FocussedRows>((_, get) => ({
+const useFocussedRows = create<FocussedRows>(() => ({
   focussedRows: [],
-
-  isRowFocussed: (index: number) => {
-    const { focussedRows } = get()
-    return focussedRows.includes(index)
-  },
 }))
+
+export function isRowFocussed(index: number) {
+  const { focussedRows } = useFocussedRows.getState()
+  return focussedRows.includes(index)
+}
 
 export function focusRow(index: number) {
   useFocussedRows.setState((state) => {
