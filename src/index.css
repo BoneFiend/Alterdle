@@ -4,7 +4,7 @@
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgb(var(--primary)) transparent;
+  scrollbar-color: rgb(var(--secondary)) transparent;
 }
 
 body {
