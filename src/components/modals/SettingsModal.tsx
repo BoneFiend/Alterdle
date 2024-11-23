@@ -37,7 +37,7 @@ import { BaseModal } from './BaseModal'
 
 type Props = {
   isHardMode: boolean
-  handleHardMode: Function
+  handleHardMode: (isSelected: boolean) => void
 }
 
 export const SettingsModal = ({ isHardMode, handleHardMode }: Props) => {

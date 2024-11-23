@@ -1,9 +1,9 @@
-import cn from '@lib/cn'
+import { Switch } from '@nextui-org/switch'
 
 type Props = {
   settingName: string
   flag: boolean
-  handleFlag: Function
+  handleFlag: (isSelected: boolean) => void
   description?: string
   disabled?: boolean
 }
@@ -15,21 +15,6 @@ export const SettingsToggle = ({
   description,
   disabled,
 }: Props) => {
-  const toggleHolder = cn(
-    'flex h-8 w-14 shrink-0 items-center rounded-full p-1 duration-300 ease-in-out dark:shadow-lg',
-    {
-      'bg-ui-primary': flag && !disabled,
-      'bg-ui-primary-disabled': !flag || disabled,
-    },
-  )
-  const toggleButton = cn(
-    'h-6 w-6 rounded-full bg-white shadow-lg transition-all duration-300 ease-in-out dark:text-ui-main',
-    {
-      'translate-x-6': flag,
-      'opacity-10': disabled,
-    },
-  )
-
   return (
     <div className="flex justify-between gap-4 py-3">
       <div className="text-left text-ui-main transition-colors duration-500">
@@ -40,9 +25,17 @@ export const SettingsToggle = ({
           </p>
         )}
       </div>
-      <button className={toggleHolder} onClick={() => handleFlag(!flag)}>
-        <div className={toggleButton} />
-      </button>
+      <Switch
+        aria-label={settingName}
+        isSelected={flag}
+        onValueChange={handleFlag}
+        isDisabled={disabled}
+        size="lg"
+        color="warning"
+        classNames={{
+          wrapper: 'bg-ui-primary-disabled shadow-lg',
+        }}
+      />
     </div>
   )
 }
