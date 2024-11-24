@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { isRowFocussed } from '@stores/useFocussedRows'
+import useFocussedRows from '@stores/useFocussedRows'
 
 import { useGameSettings } from '@hooks/useGameSettings'
 
@@ -25,6 +25,8 @@ export const Grid = ({
   isHardMode,
 }: Props) => {
   const { numberOfWords, numberOfLetters } = useGameSettings()
+
+  const { isRowFocussed } = useFocussedRows()
 
   const wonIndex = useMemo(
     () =>

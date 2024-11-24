@@ -41,9 +41,8 @@ import useClientSettings, {
   loadClientSettings,
   updateClientSettings,
 } from '@stores/useClientSettings'
-import {
+import useFocussedRows, {
   focusRow,
-  isRowFocussed,
   unfocusAllRows,
   unfocusEarliestRow,
 } from '@stores/useFocussedRows'
@@ -83,6 +82,8 @@ function App() {
   const [currentRowClass, setCurrentRowClass] = useState('')
 
   const isHardModePreferred = useClientSettings((s) => s.isHardModePreferred)
+
+  const { isRowFocussed } = useFocussedRows()
 
   const [shouldRefocus, setShouldRefocus] = useState(false)
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)

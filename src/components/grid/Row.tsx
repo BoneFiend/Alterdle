@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 
+import cn from '@lib/cn'
 import { getGuessStatuses } from '@lib/statuses'
 import { isWordInWordList, unicodeSplit } from '@lib/words'
 
@@ -38,9 +39,10 @@ export const Row = ({
 
   return (
     <div
-      className={`mb-1 flex justify-center ${
-        isCurrentRow && currentRowClassName
-      }`}
+      className={cn(
+        'mb-1 flex justify-center',
+        isCurrentRow && currentRowClassName,
+      )}
     >
       {Array.from({ length: numberOfLetters }, (_, i) => (
         <Cell
