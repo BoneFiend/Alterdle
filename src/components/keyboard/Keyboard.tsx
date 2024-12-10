@@ -44,7 +44,7 @@ export const Keyboard = ({
   const onClick = (value: string) => {
     if (value === 'ENTER') {
       onEnter()
-    } else if (value === 'DELETE') {
+    } else if (value === 'BACKSPACE') {
       onDelete()
     } else {
       onChar(value)
