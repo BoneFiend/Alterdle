@@ -6,7 +6,6 @@ import {
 } from '@headlessui/react'
 import { XCircleIcon } from '@heroicons/react/outline'
 
-import useClientSettings from '@stores/useClientSettings'
 import useModalStore from '@stores/useModalStore'
 
 import cn from '@lib/cn'
@@ -16,18 +15,9 @@ type Props = {
   children: React.ReactNode
   isOpen: boolean
   handleClose: () => void
-  isSettingsModal?: boolean
 }
 
-export const BaseModal = ({
-  title,
-  children,
-  isOpen,
-  handleClose,
-  isSettingsModal,
-}: Props) => {
-  const isDarkMode = useClientSettings((s) => s.isDarkMode)
-
+export const BaseModal = ({ title, children, isOpen, handleClose }: Props) => {
   const isAnyModalOpen = useModalStore((s) => s.isAnyModalOpen)
 
   return (
@@ -57,26 +47,10 @@ export const BaseModal = ({
         <div className="flex min-h-full items-center justify-center px-4 py-10 text-center sm:p-0">
           <div
             className={cn(
-              'inline-block transform overflow-hidden rounded-lg text-left align-bottom drop-shadow-2xl transition-colors sm:w-full sm:max-w-sm sm:align-middle',
+              'inline-block transform overflow-hidden rounded-lg text-left align-bottom drop-shadow-2xl duration-500 ease-in-out sm:w-full sm:max-w-sm sm:align-middle',
+              'bg-gradient-to-tl from-[--foundation-property] to-[--foundation-2-property] [transition-property:_--foundation-property,_--foundation-2-property]',
             )}
           >
-            {(!isDarkMode || isSettingsModal) && (
-              <div
-                className={cn(
-                  'fixed h-full w-full',
-                  'bg-gradient-to-tl from-ui-foundation-1-light-mode to-ui-foundation-2-light-mode',
-                )}
-              />
-            )}
-            {(isDarkMode || isSettingsModal) && (
-              <div
-                className={cn(
-                  'fixed h-full w-full transition-colors duration-500 ease-in-out',
-                  'bg-gradient-to-tl from-ui-foundation-1-dark-mode to-ui-foundation-2-dark-mode',
-                  'opacity-0 transition-opacity duration-500 dark:opacity-100',
-                )}
-              />
-            )}
             <div className="px-4 pb-4 pt-5 sm:p-6">
               <button
                 onClick={handleClose}

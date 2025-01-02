@@ -11,15 +11,26 @@ body {
   overflow: hidden;
 }
 
-:root {
-  --foundation-light-mode: 251 132 231;
-  --foundation-2-light-mode: 253 206 245;
-  --foundation-dark-mode: 76 2 86;
-  --foundation-2-dark-mode: 95 63 100;
+@layer base {
+  @property --foundation-property {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: rgb(251 132 231);
+  }
+  @property --foundation-2-property {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: rgb(253 206 245);
+  }
+}
 
-  --foundation: var(--foundation-light-mode);
-  --foundation-2: var(--foundation-2-light-mode);
+:root {
+  --foundation: 251 132 231;
+  --foundation-2: 253 206 245;
   --foundation-light: 253 206 245;
+
+  --foundation-property: rgb(var(--foundation));
+  --foundation-2-property: rgb(var(--foundation-2));
 
   --primary: 121 1 142;
   --primary-deep: 86 1 101;
@@ -54,8 +65,8 @@ body {
 }
 
 .dark {
-  --foundation: var(--foundation-dark-mode);
-  --foundation-2: var(--foundation-2-dark-mode);
+  --foundation: 76 2 86;
+  --foundation-2: 95 63 100;
   --foundation-light: 88 68 92;
 
   --primary: 234 115 254;

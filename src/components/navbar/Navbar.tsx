@@ -12,9 +12,8 @@ import { format } from 'date-fns'
 import { DATE_LOCALE } from '@constants/settings'
 import { GAME_TITLE } from '@constants/strings'
 
-import useClientSettings from '@stores/useClientSettings'
 import useGameSettingsStore from '@stores/useGameSettingsStore'
-import useModalStore, { updateModals } from '@stores/useModalStore'
+import { updateModals } from '@stores/useModalStore'
 
 import cn from '@lib/cn'
 import { getIsLatestGame } from '@lib/words'
@@ -29,10 +28,6 @@ export const Navbar = () => {
   )
 
   const isLatestGame = useMemo(() => getIsLatestGame(gameDate), [gameDate])
-
-  const isSettingsModalOpen = useModalStore((s) => s.modals.isSettingsModalOpen)
-
-  const isDarkMode = useClientSettings((s) => s.isDarkMode)
 
   return (
     <>
@@ -74,17 +69,10 @@ export const Navbar = () => {
       )}
       <div
         className={cn(
-          'sm:-pb-5 short:-pb-5 relative z-10 -mb-3 h-3 *:absolute *:h-full *:w-full *:transition-opacity *:duration-500 sm:h-5 short:h-5',
-          isSettingsModalOpen && '*:will-change-[opacity]',
+          'sm:-pb-5 short:-pb-5 relative z-10 -mb-3 h-3 duration-500 ease-in-out sm:h-5 short:h-5',
+          'bg-gradient-to-b from-[--foundation-property] to-transparent [transition-property:_--foundation-property]',
         )}
-      >
-        {(!isDarkMode || isSettingsModalOpen) && (
-          <div className="bg-gradient-to-b from-ui-foundation-1-light-mode to-transparent opacity-100 dark:opacity-0" />
-        )}
-        {(isDarkMode || isSettingsModalOpen) && (
-          <div className="bg-gradient-to-b from-ui-foundation-1-dark-mode to-transparent opacity-0 dark:opacity-100" />
-        )}
-      </div>
+      />
     </>
   )
 }

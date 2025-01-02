@@ -51,7 +51,6 @@ export const AdvancedSettingsModal = () => {
       title="Advanced Settings"
       isOpen={isAdvancedSettingsModalOpen}
       handleClose={handleClose}
-      isSettingsModal
     >
       <div className="-mb-2 mt-2 flex flex-col divide-y divide-ui-main/50">
         <SettingsToggle

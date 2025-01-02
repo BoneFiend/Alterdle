@@ -11,10 +11,6 @@ module.exports = {
       'ui-foundation': {
         DEFAULT: 'rgb(var(--foundation))',
         2: 'rgb(var(--foundation-2))',
-        '1-light-mode': 'rgb(var(--foundation-light-mode))',
-        '2-light-mode': 'rgb(var(--foundation-2-light-mode))',
-        '1-dark-mode': 'rgb(var(--foundation-dark-mode))',
-        '2-dark-mode': 'rgb(var(--foundation-2-dark-mode))',
         light: 'rgb(var(--foundation-light))',
       },
       'ui-primary': {

@@ -73,9 +73,8 @@ export const SettingsModal = ({ isHardMode, handleHardMode }: Props) => {
       title="Settings"
       isOpen={isSettingsModalOpen}
       handleClose={handleClose}
-      isSettingsModal
     >
-      <div className="-mb-3 mt-2 flex flex-col divide-y divide-ui-main/50">
+      <div className="-mb-3 mt-2 flex flex-col divide-y divide-ui-main/50 *:transition-colors *:duration-500 *:ease-in-out">
         <SettingsSlider
           settingName="Word Length"
           value={numberOfLetters}

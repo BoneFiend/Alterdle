@@ -19,10 +19,10 @@ export const SettingsSlider = ({
 }: Props) => {
   return (
     <div className="flex justify-between gap-4 py-3">
-      <div className="text-left text-ui-main transition-colors duration-500">
+      <div className="text-left text-ui-main transition-colors duration-500 ease-in-out">
         <p className="leading-none">{settingName}</p>
         {description && (
-          <p className="mt-1 text-xs text-ui-main transition-colors duration-500">
+          <p className="mt-1 text-xs text-ui-main transition-colors duration-500 ease-in-out">
             {description}
           </p>
         )}
