@@ -12,12 +12,6 @@ const gameStatKey = 'alterdleGameStats'
 
 const clientSettingsKey = 'alterdleClientSettings'
 
-const darkModeKey = 'theme'
-const highContrastKey = 'highContrast'
-const longShareKey = 'longShare'
-const gameModeKey = 'gameMode'
-const perfModeKey = 'perfMode'
-
 export const saveGameStateToLocalStorage = (
   isLatestGame: boolean,
   gameState: StoredGameState,
@@ -77,13 +71,4 @@ export const loadClientSettingsFromLocalStorage = () => {
     } as ClientSettings
   }
   return JSON.parse(clientSettingsString) as ClientSettings
-}
-
-// TODO remove this later
-export const removeLegacyKeys = () => {
-  localStorage.removeItem(darkModeKey)
-  localStorage.removeItem(highContrastKey)
-  localStorage.removeItem(longShareKey)
-  localStorage.removeItem(gameModeKey)
-  localStorage.removeItem(perfModeKey)
 }

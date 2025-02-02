@@ -53,7 +53,6 @@ import { useGameSettings } from '@hooks/useGameSettings'
 import { isInAppBrowser } from '@lib/browser'
 import {
   loadGameStateFromLocalStorage,
-  removeLegacyKeys,
   saveGameStateToLocalStorage,
 } from '@lib/localStorage'
 import { addStatsForCompletedGame, loadStats } from '@lib/stats'
@@ -126,7 +125,6 @@ function App() {
     // if no game state on load,
     // show the user the how-to info modal
     loadClientSettings()
-    removeLegacyKeys()
     if (
       !loadGameStateFromLocalStorage(true) &&
       !loadGameStateFromLocalStorage(false)
