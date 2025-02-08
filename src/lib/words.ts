@@ -80,7 +80,7 @@ export const unicodeLength = (word: string) => {
   return unicodeSplit(word).length
 }
 
-export const localeAwareLowerCase = (text: string) => {
+const localeAwareLowerCase = (text: string) => {
   return import.meta.env.REACT_APP_LOCALE_STRING
     ? text.toLocaleLowerCase(import.meta.env.REACT_APP_LOCALE_STRING)
     : text.toLowerCase()
@@ -121,7 +121,7 @@ export const getIndex = (gameDate: Date) => {
   return index
 }
 
-export const seededRandom = (seed: number) => {
+const seededRandom = (seed: number) => {
   let x = Math.sin(seed++) * 10000
   return x - Math.floor(x)
 }

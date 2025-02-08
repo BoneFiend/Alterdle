@@ -25,7 +25,7 @@ type AlertContextValue = {
   showError: (message: string, options?: ShowOptions) => void
 }
 
-export const AlertContext = createContext<AlertContextValue | null>({
+const AlertContext = createContext<AlertContextValue | null>({
   status: 'success',
   message: null,
   isVisible: false,
