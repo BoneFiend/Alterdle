@@ -18,7 +18,7 @@
         "useImportType": "warn"
       }
     },
-    "ignore": ["./build/**", "./node_modules/**", "./src/constants/wordlist.ts"]
+    "ignore": ["./dist/**", "./node_modules/**", "./src/constants/wordlist.ts"]
   },
   "formatter": { "enabled": false }
 }
