@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { DELETE_TEXT, ENTER_TEXT } from '@constants/strings'
 
@@ -51,24 +51,30 @@ export const Keyboard = ({
     }
   }
 
-  const keyDown = (e: KeyboardEvent) => {
-    activateKey(localeAwareUpperCase(e.key))
-    if (e.code === 'Backspace') {
-      onDelete()
-    }
-  }
-
-  const keyUp = (e: KeyboardEvent) => {
-    deactivateKey(localeAwareUpperCase(e.key))
-    if (e.code === 'Enter') {
-      onEnter()
-    } else {
-      const key = localeAwareUpperCase(e.key)
-      if (key.length === 1 && key >= 'A' && key <= 'Z') {
-        onChar(key)
+  const keyDown = useCallback(
+    (e: KeyboardEvent) => {
+      activateKey(localeAwareUpperCase(e.key))
+      if (e.code === 'Backspace') {
+        onDelete()
       }
-    }
-  }
+    },
+    [onDelete],
+  )
+
+  const keyUp = useCallback(
+    (e: KeyboardEvent) => {
+      deactivateKey(localeAwareUpperCase(e.key))
+      if (e.code === 'Enter') {
+        onEnter()
+      } else {
+        const key = localeAwareUpperCase(e.key)
+        if (key.length === 1 && key >= 'A' && key <= 'Z') {
+          onChar(key)
+        }
+      }
+    },
+    [onEnter, onChar],
+  )
 
   useEffect(() => {
     if (isAnyModalOpen) {
@@ -80,7 +86,7 @@ export const Keyboard = ({
       window.removeEventListener('keyup', keyUp)
       window.removeEventListener('keydown', keyDown)
     }
-  }, [onEnter, onDelete, onChar, isAnyModalOpen])
+  }, [isAnyModalOpen, keyDown, keyUp])
 
   return (
     <div className="flex flex-col gap-1 *:flex *:justify-center">

@@ -1,4 +1,4 @@
-import { fail } from 'assert'
+import { fail } from 'node:assert'
 
 import { WORDS } from './wordlist'
 
@@ -10,12 +10,12 @@ describe('wordlist', () => {
     expect(WORDS.length).toEqual(uniqueWords.length)
 
     if (uniqueWords.length !== WORDS.length) {
-      uniqueWords.forEach((w) => {
+      for (const w of uniqueWords) {
         const ww = WORDS.filter((x) => x === w)
         if (ww.length > 1) {
           fail(`The word ${w} is not unique.`)
         }
-      })
+      }
     }
   })
 })

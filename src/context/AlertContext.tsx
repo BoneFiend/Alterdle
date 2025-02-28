@@ -1,5 +1,5 @@
 import {
-  ReactNode,
+  type ReactNode,
   createContext,
   useCallback,
   useContext,
@@ -69,7 +69,7 @@ export const AlertProvider = ({ children }: Props) => {
         }
       }, delayMs)
     },
-    [setStatus, setMessage, setIsVisible],
+    [],
   )
 
   const showError = useCallback(

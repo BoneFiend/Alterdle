@@ -38,6 +38,7 @@ export const Grid = ({
     <div className="max-w-full px-2 py-3 sm:px-3">
       {Array.from({ length: maxChallenges }, (_, i) => (
         <Row
+          // biome-ignore lint/suspicious/noArrayIndexKey: no other distinguishing string
           key={i}
           solution={solution}
           guess={

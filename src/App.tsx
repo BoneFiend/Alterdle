@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { default as GraphemeSplitter } from 'grapheme-splitter'
 import Div100vh from 'react-div-100vh'
@@ -35,7 +35,7 @@ import {
   WIN_MESSAGES,
   WORD_NOT_FOUND_MESSAGE,
 } from '@constants/strings'
-import { Obj2d, updateObj2d } from '@constants/types'
+import { type Obj2d, updateObj2d } from '@constants/types'
 
 import useClientSettings, {
   loadClientSettings,
@@ -148,6 +148,7 @@ function App() {
     }
   }, [numberOfWords, numberOfLetters, guesses, shouldRefocus, maxChallenges])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: refocus on game settings change
   useEffect(() => {
     if (timerRef.current) clearTimeout(timerRef.current)
     setShouldRefocus(true)
@@ -167,24 +168,33 @@ function App() {
       })
   }, [showErrorAlert])
 
-  const handleHardMode = (isHard: boolean) => {
-    if (numberOfWords === 1) {
-      if (
-        (guesses[numberOfWords]?.[numberOfLetters] ?? []).length === 0 ||
-        isHardModePreferred
-      ) {
-        updateClientSettings({ isHardModePreferred: isHard })
+  const handleHardMode = useCallback(
+    (isHard: boolean) => {
+      if (numberOfWords === 1) {
+        if (
+          (guesses[numberOfWords]?.[numberOfLetters] ?? []).length === 0 ||
+          isHardModePreferred
+        ) {
+          updateClientSettings({ isHardModePreferred: isHard })
+        } else {
+          showErrorAlert(HARD_MODE_CHEATING_MESSAGE)
+        }
       } else {
-        showErrorAlert(HARD_MODE_CHEATING_MESSAGE)
+        showErrorAlert(HARD_MODE_RESTRICTION_MESSAGE)
       }
-    } else {
-      showErrorAlert(HARD_MODE_RESTRICTION_MESSAGE)
-    }
-  }
+    },
+    [
+      numberOfLetters,
+      numberOfWords,
+      guesses,
+      isHardModePreferred,
+      showErrorAlert,
+    ],
+  )
 
-  const clearCurrentRowClass = () => {
+  const clearCurrentRowClass = useCallback(() => {
     setCurrentRowClass('')
-  }
+  }, [])
 
   useEffect(() => {
     saveGameStateToLocalStorage(isLatestGame, {
@@ -193,34 +203,47 @@ function App() {
     })
   }, [guesses, gameDate, isLatestGame])
 
-  const onChar = (value: string) => {
-    setShouldRefocus(false)
-    if (
-      isAnyModalOpen ||
-      isGameWon ||
-      isGameLost ||
-      (guesses[numberOfWords]?.[numberOfLetters] || []).length === maxChallenges
-    )
-      return
-    focusRow((guesses[numberOfWords]?.[numberOfLetters] ?? []).length)
-    if (
-      unicodeLength(`${currentGuess}${value}`) <= numberOfLetters &&
-      (guesses[numberOfWords]?.[numberOfLetters] ?? []).length <
-        maxChallenges &&
-      !isGameWon
-    ) {
-      setCurrentGuesses((prev) => {
-        return updateObj2d(
-          prev,
-          numberOfWords,
-          numberOfLetters,
-          `${currentGuess}${value}`,
-        )
-      })
-    }
-  }
+  const onChar = useCallback(
+    (value: string) => {
+      setShouldRefocus(false)
+      if (
+        isAnyModalOpen ||
+        isGameWon ||
+        isGameLost ||
+        (guesses[numberOfWords]?.[numberOfLetters] || []).length ===
+          maxChallenges
+      )
+        return
+      focusRow((guesses[numberOfWords]?.[numberOfLetters] ?? []).length)
+      if (
+        unicodeLength(`${currentGuess}${value}`) <= numberOfLetters &&
+        (guesses[numberOfWords]?.[numberOfLetters] ?? []).length <
+          maxChallenges &&
+        !isGameWon
+      ) {
+        setCurrentGuesses((prev) => {
+          return updateObj2d(
+            prev,
+            numberOfWords,
+            numberOfLetters,
+            `${currentGuess}${value}`,
+          )
+        })
+      }
+    },
+    [
+      isAnyModalOpen,
+      isGameWon,
+      isGameLost,
+      guesses,
+      numberOfWords,
+      numberOfLetters,
+      currentGuess,
+      maxChallenges,
+    ],
+  )
 
-  const onDelete = () => {
+  const onDelete = useCallback(() => {
     if (isAnyModalOpen) return
     setCurrentGuesses(
       updateObj2d(
@@ -233,9 +256,15 @@ function App() {
           .join(''),
       ),
     )
-  }
+  }, [
+    isAnyModalOpen,
+    currentGuesses,
+    numberOfWords,
+    numberOfLetters,
+    currentGuess,
+  ])
 
-  const onEnter = () => {
+  const onEnter = useCallback(() => {
     if (isGameWon || isGameLost || isAnyModalOpen) return
 
     if (!(unicodeLength(currentGuess) === numberOfLetters)) {
@@ -347,7 +376,24 @@ function App() {
         })
       }
     }
-  }
+  }, [
+    clearCurrentRowClass,
+    numberOfLetters,
+    numberOfWords,
+    guesses,
+    isGameLost,
+    isGameWon,
+    isHardMode,
+    isLatestGame,
+    maxChallenges,
+    isAnyModalOpen,
+    showSuccessAlert,
+    solution,
+    currentGuess,
+    currentGuesses,
+    showErrorAlert,
+    gamesWon,
+  ])
 
   return (
     <Div100vh>
@@ -355,10 +401,10 @@ function App() {
         <Navbar />
         <div className="mx-auto flex w-full grow flex-col pb-8">
           <div className="flex h-[1vh] grow flex-wrap items-start justify-center overflow-y-scroll">
-            {solution.map((_, i: number) => (
+            {solution.map((sol) => (
               <Grid
-                key={i}
-                solution={solution[i]}
+                key={sol}
+                solution={sol}
                 guesses={guesses[numberOfWords]?.[numberOfLetters] ?? []}
                 currentGuess={currentGuess}
                 currentRowClassName={currentRowClass}

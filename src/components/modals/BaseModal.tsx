@@ -53,6 +53,7 @@ export const BaseModal = ({ title, children, isOpen, handleClose }: Props) => {
           >
             <div className="px-4 pb-4 pt-5 sm:p-6">
               <button
+                type="button"
                 onClick={handleClose}
                 tabIndex={0}
                 aria-pressed="false"

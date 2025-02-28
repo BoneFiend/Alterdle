@@ -58,7 +58,7 @@ export const findFirstUnusedReveal = (
 
   // check for the first unused letter, taking duplicate letters
   // into account - see issue #198
-  let n
+  let n: number
   for (const letter of splitWord) {
     n = lettersLeftArray.indexOf(letter)
     if (n !== -1) {
@@ -94,7 +94,7 @@ export const localeAwareUpperCase = (text: string) => {
 
 export const getLastGameDate = (today: Date) => {
   const t = startOfDay(today)
-  let daysSinceLastGame = differenceInDays(GAME_EPOCH, t) % periodInDays
+  const daysSinceLastGame = differenceInDays(GAME_EPOCH, t) % periodInDays
   return addDays(t, -daysSinceLastGame)
 }
 
@@ -122,7 +122,7 @@ export const getIndex = (gameDate: Date) => {
 }
 
 const seededRandom = (seed: number) => {
-  let x = Math.sin(seed++) * 10000
+  const x = Math.sin(seed) * 10000
   return x - Math.floor(x)
 }
 
@@ -140,9 +140,9 @@ export const getSolution = (
     gameDate.getFullYear() +
     numberOfWords * 1234 +
     numberOfLetters
-  let solution: string[] = []
+  const solution: string[] = []
 
-  let availableWords = [
+  const availableWords = [
     ...WORDS.filter((word) => word.length === numberOfLetters),
   ]
 

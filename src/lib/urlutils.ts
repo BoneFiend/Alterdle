@@ -62,7 +62,7 @@ export const getShareUrl = (
 export const loadNumberOfWords = () => {
   const urlParams = new URLSearchParams(window.location.search)
 
-  var numberOfWords = Number(urlParams.get('w')) ?? DEFAULT_NUMBER_OF_WORDS
+  let numberOfWords = Number(urlParams.get('w')) ?? DEFAULT_NUMBER_OF_WORDS
   if (
     numberOfWords > MAX_NUMBER_OF_WORDS ||
     numberOfWords < MIN_NUMBER_OF_WORDS
@@ -76,7 +76,7 @@ export const loadNumberOfWords = () => {
 export const loadNumberOfLetters = () => {
   const urlParams = new URLSearchParams(window.location.search)
 
-  var numberOfLetters = Number(urlParams.get('l')) ?? DEFAULT_NUMBER_OF_LETTERS
+  let numberOfLetters = Number(urlParams.get('l')) ?? DEFAULT_NUMBER_OF_LETTERS
   if (
     numberOfLetters > MAX_NUMBER_OF_LETTERS ||
     numberOfLetters < MIN_NUMBER_OF_LETTERS
@@ -89,13 +89,15 @@ export const loadNumberOfLetters = () => {
 
 export const loadGameDate = () => {
   const parsed = queryString.parse(window.location.search)
-  try {
-    const d = startOfDay(parseISO(parsed.d!.toString()))
-    if (d >= getToday() || d < GAME_EPOCH) {
+  if (parsed.d) {
+    try {
+      const d = startOfDay(parseISO(parsed.d?.toString()))
+      if (d >= getToday() || d < GAME_EPOCH) {
+        return getToday()
+      }
+      return d
+    } catch (e) {
       return getToday()
     }
-    return d
-  } catch (e) {
-    return getToday()
-  }
+  } else return getToday()
 }

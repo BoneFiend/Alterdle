@@ -26,7 +26,7 @@ import {
   SHARE_TEXT,
   STATISTICS_TITLE,
 } from '@constants/strings'
-import { GameStats, Obj2d } from '@constants/types'
+import type { GameStats, Obj2d } from '@constants/types'
 
 import useClientSettings from '@stores/useClientSettings'
 import useGameSettingsStore, {

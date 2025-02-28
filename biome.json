@@ -1,0 +1,24 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "organizeImports": {
+    "enabled": false
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "suspicious": {
+        "noExplicitAny": "warn"
+      },
+      "correctness": {
+        "useExhaustiveDependencies": "warn"
+      },
+      "style": {
+        "useTemplate": "off",
+        "useImportType": "warn"
+      }
+    },
+    "ignore": ["./build/**", "./node_modules/**", "./src/constants/wordlist.ts"]
+  },
+  "formatter": { "enabled": false }
+}

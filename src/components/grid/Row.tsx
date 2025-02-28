@@ -46,7 +46,10 @@ export const Row = ({
     >
       {Array.from({ length: numberOfLetters }, (_, i) => (
         <Cell
-          key={i}
+          key={`${numberOfLetters}-${numberOfWords}-${
+            // biome-ignore lint/suspicious/noArrayIndexKey: no other distinguishing string
+            i
+          }`}
           value={splitGuess ? splitGuess[i] : undefined}
           status={
             !isCurrentRow

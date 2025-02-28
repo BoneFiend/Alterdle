@@ -10,8 +10,9 @@ import Theme from '@context/Theme'
 import './index.css'
 import reportWebVitals from './reportWebVitals'
 
-const container = document.getElementById('root')!
+const container = document.getElementById('root')
 
+// biome-ignore lint/style/noNonNullAssertion: it's there
 const root = createRoot(container!)
 root.render(
   <React.StrictMode>

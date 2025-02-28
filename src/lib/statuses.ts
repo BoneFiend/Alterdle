@@ -1,4 +1,4 @@
-import { CharStatus } from '@constants/types'
+import type { CharStatus } from '@constants/types'
 
 import { unicodeSplit } from './words'
 
@@ -8,39 +8,37 @@ export const getStatuses = (
 ): { [key: string]: CharStatus } => {
   const charObj: { [key: string]: CharStatus } = {}
 
-  guesses.forEach((word) => {
-    solution.forEach((sol) => {
+  for (const word of guesses) {
+    for (const sol of solution) {
       if (guesses.includes(sol)) {
         // Make letters from already guessed words absent by default
-        unicodeSplit(sol).forEach((letter) => {
-          return charObj[letter]
-            ? charObj[letter]
-            : (charObj[letter] = 'absent')
-        })
+        for (const letter of unicodeSplit(sol)) {
+          if (!charObj[letter]) charObj[letter] = 'absent'
+        }
       } else {
         const splitSolution = unicodeSplit(sol)
 
         unicodeSplit(word).forEach((letter, i) => {
           if (!splitSolution.includes(letter)) {
             // Make status absent if it hasn't already been set
-            return charObj[letter]
-              ? charObj[letter]
-              : (charObj[letter] = 'absent')
+            if (!charObj[letter]) charObj[letter] = 'absent'
           }
 
           if (letter === splitSolution[i]) {
             // Make status correct
-            return (charObj[letter] = 'correct')
+            charObj[letter] = 'correct'
+            return
           }
 
           if (charObj[letter] !== 'correct') {
             // Make status present if it hasn't already been set as correct
-            return (charObj[letter] = 'present')
+            charObj[letter] = 'present'
+            return
           }
         })
       }
-    })
-  })
+    }
+  }
 
   return charObj
 }
@@ -83,10 +81,10 @@ export const getGuessStatuses = (
       statuses[i] = 'present'
       solutionCharsTaken[indexOfPresentChar] = true
       return
-    } else {
-      statuses[i] = 'absent'
-      return
     }
+
+    statuses[i] = 'absent'
+    return
   })
 
   return statuses

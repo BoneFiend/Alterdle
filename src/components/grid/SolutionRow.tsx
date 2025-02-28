@@ -21,7 +21,10 @@ export const SolutionRow = ({
     <div className="flex justify-center">
       {splitGuess.map((letter, i) => (
         <Cell
-          key={`${numberOfLetters}-${numberOfWords}-${i}`}
+          key={`${numberOfLetters}-${numberOfWords}-${
+            // biome-ignore lint/suspicious/noArrayIndexKey: no other distinguishing string
+            i
+          }`}
           value={letter}
           status={'incorrect'}
           position={i}

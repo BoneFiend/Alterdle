@@ -4,7 +4,7 @@ import {
   SUCCESS_RATE_TEXT,
   TOTAL_TRIES_TEXT,
 } from '@constants/strings'
-import { GameStats, Obj2d } from '@constants/types'
+import type { GameStats, Obj2d } from '@constants/types'
 
 import { defaultStats } from '@lib/stats'
 

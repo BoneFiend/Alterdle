@@ -1,5 +1,5 @@
 import { GAME_EPOCH } from '@constants/settings'
-import { GameStats, Obj2d } from '@constants/types'
+import type { GameStats, Obj2d } from '@constants/types'
 
 import { getToday } from './dateutils'
 import {

@@ -21,19 +21,17 @@ export function useGameSettings() {
   const numberOfWordsRef = useRef<number>(numberOfWords)
   const displayNumberOfWords = useMemo(() => {
     if (isPerfMode && isAnyModalOpen) return numberOfWordsRef.current
-    else {
-      numberOfWordsRef.current = numberOfWords
-      return numberOfWords
-    }
+
+    numberOfWordsRef.current = numberOfWords
+    return numberOfWords
   }, [numberOfWords, isPerfMode, isAnyModalOpen])
 
   const numberOfLettersRef = useRef<number>(numberOfLetters)
   const displayNumberOfLetters = useMemo(() => {
     if (isPerfMode && isAnyModalOpen) return numberOfLettersRef.current
-    else {
-      numberOfLettersRef.current = numberOfLetters
-      return numberOfLetters
-    }
+
+    numberOfLettersRef.current = numberOfLetters
+    return numberOfLetters
   }, [numberOfLetters, isPerfMode, isAnyModalOpen])
 
   return {

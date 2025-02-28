@@ -8,7 +8,7 @@ import {
   MIN_NUMBER_OF_WORDS,
 } from '@constants/settings'
 import { CHALLENGES_DESCRIPTION, LENGTH_DESCRIPTION } from '@constants/strings'
-import { CharStatus } from '@constants/types'
+import type { CharStatus } from '@constants/types'
 
 import useGameSettingsStore, {
   setNumberOfLetters,
@@ -155,6 +155,7 @@ export const HelpModal = () => {
       <div className="mb-1 mt-2 flex justify-center">
         {word.split('').map((c, i) => (
           <Cell
+            // biome-ignore lint/suspicious/noArrayIndexKey: no other distinguishing string
             key={i}
             isRevealing={indices.indexOf(i) > -1}
             value={c.toUpperCase()}
@@ -181,19 +182,19 @@ export const HelpModal = () => {
             </p>
           </>
         )
-      } else {
-        return (
-          <>
-            {wordCells}
-            <p className="text-sm text-ui-main">
-              There are no letters {middleText} spot.
-            </p>
-          </>
-        )
       }
-    } else {
-      return <p></p>
+
+      return (
+        <>
+          {wordCells}
+          <p className="text-sm text-ui-main">
+            There are no letters {middleText} spot.
+          </p>
+        </>
+      )
     }
+
+    return <p />
   }
 
   const handleClose = () => updateModals({ isHelpModalOpen: false })

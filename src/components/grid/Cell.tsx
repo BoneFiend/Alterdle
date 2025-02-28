@@ -1,5 +1,5 @@
 import { REVEAL_TIME_MS } from '@constants/settings'
-import { CharStatus } from '@constants/types'
+import type { CharStatus } from '@constants/types'
 
 import useClientSettings from '@stores/useClientSettings'
 

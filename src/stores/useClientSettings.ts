@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 
 import { defaultClientSettings } from '@constants/types'
-import { ClientSettings } from '@constants/types'
+import type { ClientSettings } from '@constants/types'
 
 import {
   loadClientSettingsFromLocalStorage,

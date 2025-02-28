@@ -1,6 +1,6 @@
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 
-import { CharStatus } from '@constants/types'
+import type { CharStatus } from '@constants/types'
 
 import { useIsKeyActive } from '@stores/useActiveKeys'
 
@@ -32,6 +32,7 @@ export const Key = ({
 
   return (
     <button
+      type="button"
       aria-label={`${value}${status ? ' ' + status : ''}`}
       className={cn(
         'h-14 sm:h-16 short:h-12 xshort:h-10',

@@ -1,4 +1,4 @@
-import { GameStats, Obj2d } from '@constants/types'
+import type { GameStats, Obj2d } from '@constants/types'
 
 import { getToday } from '@lib/dateutils'
 import { defaultStats } from '@lib/stats'
@@ -37,9 +37,9 @@ export const Histogram = ({
 
   return (
     <div className="justify-left m-2 columns-1 text-sm dark:text-white">
-      {histogramBuckets.map((value, i) => (
+      {histogramBuckets.map((value) => (
         <Progress
-          key={i}
+          key={value}
           index={value}
           isCurrentDayStatRow={
             isLatestGame &&

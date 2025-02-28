@@ -36,7 +36,8 @@ export const LOSE_MESSAGES = [
 export const GAME_COPIED_MESSAGE = 'Copied to clipboard'
 export const NOT_ENOUGH_LETTERS_MESSAGE = 'Not enough letters'
 export const WORD_NOT_FOUND_MESSAGE = 'Word not found'
-export const LONG_SHARE_DESCRIPTION = `Share text will contain details of every guess of every word`
+export const LONG_SHARE_DESCRIPTION =
+  'Share text will contain details of every guess of every word'
 export const HARD_MODE_CHEATING_MESSAGE =
   'Hard Mode can be enabled only at the start'
 export const HARD_MODE_RESTRICTION_MESSAGE =

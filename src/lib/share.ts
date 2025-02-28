@@ -38,8 +38,8 @@ export const shareStatus = (
   }/${maxChallenges}${isHardMode ? '*' : ''}\n`
 
   const url = getShareUrl(numberOfWords, numberOfLetters, gameDate)
-  var grids = ''
-  var numbers = ''
+  let grids = ''
+  let numbers = ''
 
   for (let i = 0; i < numberOfWords; i += gridsPerRow) {
     // Each row of the big grid
@@ -48,7 +48,7 @@ export const shareStatus = (
       getEmojiNumber(guesses.indexOf(solution[i]) + 1, maxChallenges),
     )
 
-    var row = generateEmojiGrid(
+    let row = generateEmojiGrid(
       solution[i],
       guesses,
       getEmojiTiles(isHighContrastMode),
@@ -163,7 +163,7 @@ const attemptShare = (shareData: object) => {
 }
 
 const getEmojiTiles = (isHighContrastMode: boolean) => {
-  let tiles: string[] = []
+  const tiles: string[] = []
   tiles.push(isHighContrastMode ? '🟧' : '🟩')
   tiles.push(isHighContrastMode ? '🟦' : '🟨')
   tiles.push('⬜')
@@ -176,7 +176,7 @@ const joinEmojiGrids = (a: string, b: string) => {
   const aLines = a.split('\n')
   const bLines = b.split('\n')
 
-  let combinedLines = []
+  const combinedLines = []
   for (let i = 0; i < aLines.length; i++) {
     const aLine = aLines[i] || ''
     const bLine = bLines[i] || ''

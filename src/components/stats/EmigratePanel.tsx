@@ -4,7 +4,7 @@ import { DuplicateIcon } from '@heroicons/react/outline'
 
 import { Button } from '@ui/inputs/Button'
 
-import { MigrationStats } from '@constants/types'
+import type { MigrationStats } from '@constants/types'
 
 import { copyTextToClipboard } from '@lib/clipboard'
 import { encrypt } from '@lib/encryption'

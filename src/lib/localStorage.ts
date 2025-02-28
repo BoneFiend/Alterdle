@@ -1,8 +1,8 @@
 import {
-  ClientSettings,
-  GameStats,
-  Obj2d,
-  StoredGameState,
+  type ClientSettings,
+  type GameStats,
+  type Obj2d,
+  type StoredGameState,
   defaultClientSettings,
 } from '@constants/types'
 
@@ -27,9 +27,9 @@ export const loadGameStateFromLocalStorage = (isLatestGame: boolean) => {
     const state = JSON.parse(stateString)
     state.gameDate = new Date(state.gameDate)
     return state as StoredGameState
-  } else {
-    return null
   }
+
+  return null
 }
 
 export const saveStatsToLocalStorage = (gameStats: Obj2d<GameStats>) => {

@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import type React from 'react'
+import { useCallback, useEffect } from 'react'
 
 import useClientSettings from '@stores/useClientSettings'
 
@@ -13,13 +14,13 @@ const Theme: React.FC = () => {
   const darkKey = 'dark'
   const highContrastKey = 'high-contrast'
 
-  const applyTheme = (themeKey: string) => {
+  const applyTheme = useCallback((themeKey: string) => {
     document.documentElement.classList.add(themeKey)
-  }
+  }, [])
 
-  const removeTheme = (themeKey: string) => {
+  const removeTheme = useCallback((themeKey: string) => {
     document.documentElement.classList.remove(themeKey)
-  }
+  }, [])
 
   useEffect(() => {
     if (isDarkMode) {
@@ -27,7 +28,7 @@ const Theme: React.FC = () => {
     } else {
       removeTheme(darkKey)
     }
-  }, [isDarkMode])
+  }, [isDarkMode, applyTheme, removeTheme])
 
   useEffect(() => {
     if (isHighContrastMode) {
@@ -35,7 +36,7 @@ const Theme: React.FC = () => {
     } else {
       removeTheme(highContrastKey)
     }
-  }, [isHighContrastMode])
+  }, [isHighContrastMode, applyTheme, removeTheme])
 
   return (
     <div

@@ -32,7 +32,7 @@ export function activateKey(key: string) {
 
 export function deactivateKey(key: string) {
   if (keyTimeouts[key]) {
-    clearTimeout(keyTimeouts[key]!)
+    clearTimeout(keyTimeouts[key])
     keyTimeouts[key] = null
   }
 
@@ -45,13 +45,13 @@ export function deactivateKey(key: string) {
 }
 
 export function deactivateAllKeys() {
-  Object.values(keyTimeouts).forEach((timeout) => {
+  for (const timeout in keyTimeouts) {
     if (timeout) clearTimeout(timeout)
-  })
+  }
 
-  Object.keys(keyTimeouts).forEach((key) => {
+  for (const key in keyTimeouts) {
     keyTimeouts[key] = null
-  })
+  }
 
   useActiveKeys.setState({ activeKeys: {} })
 }

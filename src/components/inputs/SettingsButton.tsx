@@ -1,9 +1,9 @@
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 
-import { ShareIcon } from '@heroicons/react/outline'
-import { VariantProps } from 'class-variance-authority'
+import type { ShareIcon } from '@heroicons/react/outline'
+import type { VariantProps } from 'class-variance-authority'
 
-import { Button, buttonVariants } from './Button'
+import { Button, type buttonVariants } from './Button'
 
 interface Props extends VariantProps<typeof buttonVariants> {
   settingName: ReactNode

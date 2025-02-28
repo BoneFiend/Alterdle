@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 
 import { Button } from '@ui/inputs/Button'
 
-import { MigrationStats } from '@constants/types'
+import type { MigrationStats } from '@constants/types'
 
 import cn from '@lib/cn'
 import { decrypt } from '@lib/encryption'
@@ -45,7 +45,7 @@ export const ImmigratePanel = () => {
         'Are you sure you want to override the statistics on this device? This action is not reversable.',
       )
     ) {
-      var migrationStats = JSON.parse(decrypt(value) ?? '') as MigrationStats
+      const migrationStats = JSON.parse(decrypt(value) ?? '') as MigrationStats
       if (!migrationStats) return
 
       if (migrationStats.gameState) {

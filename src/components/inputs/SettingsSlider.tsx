@@ -3,7 +3,7 @@ import { Slider } from '@nextui-org/slider'
 type Props = {
   settingName: string
   value: number
-  handleValue: Function
+  handleValue: (value: number) => void
   description?: string
   minValue: number
   maxValue: number
