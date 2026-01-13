@@ -16,7 +16,7 @@
     "visualise": "pnpx vite-bundle-visualizer --sourcemap"
   },
   "dependencies": {
-    "@headlessui/react": "^2.1.2",
+    "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^1.0.6",
     "@nextui-org/react": "^2.4.6",
     "@nextui-org/slider": "^2.2.15",
